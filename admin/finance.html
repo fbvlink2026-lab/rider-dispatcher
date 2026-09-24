@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Sentro ng Pondo — Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    <style>
+        .kard-malaki {
+            border-radius: 16px; padding: 20px; color: white; margin-bottom: 14px;
+        }
+        .kard-dagdag { background: linear-gradient(135deg, #00B42A 0%, #009A29 100%); }
+        .kard-bawas { background: linear-gradient(135deg, #F53F3F 0%, #D92D2D 100%); }
+        .kard-balanse { background: linear-gradient(135deg, #165DFF 0%, #0E42D2 100%); }
+    </style>
+</head>
+<body>
+<div class="katawan-aplikasyon">
+
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-ulo"><h2>🏠 Admin Panel</h2><p>Pamamahala sa Pera</p></div>
+        <nav class="menu-talaan">
+            <div class="menu-kabanata-pamagat">Pananalapi</div>
+            <a href="payments.html" class="menu-link">💳 Paraan ng Bayad</a>
+            <a href="finance.html" class="menu-link aktibo">💰 Sentro ng Pondo</a>
+            <a href="transactions.html" class="menu-link">📋 Galaw ng Pera</a>
+            <div class="menu-kabanata-pamagat">Iba pa</div>
+            <a href="orders.html" class="menu-link">📝 Utos</a>
+        </nav>
+        <div class="menu-ibaba">martodosko © 2026 — v1.3.0</div>
+    </aside>
+
+    <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+    <main class="pangunahing-larawan">
+        <div class="itaas-na-bar">
+            <button class="pindutan-menu" id="btnMenu">☰</button>
+            <span class="pangalan-pahina">💰 Sentro ng Pananalapi</span>
+        </div>
+
+        <div class="app-container">
+
+            <!-- BALANSE -->
+            <div class="kard-malaki kard-balanse">
+                <div style="font-size: 13px; opacity: 0.8; margin-bottom: 4px;">Kasalukuyang Balanse</div>
+                <div id="kabuuang-balanse" style="font-size: 32px; font-weight: 700;">₱0.00</div>
+                <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 12px; opacity: 0.85;">
+                    <div>Kita Ngayong Araw: <span id="araw-kita">₱0.00</span></div>
+                    <div>Gastos Ngayong Araw: <span id="araw-gastos">₱0.00</span></div>
+                </div>
+            </div>
+
+            <!-- DAGDAG NA PONDO / KITA -->
+            <div class="kard-malaki kard-dagdag">
+                <h3 style="margin:0 0 12px; font-size:15px;">➕ Magtala ng Kita / Pumasok na Pondo</h3>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Halaga (₱)</label>
+                    <input type="number" id="dagdag_halaga" step="0.01" min="0" placeholder="150.00" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                </div>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Pinagmulan</label>
+                    <select id="dagdag_uri" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                        <option value="bayad_biyahe">Bayad sa Biyahe</option>
+                        <option value="deposito">Pondo / Deposito</option>
+                        <option value="ibang_kita">Ibang Kita</option>
+                    </select>
+                </div>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Tala / Sanggunian</label>
+                    <input type="text" id="dagdag_tala" placeholder="Utos #: ____" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                </div>
+                <button onclick="magdagdag()" class="btn" style="background: white; color: #00B42A; font-weight: 600; width: 100%;">✅ Ipasok sa Kita</button>
+            </div>
+
+            <!-- BAWAS / GASTOS -->
+            <div class="kard-malaki kard-bawas">
+                <h3 style="margin:0 0 12px; font-size:15px;">➖ Magtala ng Gastos / Maglabas ng Pondo</h3>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Halaga (₱)</label>
+                    <input type="number" id="bawas_halaga" step="0.01" min="0" placeholder="85.00" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                </div>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Uri ng Gastos</label>
+                    <select id="bawas_uri" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                        <option value="gas">Gasolina</option>
+                        <option value="piyesa">Piyesa / Pagkumpuni</option>
+                        <option value="sweldo">Sweldo / Bayad sa Tulong</option>
+                        <option value="iba_gastos">Ibang Gastos</option>
+                    </select>
+                </div>
+                <div class="input-group" style="margin:0 0 8px 0;">
+                    <label style="font-size:12px; opacity:0.9;">Tala / Paliwanag</label>
+                    <input type="text" id="bawas_tala" placeholder="Hal. Lopez-Calauag" style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                </div>
+                <button onclick="mambawas()" class="btn" style="background: white; color: #F53F3F; font-weight: 600; width: 100%;">📤 Itala ang Gastos</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="transactions.html" class="btn primary-btn" style="width: 100%;">📋 Tingnan ang Buong Talaan ng Galaw →</a>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent='✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent='☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// SWIPE
+let simulaX=0, simulaY=0;
+document.addEventListener('touchstart',e=>{simulaX=e.touches[0].clientX;simulaY=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-simulaX,dy=Math.abs(e.changedTouches[0].clientY-simulaY);if(simulaX<35&&dx>50&&dy<30&&!menu.classList.contains('bukas'))buksanMenu();if(dx<-50&&dy<30&&menu.classList.contains('bukas'))isaraMenu();},{passive:true});
+
+// === SENTRO NG PANANALAPI ===
+document.addEventListener('DOMContentLoaded', IpakitaBalanse);
+
+function IpakitaBalanse() {
+  if (!RIDER_APP.datos.kayamanan) RIDER_APP.datos.kayamanan = [];
+  const lahat = RIDER_APP.datos.kayamanan;
+  let balanse = 0, kitaAraw = 0, gastosAraw = 0;
+  const ngayon = new Date().toLocaleDateString('fil-PH');
+  lahat.forEach(t => {
+    if (t.uri === 'kita') balanse += t.halaga;
+    else balanse -= t.halaga;
+    if (new Date(t.petsa).toLocaleDateString('fil-PH') === ngayon) {
+      if (t.uri === 'kita') kitaAraw += t.halaga;
+      else gastosAraw += t.halaga;
+    }
+  });
+  document.getElementById('kabuuang-balanse').textContent = formatPera(balanse);
+  document.getElementById('araw-kita').textContent = formatPera(kitaAraw);
+  document.getElementById('araw-gastos').textContent = formatPera(gastosAraw);
+}
+
+function formatPera(p) { return '₱' + p.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+function magdagdag() {
+  const hal = parseFloat(document.getElementById('dagdag_halaga').value);
+  if (!hal || hal <= 0) return alert('Ilagay ang tamang halaga.');
+  RIDER_APP.datos.kayamanan.unshift({
+    id: 'K-' + Date.now(),
+    uri: 'kita',
+    halaga: hal,
+    kategorya: document.getElementById('dagdag_uri').value,
+    tala: document.getElementById('dagdag_tala').value.trim() || 'Walang tala',
+    petsa: new Date().toLocaleString('fil-PH')
+  });
+  RIDER_APP.iimbak();
+  document.getElementById('dagdag_halaga').value = '';
+  document.getElementById('dagdag_tala').value = '';
+  IpakitaBalanse();
+  alert('✅ Na-itala na sa Kita!');
+}
+
+function mambawas() {
+  const hal = parseFloat(document.getElementById('bawas_halaga').value);
+  if (!hal || hal <= 0) return alert('Ilagay ang tamang halaga.');
+  RIDER_APP.datos.kayamanan.unshift({
+    id: 'G-' + Date.now(),
+    uri: 'gastos',
+    halaga: hal,
+    kategorya: document.getElementById('bawas_uri').value,
+    tala: document.getElementById('bawas_tala').value.trim() || 'Walang tala',
+    petsa: new Date().toLocaleString('fil-PH')
+  });
+  RIDER_APP.iimbak();
+  document.getElementById('bawas_halaga').value = '';
+  document.getElementById('bawas_tala').value = '';
+  IpakitaBalanse();
+  alert('✅ Na-itala na sa Gastos!');
+}
+</script>
+</body>
+</html>
