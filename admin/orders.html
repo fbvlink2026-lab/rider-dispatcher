@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Mga Utos | Admin — Rider Dispatcher</title>
+    <!-- File: admin/orders.html | Bersyon: 1.1.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .lista { margin-top: 10px; }
+        .bagay { padding: 14px; border-bottom: 1px solid #F2F3F5; display: flex; flex-direction: column; gap: 6px; }
+        .bagay:last-child { border-bottom: none; }
+        .linya-itaas { display: flex; justify-content: space-between; align-items: flex-start; }
+        .detalye { flex: 1; font-size: 14px; }
+        .detalye strong { display: block; font-size: 15px; margin-bottom: 2px; }
+        .katayuan { padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+        .katayuan-hinihintay { background: #FFF7E8; color: #FF7D00; }
+        .katayuan-sinasakyan { background: #E8F0FF; color: #165DFF; }
+        .katayuan-tapos { background: #E8FFEE; color: #00B42A; }
+        .katayuan-kanselado { background: #FFECEC; color: #F53F3F; }
+        .mga-pindutan { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+        .btn-maliit { padding: 6px 10px; font-size: 13px; border-radius: 8px; border: none; cursor: pointer; }
+        .kabuuuan { background: #F9FAFB; padding: 16px; border-radius: 12px; margin: 16px 0; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; max-height: 90vh; overflow-y: auto; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 16px; text-align: center; }
+        .pagsala { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .pagsala select { flex: 1; min-width: 120px; padding: 8px; border-radius: 8px; border: 1px solid #E5E6EB; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">📋 Mga Utos</span>
+            <span></span>
+        </nav>
+
+        <!-- KABUUAN NG KITA -->
+        <div class="kabuuuan">
+            <h3 style="margin:0 0 10px;">💰 Kabuuan Ngayong Araw</h3>
+            <div class="grid-2">
+                <div>
+                    <p style="font-size:13px; color:#4E5969; margin:0;">Bilang ng Utos</p>
+                    <p style="font-size:20px; font-weight:700; margin:2px 0;" id="bilang-utos">0</p>
+                </div>
+                <div>
+                    <p style="font-size:13px; color:#4E5969; margin:0;">Kabuuan ng Kita</p>
+                    <p style="font-size:20px; font-weight:700; margin:2px 0; color:#00B42A;" id="kabuuan-kita">₱0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGSALA -->
+        <section class="form-section">
+            <div class="pagsala">
+                <select id="sala-katayuan">
+                    <option value="">Lahat ng Katayuan</option>
+                    <option value="hinihintay">Hinihintay</option>
+                    <option value="sinasakyan">Sinasakyan</option>
+                    <option value="tapos">Tapos</option>
+                    <option value="kanselado">Kanselado</option>
+                </select>
+                <select id="sala-rider">
+                    <option value="">Lahat ng Rider</option>
+                </select>
+                <select id="sala-ruta">
+                    <option value="">Lahat ng Ruta</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- LISTAHAN NG UTOS -->
+        <section class="form-section">
+            <h3>Listahan ng Lahat ng Utos</h3>
+            <div id="lista-utos" class="lista">
+                <p style="text-align:center; color:#4E5969; padding:20px;">Naglalagay…</p>
+            </div>
+        </section>
+
+        <!-- MAGDAGDAG NG BAGONG UTOS -->
+        <section class="form-section">
+            <h3 id="pamagat-anyo">➕ Magdagdag ng Bagong Utos</h3>
+            
+            <div class="input-group">
+                <label>Mamimili *</label>
+                <select id="u-mamimili">
+                    <option value="">— Pumili ng mamimili —</option>
+                </select>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Ruta *</label>
+                    <select id="u-ruta">
+                        <option value="">— Pumili ng ruta —</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Rider *</label>
+                    <select id="u-rider">
+                        <option value="">— Pumili ng rider —</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Halaga ng Pamasahe (₱)</label>
+                    <input type="number" step="0.01" id="u-halaga" placeholder="0.00">
+                </div>
+                <div class="input-group">
+                    <label>Katayuan</label>
+                    <select id="u-katayuan">
+                        <option value="hinihintay" selected>Hinihintay</option>
+                        <option value="sinasakyan">Sinasakyan</option>
+                        <option value="tapos">Tapos</option>
+                        <option value="kanselado">Kanselado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Petsa at Oras</label>
+                <input type="datetime-local" id="u-petsa">
+            </div>
+            <div class="input-group">
+                <label>Tala / Paalala</label>
+                <textarea id="u-tala" style="width:100%; min-height:60px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;" placeholder="Karagdagang impormasyon…"></textarea>
+            </div>
+
+            <button id="isumbag-btn" class="btn primary-btn btn-full">✅ I-save ang Utos</button>
+        </section>
+
+        <!-- PATONG: PAGBURA -->
+        <div id="patong-bura" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Burahin ang Utos?</h2>
+                <p id="detalye-bura" style="text-align:center; margin-bottom:16px; font-weight:600;"></p>
+                <p style="font-size:14px; color:#4E5969; margin-bottom:20px;">Hindi na mababawi kapag nabura.</p>
+                <button id="kumpirma-bura" class="btn danger-btn btn-full">🗑️ Oo, Burahin</button>
+                <button id="hindi-bura" class="btn secondary-btn btn-full" style="margin-top:8px;">Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idNagbabago = null;
+            let idBuburahin = null;
+
+            // ILAGAY ANG LAHAT NG PAGPIPILIAN
+            function ilagayLahatNgPagpipilian() {
+                // Mamimili
+                const selMamimili = document.getElementById('u-mamimili');
+                selMamimili.innerHTML = '<option value="">— Pumili ng mamimili —</option>';
+                (RIDER_APP.datos.mga_mamimili || []).forEach(m => {
+                    selMamimili.innerHTML += `<option value="${m.id}">${m.pangalan} — ${m.telepono}</option>`;
+                });
+
+                // Ruta
+                const selRuta = document.getElementById('u-ruta');
+                selRuta.innerHTML = '<option value="">— Pumili ng ruta —</option>';
+                (RIDER_APP.datos.mga_ruta || []).forEach(r => {
+                    selRuta.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+
+                // Rider
+                const selRider = document.getElementById('u-rider');
+                selRider.innerHTML = '<option value="">— Pumili ng rider —</option>';
+                (RIDER_APP.datos.mga_rider || []).filter(r => r.katayuan === 'aktibo').forEach(r => {
+                    selRider.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+
+                // Sala — Rider
+                const salaRider = document.getElementById('sala-rider');
+                salaRider.innerHTML = '<option value="">Lahat ng Rider</option>';
+                (RIDER_APP.datos.mga_rider || []).forEach(r => {
+                    salaRider.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+
+                // Sala — Ruta
+                const salaRuta = document.getElementById('sala-ruta');
+                salaRuta.innerHTML = '<option value="">Lahat ng Ruta</option>';
+                (RIDER_APP.datos.mga_ruta || []).forEach(r => {
+                    salaRuta.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+            }
+
+            // KUNIN ANG PANGALAN SA PAMAMAGITAN NG ID
+            function kuninPangalanMamimili(id) {
+                const m = (RIDER_APP.datos.mga_mamimili || []).find(x => x.id === id);
+                return m ? m.pangalan : 'Hindi kilala';
+            }
+            function kuninPangalanRuta(id) {
+                const r = (RIDER_APP.datos.mga_ruta || []).find(x => x.id === id);
+                return r ? r.pangalan : 'Hindi tinukoy';
+            }
+            function kuninPangalanRider(id) {
+                const r = (RIDER_APP.datos.mga_rider || []).find(x => x.id === id);
+                return r ? r.pangalan : 'Hindi tinukoy';
+            }
+
+            // KABUUAN NG KITA
+            function kabuuanNgKita() {
+                const ngayon = new Date().toISOString().substring(0, 10);
+                const mgaUtos = (RIDER_APP.datos.mga_utos || []).filter(u => {
+                    const petsa = u.petsa ? u.petsa.substring(0, 10) : null;
+                    return petsa === ngayon && u.katayuan === 'tapos';
+                });
+                const kabuuan = mgaUtos.reduce((sum, u) => sum + (Number(u.halaga) || 0), 0);
+                document.getElementById('bilang-utos').textContent = mgaUtos.length;
+                document.getElementById('kabuuan-kita').textContent = '₱' + kabuuan.toFixed(2);
+            }
+
+            // ILISTA ANG LAHAT NG UTOS
+            function ilistaUtos() {
+                const lugar = document.getElementById('lista-utos');
+                let lahat = RIDER_APP.datos.mga_utos || [];
+
+                // Maglagay ng pagsala
+                const salaKatayuan = document.getElementById('sala-katayuan').value;
+                const salaRider = document.getElementById('sala-rider').value;
+                const salaRuta = document.getElementById('sala-ruta').value;
+
+                if (salaKatayuan) lahat = lahat.filter(u => u.katayuan === salaKatayuan);
+                if (salaRider) lahat = lahat.filter(u => u.riderId === salaRider);
+                if (salaRuta) lahat = lahat.filter(u => u.rutaId === salaRuta);
+
+                // Ayusin mula sa pinakabago
+                lahat = [...lahat].sort((a, b) => new Date(b.petsa || 0) - new Date(a.petsa || 0));
+
+                if (lahat.length === 0) {
+                    lugar.innerHTML = '<p style="text-align:center; color:#4E5969; padding:20px;">Wala pang naitalang utos.</p>';
+                    kabuuanNgKita();
+                    return;
+                }
+
+                lugar.innerHTML = '';
+                lahat.forEach(u => {
+                    const klaseKatayuan = {
+                        hinihintay: 'katayuan-hinihintay',
+                        sinasakyan: 'katayuan-sinasakyan',
+                        tapos: 'katayuan-tapos',
+                        kanselado: 'katayuan-kanselado'
+                    }[u.katayuan] || '';
+
+                    const pangalanKatayuan = {
+                        hinihintay: 'Hinihintay',
+                        sinasakyan: 'Sinasakyan',
+                        tapos: 'Tapos',
+                        kanselado: 'Kanselado'
+                    }[u.katayuan] || u.katayuan;
+
+                    lugar.innerHTML += `
+                    <div class="bagay" data-id="${u.id}">
+                        <div class="linya-itaas">
+                            <div class="detalye">
+                                <strong>${kuninPangalanMamimili(u.mamimiliId)}</strong>
+                                📍 ${kuninPangalanRuta(u.rutaId)} • 🏍️ ${kuninPangalanRider(u.riderId)}<br>
+                                🕐 ${u.petsa ? u.petsa.replace('T', ' ') : 'Walang petsa'} • 💰 ₱${u.halaga || '0.00'}
+                                ${u.tala ? `<br>📝 ${u.tala}` : ''}
+                            </div>
+                            <span class="katayuan ${klaseKatayuan}">${pangalanKatayuan}</span>
+                        </div>
+                        <div class="mga-pindutan">
+                            ${u.katayuan === 'hinihintay' ? `<button class="btn-maliit secondary-btn simulan-btn" data-id="${u.id}">🚗 Simulan</button>` : ''}
+                            ${u.katayuan === 'sinasakyan' ? `<button class="btn-maliit primary-btn tapusin-btn" data-id="${u.id}">✅ Tapusin</button>` : ''}
+                            ${u.katayuan !== 'tapos' && u.katayuan !== 'kanselado' ? `<button class="btn-maliit kanselado-btn" data-id="${u.id}" style="background:#FFECEC; color:#F53F3F;">❌ Kanselado</button>` : ''}
+                            <button class="btn-maliit secondary-btn baguhin-btn" data-id="${u.id}">✏️ Baguhin</button>
+                            <button class="btn-maliit danger-btn bura-btn" data-id="${u.id}">🗑️ Burahin</button>
+                        </div>
+                    </div>`;
+                });
+
+                ilakipGawainSaPindutan();
+                kabuuanNgKita();
+            }
+
+            function ilakipGawainSaPindutan() {
+                // Simulan
+                document.querySelectorAll('.simulan-btn').forEach(btn => {
+                    btn.addEventListener('click', () => baguhinKatayuan(btn.dataset.id, 'sinasakyan'));
+                });
+                // Tapusin
+                document.querySelectorAll('.tapusin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => baguhinKatayuan(btn.dataset.id, 'tapos'));
+                });
+                // Kanselado
+                document.querySelectorAll('.kanselado-btn').forEach(btn => {
+                    btn.addEventListener('click', () => baguhinKatayuan(btn.dataset.id, 'kanselado'));
+                });
+                // Baguhin
+                document.querySelectorAll('.baguhin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanParaBaguhin(btn.dataset.id));
+                });
+                // Burahin
+                document.querySelectorAll('.bura-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanPatongBura(btn.dataset.id));
+                });
+            }
+
+            // BAGUHIN ANG KATAYUAN NG UTOS
+            function baguhinKatayuan(id, bagongKatayuan) {
+                const idx = RIDER_APP.datos.mga_utos.findIndex(u => u.id === id);
+                if (idx === -1) return;
+                RIDER_APP.datos.mga_utos[idx].katayuan = bagongKatayuan;
+                RIDER_APP.iimbak();
+                ilistaUtos();
+            }
+
+            // BAGUHIN — ILAGAY SA ANYO
+            function buksanParaBaguhin(id) {
+                const utos = RIDER_APP.datos.mga_utos.find(u => u.id === id);
+                if (!utos) return;
+                idNagbabago = id;
+                document.getElementById('pamagat-anyo').textContent = '✏️ Baguhin ang Utos';
+                document.getElementById('u-mamimili').value = utos.mamimiliId || '';
+                document.getElementById('u-ruta').value = utos.rutaId || '';
+                document.getElementById('u-rider').value = utos.riderId || '';
+                document.getElementById('u-halaga').value = utos.halaga || '';
+                document.getElementById('u-katayuan').value = utos.katayuan || 'hinihintay';
+                document.getElementById('u-petsa').value = utos.petsa || '';
+                document.getElementById('u-tala').value = utos.tala || '';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            // BURA — PATONG NG KUMPIRMA
+            function buksanPatongBura(id) {
+                const utos = RIDER_APP.datos.mga_utos.find(u => u.id === id);
+                if (!utos) return;
+                idBuburahin = id;
+                document.getElementById('detalye-bura').textContent = 
+                    `${kuninPangalanMamimili(utos.mamimiliId)} — ${kuninPangalanRuta(utos.rutaId)}`;
+                document.getElementById('patong-bura').classList.remove('nakatago');
+            }
+
+            document.getElementById('hindi-bura').addEventListener('click', () => {
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+            });
+
+            document.getElementById('kumpirma-bura').addEventListener('click', () => {
+                if (!idBuburahin) return;
+                RIDER_APP.datos.mga_utos = RIDER_APP.datos.mga_utos.filter(u => u.id !== idBuburahin);
+                RIDER_APP.iimbak();
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+                ilistaUtos();
+            });
+
+            // ISUMBAG — BAGONG O BINAGONG UTOS
+            document.getElementById('isumbag-btn').addEventListener('click', () => {
+                const mamimiliId = document.getElementById('u-mamimili').value;
+                const rutaId = document.getElementById('u-ruta').value;
+                const riderId = document.getElementById('u-rider').value;
+
+                if (!mamimiliId || !rutaId || !riderId) {
+                    alert('❌ Punan ang lahat ng may *');
+                    return;
+                }
+
+                const bagongDato = {
+                    id: idNagbabago || 'utos_' + Date.now(),
+                    mamimiliId,
+                    rutaId,
+                    riderId,
+                    halaga: Number(document.getElementById('u-halaga').value) || 0,
+                    katayuan: document.getElementById('u-katayuan').value,
+                    petsa: document.getElementById('u-petsa').value || new Date().toISOString().slice(0, 16),
+                    tala: document.getElementById('u-tala').value.trim()
+                };
+
+                if (idNagbabago) {
+                    const idx = RIDER_APP.datos.mga_utos.findIndex(u => u.id === idNagbabago);
+                    RIDER_APP.datos.mga_utos[idx] = bagongDato;
+                    alert('✅ Na-update na ang utos!');
+                } else {
+                    if (!RIDER_APP.datos.mga_utos) RIDER_APP.datos.mga_utos = [];
+                    RIDER_APP.datos.mga_utos.push(bagongDato);
+                    alert('✅ Naisave na ang bagong utos!');
+                }
+
+                linisinAnyo();
+                ilistaUtos();
+            });
+
+            function linisinAnyo() {
+                idNagbabago = null;
+                document.getElementById('pamagat-anyo').textContent = '➕ Magdagdag ng Bagong Utos';
+                document.getElementById('u-mamimili').value = '';
+                document.getElementById('u-ruta').value = '';
+                document.getElementById('u-rider').value = '';
+                document.getElementById('u-halaga').value = '';
+                document.getElementById('u-katayuan').value = 'hinihintay';
+                document.getElementById('u-petsa').value = new Date().toISOString().slice(0, 16);
+                document.getElementById('u-tala').value = '';
+            }
+
+            // PAGSALA
+            ['sala-katayuan', 'sala-rider', 'sala-ruta'].forEach(id => {
+                document.getElementById(id).addEventListener('change', ilistaUtos);
+            });
+
+            // SIMULAN
+            ilagayLahatNgPagpipilian();
+            if (!document.getElementById('u-petsa').value) {
+                document.getElementById('u-petsa').value = new Date().toISOString().slice(0, 16);
+            }
+            ilistaUtos();
+        });
+    </script>
+</body>
+</html>
