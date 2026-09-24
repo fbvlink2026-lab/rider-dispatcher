@@ -2,20 +2,20 @@
 <html lang="tl">
 <head>
     <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏍️ Rider's Dispatcher — Buong Sistema v14.5</title>
     <meta name="author" content="martodosko">
     <meta name="description" content="Ruta → Kuwanenta → Magtalaga → Subaybayan — Lahat sa iisang app">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>    
     <!-- Leaflet CSS para sa Mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- Iyong Estilo -->
-<style>
-/* ==================================================
+    <style>
+    /* ==================================================
    HABAL-HABAL RATE CALCULATOR v11.0 — style.css
    Ginawa ni martodosko | Setyembre 2026
    ================================================== */
@@ -612,8 +612,8 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
         <!-- Fare Input -->
         <div class="card">
             <h3>💵 Ilagay ang Pamasahe</h3>
-            <p>Singil: ₱<input type="number" id="fare" min="0" step="5" placeholder="0.00"></p>
-            <button class="btn-primary" onclick="computeFare()">🧮 Kuwentahin</button>
+            <p>Singil: ₱<input type="number" id="fare-amount" min="0" step="5" placeholder="0.00"></p>
+            <button class="btn-primary" onclick="calculateFare()">🧮 Kuwentahin</button>
         </div>
 
         <!-- Results -->
@@ -621,51 +621,51 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
             <h3>📋 Resulta</h3>
             <div class="result-row">
                 <span>Kabuuang layo:</span>
-                <span id="r-km">0.00</span> km
+                <span id="res-km">0.00</span> km
             </div>
             <div class="result-row">
                 <span>Gasolina nagamit:</span>
-                <span id="r-liter">0.00</span> L
+                <span id="res-liter">0.00</span> L
             </div>
             <div class="result-row">
                 <span>Presyo/Litro:</span>
-                <span>₱<span id="r-gas-price">0.00</span></span>
+                <span>₱<span id="res-gas-price">0.00</span></span>
             </div>
             <div class="result-row">
                 <span>Gastos sa Gasolina:</span>
-                <span>₱<span id="r-cost-gas">0.00</span></span>
+                <span>₱<span id="res-cost-gas">0.00</span></span>
             </div>
             <div class="result-row">
                 <span>Oras ng biyahe:</span>
-                <span id="r-hours">0.00</span> oras
+                <span id="res-hrs">0.00</span> oras
             </div>
             <div class="result-row">
                 <span>Gastos/oras:</span>
-                <span>₱<span id="r-cost-per-hr">0.00</span></span>
+                <span>₱<span id="res-cost-per-hr">0.00</span></span>
             </div>
             <div class="result-row">
                 <span>Gastos sa oras:</span>
-                <span>₱<span id="r-cost-time">0.00</span></span>
+                <span>₱<span id="res-cost-time">0.00</span></span>
             </div>
             <div class="result-row total-row">
                 <strong>KABUUANG GASTOS:</strong>
-                <strong>₱<span id="r-total-cost">0.00</span></strong>
+                <strong>₱<span id="res-total-cost">0.00</span></strong>
             </div>
             <div class="result-row">
                 <span>Singil:</span>
-                <span>₱<span id="r-fare">0.00</span></span>
+                <span>₱<span id="res-fare">0.00</span></span>
             </div>
             <div class="result-row net-row">
                 <strong>KITA:</strong>
-                <strong>₱<span id="r-net">0.00</span></strong>
+                <strong>₱<span id="res-net">0.00</span></strong>
             </div>
             <div class="result-row">
                 <span>Kita/oras:</span>
-                <span>₱<span id="r-net-per-hr">0.00</span>/oras</span>
+                <span>₱<span id="res-per-hour">0.00</span>/oras</span>
             </div>
             <div class="result-row">
                 <span>Gastos/km:</span>
-                <span>₱<span id="r-per-km">0.00</span>/km</span>
+                <span>₱<span id="res-per-km">0.00</span>/km</span>
             </div>
 
             <div class="suggested-box">
@@ -675,7 +675,8 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
             </div>
 
             <div class="btn-row" style="margin-top:15px;">
-                <button class="btn-primary" onclick="saveLastTrip()">✅ Itala ang Biyahe</button>
+                <button class="btn-primary" onclick="saveAndRecord()">✅ Itala ang Biyahe</button>
+                <button class="btn-secondary" onclick="shareLastResult()">📤 Ibahagi</button>
                 <button class="btn-secondary" onclick="resetCalc()">🔄 I-reset</button>
             </div>
         </div>
@@ -791,8 +792,6 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
     </div>
 </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <!-- Iyong JavaScript -->
 <script>
