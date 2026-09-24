@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📢 Promosyon at Alok | Admin — Rider Dispatcher</title>
+    <!-- File: admin/promotion.html | Bersyon: 1.3.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .lista { margin-top: 10px; }
+        .bagay { padding: 14px; border-bottom: 1px solid #F2F3F5; }
+        .bagay:last-child { border-bottom: none; }
+        .aktibo { border-left: 3px solid #00B42A; background: #E8FFEE; padding-left: 10px; }
+        .hindi-aktibo { border-left: 3px solid #86909C; background: #F2F3F5; padding-left: 10px; }
+        .magtatapos { border-left: 3px solid #FF7D00; background: #FFF7E8; padding-left: 10px; }
+        .kodigo { font-family: monospace; font-size: 15px; background: #F0F5FF; color: #165DFF; padding: 4px 10px; border-radius: 6px; font-weight: 600; display: inline-block; margin: 4px 0; }
+        .porsyento { font-size: 18px; font-weight: 700; color: #F53F3F; }
+        .mga-pindutan { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+        .btn-maliit { padding: 6px 10px; font-size: 13px; border-radius: 8px; border: none; cursor: pointer; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; max-height: 90vh; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">📢 Promosyon at Alok</span>
+            <span></span>
+        </nav>
+
+        <!-- LISTAHAN NG PROMOSYON -->
+        <section class="form-section">
+            <h3>Listahan ng Lahat ng Promosyon</h3>
+            <div id="lista-promosyon" class="lista">
+                <p style="text-align:center; color:#4E5969; padding:20px;">Naglalagay…</p>
+            </div>
+        </section>
+
+        <!-- MAGDAGDAG / BAGUHIN -->
+        <section class="form-section">
+            <h3 id="pamagat-anyo">➕ Magdagdag ng Bagong Promosyon</h3>
+            
+            <div class="input-group">
+                <label>Pangalan ng Alok *</label>
+                <input type="text" id="pangalan" placeholder="Hal. Bagong Mamimili — 10% Bawas">
+            </div>
+            <div class="input-group">
+                <label>Kodigo na Ipapasa</label>
+                <input type="text" id="kodigo" placeholder="Hal. BAGONG10 — walang puwang">
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Uri ng Bawas</label>
+                    <select id="uri_bawas">
+                        <option value="porsyento">Porsyento (%)</option>
+                        <option value="halaga">Tiyak na Halaga (₱)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Halaga ng Bawas</label>
+                    <input type="number" id="halaga_bawas" min="1" step="1">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Para sa Tiyak na Ruta</label>
+                <select id="para_ruta">
+                    <option value="">— Lahat ng Ruta —</option>
+                </select>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Petsa ng Pagsisimula</label>
+                    <input type="date" id="simula">
+                </div>
+                <div class="input-group">
+                    <label>Petsa ng Pagtatapos</label>
+                    <input type="date" id="tatapos">
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Pinakamababang Halaga ng Pamasahe (₱)</label>
+                    <input type="number" id="pinakamababa" min="0" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Bilang ng Pagkakagamit sa Bawat Tao</label>
+                    <input type="number" id="bawat_tao" min="0" value="0" placeholder="0 = Walang Hangganan">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Katayuan</label>
+                <select id="katayuan">
+                    <option value="aktibo" selected>✅ Aktibo</option>
+                    <option value="hindi_aktibo">⏸️ Hindi Aktibo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Tala / Paglalarawan</label>
+                <textarea id="tala" style="width:100%; min-height:60px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;" placeholder="Karagdagang paliwanag…"></textarea>
+            </div>
+
+            <button id="isumbag-btn" class="btn primary-btn btn-full">✅ I-save ang Promosyon</button>
+        </section>
+
+        <!-- PATONG: PAGBURA -->
+        <div id="patong-bura" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Burahin ang Promosyon?</h2>
+                <p id="detalye-bura" style="text-align:center; margin-bottom:16px; font-weight:600;"></p>
+                <p style="font-size:14px; color:#4E5969; margin-bottom:20px;">Hindi na mababawi kapag nabura.</p>
+                <button id="kumpirma-bura" class="btn danger-btn btn-full">🗑️ Oo, Burahin</button>
+                <button id="hindi-bura" class="btn secondary-btn btn-full" style="margin-top:8px;">❌ Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idNagbabago = null;
+            let idBuburahin = null;
+
+            // Ilagay ang mga ruta
+            function ilagayMgaRuta() {
+                const lugar = document.getElementById('para_ruta');
+                lugar.innerHTML = '<option value="">— Lahat ng Ruta —</option>';
+                (RIDER_APP.datos.mga_ruta || []).forEach(r => {
+                    lugar.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+            }
+
+            // Kunin ang katayuan ngayon
+            function kuninKalagayan(prom) {
+                const ngayon = new Date();
+                const simula = prom.simula ? new Date(prom.simula) : null;
+                const tatapos = prom.tatapos ? new Date(prom.tatapos) : null;
+
+                if (prom.katayuan !== 'aktibo') return 'hindi-aktibo';
+                if (simula && ngayon < simula) return 'hindi-aktibo';
+                if (tatapos && ngayon > tatapos) return 'magtatapos';
+                return 'aktibo';
+            }
+
+            // Ipakita ang listahan
+            function ilistaPromosyon() {
+                const lugar = document.getElementById('lista-promosyon');
+                if (!RIDER_APP.datos.mga_promosyon) RIDER_APP.datos.mga_promosyon = [];
+                const lahat = RIDER_APP.datos.mga_promosyon;
+
+                if (lahat.length === 0) {
+                    lugar.innerHTML = '<p style="text-align:center; color:#86909C; padding:20px;">Wala pang promosyon.</p>';
+                    return;
+                }
+
+                lugar.innerHTML = '';
+                lahat.sort((a, b) => new Date(b.simula || 0) - new Date(a.simula || 0)).forEach(p => {
+                    const klase = kuninKalagayan(p);
+                    const uriTeksto = p.uri_bawas === 'porsyento' ? `${p.halaga_bawas}% Bawas` : `₱${p.halaga_bawas}.00 Bawas`;
+                    const rutaPangalan = p.para_ruta ? 
+                        ((RIDER_APP.datos.mga_ruta || []).find(r => r.id === p.para_ruta)?.pangalan || 'Tiyak na ruta') 
+                        : 'Lahat ng ruta';
+                    
+                    lugar.innerHTML += `
+                    <div class="bagay ${klase}" data-id="${p.id}">
+                        <strong>${p.pangalan}</strong>
+                        <div class="kodigo">${p.kodigo || 'Walang kodigo'}</div>
+                        <span class="porsyento">${uriTeksto}</span><br>
+                        📍 ${rutaPangalan}<br>
+                        📅 ${p.simula || 'Agad'} — ${p.tatapos || 'Walang hangganan'}<br>
+                        ${p.pinakamababa ? `Pinakamababa: ₱${p.pinakamababa}.00` : ''}
+                        <div class="mga-pindutan">
+                            <button class="btn-maliit secondary-btn baguhin-btn" data-id="${p.id}">✏️ Baguhin</button>
+                            <button class="btn-maliit danger-btn bura-btn" data-id="${p.id}">🗑️ Burahin</button>
+                        </div>
+                    </div>`;
+                });
+
+                ilakipGawainSaPindutan();
+            }
+
+            function ilakipGawainSaPindutan() {
+                document.querySelectorAll('.baguhin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanParaBaguhin(btn.dataset.id));
+                });
+                document.querySelectorAll('.bura-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanPatongBura(btn.dataset.id));
+                });
+            }
+
+            function buksanParaBaguhin(id) {
+                const prom = RIDER_APP.datos.mga_promosyon.find(p => p.id === id);
+                if (!prom) return;
+                idNagbabago = id;
+                document.getElementById('pamagat-anyo').textContent = '✏️ Baguhin ang Promosyon';
+                document.getElementById('pangalan').value = prom.pangalan || '';
+                document.getElementById('kodigo').value = prom.kodigo || '';
+                document.getElementById('uri_bawas').value = prom.uri_bawas || 'porsyento';
+                document.getElementById('halaga_bawas').value = prom.halaga_bawas || '';
+                document.getElementById('para_ruta').value = prom.para_ruta || '';
+                document.getElementById('simula').value = prom.simula || '';
+                document.getElementById('tatapos').value = prom.tatapos || '';
+                document.getElementById('pinakamababa').value = prom.pinakamababa || 0;
+                document.getElementById('bawat_tao').value = prom.bawat_tao || 0;
+                document.getElementById('katayuan').value = prom.katayuan || 'aktibo';
+                document.getElementById('tala').value = prom.tala || '';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            function buksanPatongBura(id) {
+                const prom = RIDER_APP.datos.mga_promosyon.find(p => p.id === id);
+                if (!prom) return;
+                idBuburahin = id;
+                document.getElementById('detalye-bura').textContent = prom.pangalan;
+                document.getElementById('patong-bura').classList.remove('nakatago');
+            }
+
+            document.getElementById('hindi-bura').addEventListener('click', () => {
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+            });
+
+            document.getElementById('kumpirma-bura').addEventListener('click', () => {
+                if (!idBuburahin) return;
+                RIDER_APP.datos.mga_promosyon = RIDER_APP.datos.mga_promosyon.filter(p => p.id !== idBuburahin);
+                RIDER_APP.iimbak();
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+                ilistaPromosyon();
+            });
+
+            // Isumite
+            document.getElementById('isumbag-btn').addEventListener('click', () => {
+                const pangalan = document.getElementById('pangalan').value.trim();
+                const halagaBawas = Number(document.getElementById('halaga_bawas').value);
+                
+                if (!pangalan || !halagaBawas) {
+                    alert('❌ Punan ang pangalan at halaga ng bawas');
+                    return;
+                }
+
+                const bagongDato = {
+                    id: idNagbabago || 'promo_' + Date.now(),
+                    pangalan,
+                    kodigo: document.getElementById('kodigo').value.trim().toUpperCase(),
+                    uri_bawas: document.getElementById('uri_bawas').value,
+                    halaga_bawas: halagaBawas,
+                    para_ruta: document.getElementById('para_ruta').value,
+                    simula: document.getElementById('simula').value,
+                    tatapos: document.getElementById('tatapos').value,
+                    pinakamababa: Number(document.getElementById('pinakamababa').value) || 0,
+                    bawat_tao: Number(document.getElementById('bawat_tao').value) || 0,
+                    katayuan: document.getElementById('katayuan').value,
+                    tala: document.getElementById('tala').value.trim()
+                };
+
+                if (idNagbabago) {
+                    const idx = RIDER_APP.datos.mga_promosyon.findIndex(p => p.id === idNagbabago);
+                    RIDER_APP.datos.mga_promosyon[idx] = bagongDato;
+                    alert('✅ Na-update na ang promosyon!');
+                } else {
+                    if (!RIDER_APP.datos.mga_promosyon) RIDER_APP.datos.mga_promosyon = [];
+                    RIDER_APP.datos.mga_promosyon.push(bagongDato);
+                    alert('✅ Naisave na ang bagong promosyon!');
+                }
+
+                RIDER_APP.iimbak();
+                linisinAnyo();
+                ilistaPromosyon();
+            });
+
+            function linisinAnyo() {
+                idNagbabago = null;
+                document.getElementById('pamagat-anyo').textContent = '➕ Magdagdag ng Bagong Promosyon';
+                ['pangalan','kodigo','halaga_bawas','simula','tatapos','tala'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                document.getElementById('uri_bawas').value = 'porsyento';
+                document.getElementById('para_ruta').value = '';
+                document.getElementById('pinakamababa').value = 0;
+                document.getElementById('bawat_tao').value = 0;
+                document.getElementById('katayuan').value = 'aktibo';
+            }
+
+            ilagayMgaRuta();
+            ilistaPromosyon();
+        });
+    </script>
+</body>
+</html>
