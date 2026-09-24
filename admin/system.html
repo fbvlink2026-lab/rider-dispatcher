@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Sistema at Pagpapahusay | Admin — Rider Dispatcher</title>
+    <!-- File: admin/system.html | Bersyon: 1.3.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .impormasyon-kahon { background: #F9FAFB; padding: 14px; border-radius: 10px; margin: 8px 0; }
+        .impormasyon-kahon.maingat { background: #FFF7E8; border-left: 3px solid #FF7D00; }
+        .impormasyon-kahon.panganib { background: #FFECEC; border-left: 3px solid #F53F3F; }
+        .talahanayan { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+        .talahanayan th, .talahanayan td { padding: 8px; text-align: left; border-bottom: 1px solid #F2F3F5; }
+        .talahanayan th { background: #F9FAFB; font-weight: 600; }
+        .katayuan-tapos { color: #00B42A; font-weight: 600; }
+        .katayuan-hinihintay { color: #FF7D00; font-weight: 600; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; max-height: 90vh; overflow-y: auto; }
+        .teksto-malaki { font-size: 22px; font-weight: 700; text-align: center; margin: 10px 0; }
+        .teksto-pula { color: #F53F3F; }
+        .teksto-berde { color: #00B42A; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">⚙️ Sistema at Pagpapahusay</span>
+            <span></span>
+        </nav>
+
+        <!-- IMPORMASYON NG SISTEMA -->
+        <section class="form-section">
+            <h3>ℹ️ Impormasyon ng Sistema</h3>
+            <div class="impormasyon-kahon">
+                <p style="margin:4px 0;"><strong>Pangalan:</strong> Rider Dispatcher</p>
+                <p style="margin:4px 0;"><strong>Bersyon:</strong> <span id="bersyon-sistema">1.3.0</span></p>
+                <p style="margin:4px 0;"><strong>Nag-develop:</strong> martodosko</p>
+                <p style="margin:4px 0;"><strong>Huling Pagbabago:</strong> 2026-09-24</p>
+                <p style="margin:4px 0;"><strong>Uri ng Imbakan:</strong> Lokal sa telepono</p>
+                <p style="margin:4px 0;"><strong>Kabuuang Sukat:</strong> <span id="sukat-imbakan">—</span></p>
+            </div>
+        </section>
+
+        <!-- PAGBABAGO SA MGA PAHINA / PINAGKUKUNAN -->
+        <section class="form-section">
+            <h3>📄 Pagbabago sa Pinagkukunan ng Pahina</h3>
+            <p style="font-size:13px; color:#4E5969; margin-bottom:10px;">
+                Dito maaaring baguhin ang teksto, pangalan, at nilalaman ng mga pahina.
+            </p>
+            <div class="input-group">
+                <label>Pahina</label>
+                <select id="pili-pahina">
+                    <option value="pamagat">Pangalan ng Sistema / Pamagat</option>
+                    <option value="paunawa">Paunawa sa Panimulang Pahina</option>
+                    <option value="tungkol">Tungkol sa Pahina</option>
+                    <option value="suporta">Impormasyon ng Suporta</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Bagong Nilalaman</label>
+                <textarea id="nilalaman-pahina" style="width:100%; min-height:120px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;"></textarea>
+            </div>
+            <button id="isave-pahina" class="btn primary-btn btn-full">💾 I-save ang Pagbabago</button>
+        </section>
+
+        <!-- TALAAN NG PAGPAPAHUSAY -->
+        <section class="form-section">
+            <h3>🚀 Plano at Talaan ng Pagpapahusay</h3>
+            <table class="talahanayan">
+                <thead>
+                    <tr>
+                        <th>Nilalaman</th>
+                        <th>Katayuan</th>
+                        <th>Petsa</th>
+                    </tr>
+                </thead>
+                <tbody id="katawan-pagpapahusay">
+                    <tr><td colspan="3" style="text-align:center; color:#86909C;">Naglalagay…</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- MAGDAGDAG NG PAGPAPAHUSAY -->
+        <section class="form-section">
+            <h3>➕ Magdagdag ng Plano / Pagbabago</h3>
+            <div class="input-group">
+                <label>Pamagat ng Pagpapahusay</label>
+                <input type="text" id="pamagat-pagpapahusay" placeholder="Hal. Pagkonekta sa mapa">
+            </div>
+            <div class="input-group">
+                <label>Detalye</label>
+                <textarea id="detalye-pagpapahusay" style="width:100%; min-height:80px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;" placeholder="Ilarawan ang gagawin…"></textarea>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Katayuan</label>
+                    <select id="katayuan-pagpapahusay">
+                        <option value="hinihintay">⏳ Hinihintay</option>
+                        <option value="ginagawa">🔧 Ginagawa</option>
+                        <option value="tapos">✅ Tapos na</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Inaasahang Petsa</label>
+                    <input type="date" id="petsa-pagpapahusay">
+                </div>
+            </div>
+            <button id="isave-pagpapahusay" class="btn primary-btn btn-full">✅ Itala</button>
+        </section>
+
+        <!-- PAMAMAHALA SA DATOS -->
+        <section class="form-section">
+            <h3>🗄️ Pamamahala sa Datos</h3>
+            
+            <div class="impormasyon-kahon maingat">
+                <strong>⚠️ Mag-ingat</strong><br>
+                Ang mga sumusunod na kilos ay maaaring magbago o magbura ng impormasyon.
+            </div>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin:12px 0;">
+                <button id="i-export" class="btn" style="flex:1; min-width:14px; background:#E8FFEE; color:#00B42A; border:none;">📤 I-export ang Lahat</button>
+                <button id="i-reset-lahat" class="btn danger-btn" style="flex:1; min-width:14px;">🗑️ Linisin ang Lahat</button>
+            </div>
+        </section>
+
+        <!-- PATONG: KUMPIRMASYON -->
+        <div id="patong-kumpirma" class="patong nakatago">
+            <div class="patong-loob">
+                <h2 id="pamagat-patong"></h2>
+                <p id="nilalaman-patong" class="teksto-malaki"></p>
+                <p id="babala-patong" style="font-size:13px; color:#4E5969; margin-bottom:16px;"></p>
+                <button id="tanggapin-patong" class="btn danger-btn btn-full">✅ Oo, Ituloy</button>
+                <button id="hindi-patong" class="btn secondary-btn btn-full" style="margin-top:8px;">❌ Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sukat ng imbakan
+            function sukatImbakan() {
+                const lahat = JSON.stringify(localStorage);
+                const KB = (lahat.length / 1024).toFixed(2);
+                document.getElementById('sukat-imbakan').textContent = KB + ' KB';
+            }
+
+            // Pahina / Nilalaman
+            function ilagayNilalamanPahina() {
+                const pili = document.getElementById('pili-pahina').value;
+                const nilalaman = RIDER_APP.datos.mga_pahina?.[pili] || nilalamanUmiiral[pili] || '';
+                document.getElementById('nilalaman-pahina').value = nilalaman;
+            }
+
+            const nilalamanUmiiral = {
+                pamagat: 'Rider Dispatcher',
+                paunawa: 'Maligayang pagdating sa sistema ng pamamahala ng biyahe. Dito matatagpuan ang lahat ng talaan ng ruta, rider, mamimili, at kita.',
+                tungkol: 'Sistema: Rider Dispatcher\nBersyon: 1.3.0\nNag-develop: martodosko\nLayunin: Pagpapadali at pagtatala ng biyahe at kita.',
+                supor ta: 'Kung may katanungan o problema, makipag-ugnayan sa:\nEmail: —\nTelepono: —\nO sa pamamagitan ng pahinang Serbisyo at Suporta.'
+            };
+
+            document.getElementById('pili-pahina').addEventListener('change', ilagayNilalamanPahina);
+            document.getElementById('isave-pahina').addEventListener('click', () => {
+                const pili = document.getElementById('pili-pahina').value;
+                const nilalaman = document.getElementById('nilalaman-pahina').value;
+                if (!RIDER_APP.datos.mga_pahina) RIDER_APP.datos.mga_pahina = {};
+                RIDER_APP.datos.mga_pahina[pili] = nilalaman;
+                RIDER_APP.iimbak();
+                alert('✅ Nai-save na ang pagbabago sa pahina!');
+            });
+
+            // Talaan ng pagpapahusay
+            function ilagayTalahanayan() {
+                if (!RIDER_APP.datos.mga_pagpapahusay) {
+                    RIDER_APP.datos.mga_pagpapahusay = [
+                        { id: 'pp1', pamagat: 'Pagtakda ng mga ruta', detalye: 'Paglalagay ng mga distansya at presyo sa Quezon', katayuan: 'tapos', petsa: '2026-09-21' },
+                        { id: 'pp2', pamagat: 'Pagsubaybay sa utos at kita', detalye: 'Pagtatala ng katayuan at kabuuan ng araw', katayuan: 'tapos', petsa: '2026-09-21' },
+                        { id: 'pp3', pamagat: 'Pagkonekta sa mapa', detalye: 'Awtomatikong pagkuha ng kilometro mula sa internet', katayuan: 'hinihintay', petsa: '' },
+                        { id: 'pp4', pamagat: 'Pahina para sa rider', detalye: 'Pagtingin sa sariling utos at kita', katayuan: 'hinihintay', petsa: '' }
+                    ];
+                }
+                const katawan = document.getElementById('katawan-pagpapahusay');
+                katawan.innerHTML = '';
+                RIDER_APP.datos.mga_pagpapahusay.forEach(p => {
+                    const klase = p.katayuan === 'tapos' ? 'katayuan-tapos' : 'katayuan-hinihintay';
+                    const teksto = { hinihintay: 'Hinihintay', ginagawa: 'Ginagawa', tapos: 'Tapos' }[p.katayuan];
+                    katawan.innerHTML += `
+                    <tr>
+                        <td><strong>${p.pamagat}</strong><br><small style="color:#86909C;">${p.detalye}</small></td>
+                        <td class="${klase}">${teksto}</td>
+                        <td>${p.petsa || '—'}</td>
+                    </tr>`;
+                });
+            }
+
+            // Magdagdag ng pagpapahusay
+            document.getElementById('isave-pagpapahusay').addEventListener('click', () => {
+                const pamagat = document.getElementById('pamagat-pagpapahusay').value.trim();
+                if (!pamagat) { alert('❌ Ipasok ang pamagat'); return; }
+                RIDER_APP.datos.mga_pagpapahusay.push({
+                    id: 'pp_' + Date.now(),
+                    pamagat,
+                    detalye: document.getElementById('detalye-pagpapahusay').value.trim(),
+                    katayuan: document.getElementById('katayuan-pagpapahusay').value,
+                    petsa: document.getElementById('petsa-pagpapahusay').value || ''
+                });
+                RIDER_APP.iimbak();
+                alert('✅ Naitala na!');
+                document.getElementById('pamagat-pagpapahusay').value = '';
+                document.getElementById('detalye-pagpapahusay').value = '';
+                document.getElementById('petsa-pagpapahusay').value = '';
+                ilagayTalahanayan();
+            });
+
+            // I-export
+            document.getElementById('i-export').addEventListener('click', () => {
+                const kopya = JSON.stringify(RIDER_APP.datos, null, 2);
+                const blb = new Blob([kopya], { type: 'application/json' });
+                const url = URL.createObjectURL(blb);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'rider_dispatcher_backup_' + new Date().toISOString().slice(0,10) + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                alert('✅ Na-download na ang kopya!');
+            });
+
+            // Linisin ang lahat
+            document.getElementById('i-reset-lahat').addEventListener('click', () => {
+                buksanPatong('⚠️ BURAHIN ANG LAHAT?', 'Hindi na mababawi kapag natapos.', 'Ito ay magbabalik sa orihinal na kalagayan ng sistema.');
+            });
+
+            function buksanPatong(pamagat, nilalaman, babala) {
+                document.getElementById('pamagat-patong').textContent = pamagat;
+                document.getElementById('nilalaman-patong').textContent = nilalaman;
+                document.getElementById('babala-patong').textContent = babala;
+                document.getElementById('patong-kumpirma').classList.remove('nakatago');
+            }
+
+            document.getElementById('hindi-patong').addEventListener('click', () => {
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+            });
+
+            document.getElementById('tanggapin-patong').addEventListener('click', () => {
+                localStorage.removeItem('rider_dispatcher_data');
+                RIDER_APP.ibalik();
+                alert('✅ Nilinisan na ang sistema!');
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+                ilagayTalahanayan();
+                sukatImbakan();
+            });
+
+            ilagayNilalamanPahina();
+            ilagayTalahanayan();
+            sukatImbakan();
+        });
+    </script>
+</body>
+</html>
