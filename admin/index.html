@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Admin — Pangunahin | Rider Dispatcher</title>
+    <!-- File: admin/index.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .menu-kard { background: #fff; border-radius: 12px; padding: 20px; text-align: center; text-decoration: none; color: inherit; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .menu-kard:active { transform: scale(0.97); }
+        .menu-icon { font-size: 32px; margin-bottom: 8px; }
+        .menu-pangalan { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+        .menu-desc { font-size: 12px; color: #4E5969; }
+        @media (max-width: 360px) { .grid-menu { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">⚙️ Panel ng Tagapamahala</span>
+            <span></span>
+        </nav>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <span style="font-size: 40px;">🔧</span>
+            <h1 style="font-size: 20px; margin: 8px 0 4px;">Pamamahala ng Sistema</h1>
+            <p style="color: #4E5969; font-size: 14px;">Pumili ng bahaging nais mong pamahalaan</p>
+        </div>
+
+        <div class="grid-menu">
+            <a href="routes.html" class="menu-kard">
+                <div class="menu-icon">📍</div>
+                <div class="menu-pangalan">Mga Ruta</div>
+                <div class="menu-desc">Ilista, dagdagan, baguhin, burahin</div>
+            </a>
+
+            <a href="settings.html" class="menu-kard">
+                <div class="menu-icon">⚙️</div>
+                <div class="menu-pangalan">Pagtatakda</div>
+                <div class="menu-desc">Presyo ng gas, piyesa, kodigo</div>
+            </a>
+
+            <a href="backup.html" class="menu-kard">
+                <div class="menu-icon">💾</div>
+                <div class="menu-pangalan">Pag-Imbak</div>
+                <div class="menu-desc">I-export, i-import, kopyahin</div>
+            </a>
+
+            <a href="about.html" class="menu-kard">
+                <div class="menu-icon">ℹ️</div>
+                <div class="menu-pangalan">Tungkol</div>
+                <div class="menu-desc">Bersyon, gabay, may-akda</div>
+            </a>
+        </div>
+
+        <div style="margin-top: 24px; text-align: center;">
+            <a href="../help.html" target="_blank" class="btn secondary-btn">📖 Buksan ang Buong Gabay</a>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+</body>
+</html>
