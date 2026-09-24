@@ -1,0 +1,239 @@
+<!-- ==================================================
+   FILE        : index.html
+   BERSYON     : 1.1.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/index.html
+   LAYUNIN     : Tahanan — Pangunahing Pahina ng Sistema
+   KONEKSYON   : js/languages.js | css/styles.css
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Dispatcher — Pamasahe at Pagpapabiyahe</title>
+    <meta name="description" content="Sistema ng pagpapabiyahe at pagkalkula ng pamasahe — Lopez, Calauag, at buong Quezon">
+    <meta name="author" content="martodosko">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <script src="js/languages.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --p: #165DFF; --p-dark: #0E42D2; --p-light: #E8F3FF;
+            --s: #00B42A; --s-dark: #009A29; --s-light: #F0FFF4;
+            --babala: #FF7D00; --pula: #F53F3F;
+            --teksto: #1D2129; --teksto-pag: #4E5969; --hangganan: #E5E6EB;
+            --puti: #FFFFFF; --kulay-likod: #F7F8FA;
+        }
+        body { background: var(--kulay-likod); color: var(--teksto); min-height: 100vh; }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: white;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.1); transform: translateX(-100%);
+            transition: transform 0.3s ease; z-index: 1000; overflow-y: auto;
+        }
+        .side-menu.bukas { transform: translateX(0); }
+        .menu-ulo {
+            background: linear-gradient(135deg, var(--p) 0%, var(--p-dark) 100%);
+            color: white; padding: 24px 16px;
+        }
+        .menu-ulo h2 { font-size: 18px; margin-bottom: 4px; }
+        .menu-ulo p { opacity: 0.85; font-size: 13px; }
+        .menu-talaan { padding: 16px 0; }
+        .menu-link {
+            display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+            color: var(--teksto); text-decoration: none; transition: 0.2s;
+        }
+        .menu-link:hover { background: var(--p-light); color: var(--p); }
+        .menu-link.aktibo { background: var(--p-light); color: var(--p); font-weight: 600; border-right: 3px solid var(--p); }
+        .menu-ikon { font-size: 18px; }
+        .menu-ibaba { padding: 20px; font-size: 12px; color: var(--teksto-pag); text-align: center; border-top: 1px solid var(--hangganan); margin-top: 20px; }
+        .tabing {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: none;
+        }
+        .tabing.nakita { display: block; }
+
+        /* Pangunahing Bahagi */
+        .pangunahing-larawan { min-height: 100vh; }
+        .itaas-na-bar {
+            background: white; padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .pindutan-menu {
+            background: none; border: none; font-size: 22px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+        }
+        .pindutan-menu:hover { background: var(--kulay-likod); }
+        .pangalan-pahina { font-weight: 600; font-size: 15px; }
+
+        .app-container { padding: 20px; max-width: 500px; margin: 0 auto; }
+
+        /* Mga Kahon */
+        .tulag-ulo {
+            background: linear-gradient(135deg, var(--p) 0%, var(--p-dark) 100%);
+            color: white; padding: 24px 20px; border-radius: 16px; margin-bottom: 24px;
+        }
+        .tulag-ulo h1 { font-size: 22px; margin-bottom: 6px; }
+        .tulag-ulo p { opacity: 0.9; font-size: 14px; line-height: 1.5; }
+
+        .grid-pili { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+        .kard-pili {
+            background: white; border-radius: 12px; padding: 20px 16px; text-align: center;
+            text-decoration: none; color: inherit; border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .kard-pili:hover { border-color: var(--p); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(22,93,255,0.15); }
+        .kard-ikon { font-size: 32px; margin-bottom: 8px; }
+        .kard-pangalan { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+        .kard-paliwanag { font-size: 12px; color: var(--teksto-pag); }
+
+        .kahon-impormasyon {
+            background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px;
+        }
+        .kahon-impormasyon h3 { font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .listahan-maikli { list-style: none; }
+        .listahan-maikli li { padding: 8px 0; border-bottom: 1px solid var(--hangganan); font-size: 14px; }
+        .listahan-maikli li:last-child { border-bottom: none; }
+
+        .btn {
+            border: none; border-radius: 10px; padding: 12px 20px; font-size: 15px; font-weight: 600;
+            cursor: pointer; width: 100%; transition: 0.2s;
+        }
+        .primary-btn { background: var(--p); color: white; }
+        .primary-btn:hover { background: var(--p-dark); }
+        .secondary-btn { background: var(--kulay-likod); color: var(--teksto); }
+        .secondary-btn:hover { background: #E8E9EB; }
+    </style>
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo">
+        <h2>🏍️ Rider Dispatcher</h2>
+        <p>Pamasahe at Pagpapabiyahe</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="index.html" class="menu-link aktibo">
+            <span class="menu-ikon">🏠</span>
+            <span data-wika="tahanan">Tahanan</span>
+        </a>
+        <a href="customer/booking.html" class="menu-link">
+            <span class="menu-ikon">🚕</span>
+            <span data-wika="magpabiyahe">Magpa-Biyahe</span>
+        </a>
+        <a href="customer/my-orders.html" class="menu-link">
+            <span class="menu-ikon">📋</span>
+            <span data-wika="aking_utos">Aking mga Utos</span>
+        </a>
+        <a href="customer/voice-booking.html" class="menu-link">
+            <span class="menu-ikon">🎤</span>
+            <span data-wika="utos_sa_boses">Utos sa Boses</span>
+        </a>
+        <a href="customer/promo.html" class="menu-link">
+            <span class="menu-ikon">🎁</span>
+            <span data-wika="promo">Promosyon</span>
+        </a>
+        <a href="customer/support.html" class="menu-link">
+            <span class="menu-ikon">❓</span>
+            <span data-wika="tulong">Tulong at Suporta</span>
+        </a>
+        <a href="faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            FAQ / Gabay
+        </a>
+        <a href="about.html" class="menu-link">
+            <span class="menu-ikon">ℹ️</span>
+            Tungkol sa Amin
+        </a>
+        <a href="admin/" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔐</span>
+            Admin Panel
+        </a>
+    </nav>
+    <div class="menu-ibaba">martodosko © 2026</div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar">
+        <button class="pindutan-menu" id="btnMenu">☰</button>
+        <span class="pangalan-pahina">🏠 Tahanan</span>
+    </div>
+
+    <div class="app-container">
+        <div class="tulag-ulo">
+            <h1>👋 Maligayang Pagdating!</h1>
+            <p>Sistema ng pagpapabiyahe at pagkalkula ng pamasahe — Lopez, Calauag, at buong Quezon.</p>
+        </div>
+
+        <div class="grid-pili">
+            <a href="customer/booking.html" class="kard-pili">
+                <div class="kard-ikon">🚕</div>
+                <div class="kard-pangalan" data-wika="magpabiyahe">Magpa-Biyahe</div>
+                <div class="kard-paliwanag">Pumili ng ruta</div>
+            </a>
+            <a href="customer/my-orders.html" class="kard-pili">
+                <div class="kard-ikon">📋</div>
+                <div class="kard-pangalan" data-wika="aking_utos">Aking Utos</div>
+                <div class="kard-paliwanag">Tingnan ang katayuan</div>
+            </a>
+            <a href="customer/voice-booking.html" class="kard-pili">
+                <div class="kard-ikon">🎤</div>
+                <div class="kard-pangalan" data-wika="utos_sa_boses">Boses</div>
+                <div class="kard-paliwanag">Mag-utos sa pagsasalita</div>
+            </a>
+            <a href="customer/promo.html" class="kard-pili">
+                <div class="kard-ikon">🎁</div>
+                <div class="kard-pangalan" data-wika="promo">Promosyon</div>
+                <div class="kard-paliwanag">Bawas sa pamasahe</div>
+            </a>
+        </div>
+
+        <div class="kahon-impormasyon">
+            <h3>📍 Mga Madalas na Ruta</h3>
+            <ul class="listahan-maikli">
+                <li><strong>Lopez → Calauag</strong> — ~22 km — ₱150 (2-way)</li>
+                <li><strong>Calauag Bayan → Sumilang</strong> — ~3.2 km — ₱50</li>
+                <li><strong>Lopez → Gumaca</strong> — ~18 km — Tawagan para sa presyo</li>
+            </ul>
+        </div>
+
+        <div class="kahon-impormasyon">
+            <h3>💡 Paano Gamitin</h3>
+            <ul class="listahan-maikli">
+                <li>1️⃣ Pindutin ang <strong>"Magpa-Biyahe"</strong></li>
+                <li>2️⃣ Piliin ang mula at papuntang lugar</li>
+                <li>3️⃣ Ilagay ang oras at petsa</li>
+                <li>4️⃣ Tingnan ang presyo → ipadala → tapos!</li>
+            </ul>
+        </div>
+
+        <a href="customer/support.html" class="btn secondary-btn" style="margin-top: 8px;">
+            ❓ May tanong? — Tulong at Suporta
+        </a>
+    </div>
+</main>
+
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe support
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+</script>
+</body>
+</html>
