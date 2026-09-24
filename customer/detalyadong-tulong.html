@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <!-- ================================================== -->
+    <!-- 📘 DETALYADONG GABAY SA PAGGAMIT                   -->
+    <!-- File: detalyadong-tulong.html                      -->
+    <!-- Bersyon: 1.0.0                                      -->
+    <!-- Petsa: 2026-09-24                                   -->
+    <!-- May-akda: martodosko                                -->
+    <!-- Proyekto: Rider's Dispatcher & Transport System    -->
+    <!-- Karapatang-ari: © 2026 martodosko                   -->
+    <!-- Lisensya: Libre — Para sa Serbisyo sa Pilipinas     -->
+    <!-- ================================================== -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="martodosko">
+    <meta name="description" content="Kumpletong gabay sa paggamit ng Rider's Dispatcher System — para sa Tsuper, Admin, at Customer.">
+    
+    <meta name="theme-color" content="#E53935">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --p: #E53935; --p-light: #FFEBEE; --ok: #43A047;
+            --warn: #FFB300; --info: #1976D2; --muted: #78909C;
+            --bg: #F5F7FA; --card: #FFFFFF; --txt: #263238;
+        }
+        body { background: var(--bg); line-height: 1.6; color: var(--txt); padding-bottom: 40px; }
+
+        .header {
+            background: linear-gradient(90deg, #C62828, #E53935); color: white;
+            padding: 24px 20px; border-radius: 0 0 24px 24px;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header h1 { font-size: 20px; margin-bottom: 4px; }
+        .header p { font-size: 13px; opacity: .9; }
+        .nav-links { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav-link { color: white; text-decoration: none; font-size: 12px; background: rgba(255,255,255,.2); padding: 6px 12px; border-radius: 8px; }
+        .copyright { font-size: 11px; opacity: .7; margin-top: 10px; }
+
+        .page { padding: 20px; max-width: 600px; margin: 0 auto; }
+        
+        .toc {
+            background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.05);
+            position: sticky; top: 100px; z-index: 99;
+        }
+        .toc h3 { font-size: 15px; margin-bottom: 10px; color: var(--p); }
+        .toc ul { list-style: none; font-size: 13px; }
+        .toc li { margin: 6px 0; }
+        .toc a { color: var(--info); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        h2 { font-size: 18px; margin: 28px 0 12px; color: var(--p); border-bottom: 2px solid var(--p-light); padding-bottom: 6px; }
+        h3 { font-size: 15px; margin: 20px 0 8px; color: var(--info); }
+        
+        .card {
+            background: white; border-radius: 16px; padding: 20px; margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.05);
+        }
+        .tip {
+            background: var(--p-light); border-left: 4px solid var(--p);
+            padding: 12px 16px; border-radius: 0 12px 12px 0; margin: 12px 0;
+        }
+        .note {
+            background: #E3F2FD; border-left: 4px solid var(--info);
+            padding: 12px 16px; border-radius: 0 12px 12px 0; margin: 12px 0;
+        }
+        .success {
+            background: #E8F5E9; border-left: 4px solid var(--ok);
+            padding: 12px 16px; border-radius: 0 12px 12px 0; margin: 12px 0;
+        }
+        .warning {
+            background: #FFF8E1; border-left: 4px solid var(--warn);
+            padding: 12px 16px; border-radius: 0 12px 12px 0; margin: 12px 0;
+        }
+
+        ul, ol { padding-left: 20px; margin: 10px 0; }
+        li { margin: 6px 0; }
+        code {
+            background: #F5F5F5; padding: 2px 6px; border-radius: 4px;
+            font-family: monospace; font-size: 13px;
+        }
+        .file-tree {
+            background: #263238; color: #EEE; padding: 16px; border-radius: 12px;
+            font-family: monospace; font-size: 13px; line-height: 1.8;
+            margin: 12px 0;
+        }
+        .btn {
+            display: inline-block; padding: 10px 16px;
+            background: var(--p); color: white; border-radius: 10px;
+            text-decoration: none; font-weight: 600; margin: 8px 8px 8px 0;
+        }
+        .btn:hover { opacity: .9; }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--p); color: var(--p);
+        }
+        .step {
+            display: flex; gap: 12px; margin: 16px 0;
+        }
+        .step-num {
+            width: 28px; height: 28px; border-radius: 50%; background: var(--p); color: white;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;
+        }
+        .step-content { flex: 1; }
+        .step-title { font-weight: 600; }
+        .step-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📘 DETALYADONG GABAY SA PAGGAMIT</h1>
+    <p>Rider's Dispatcher & Transport System — Bersyon 1.0</p>
+    <nav class="nav-links">
+        <a href="index.html" class="nav-link">🏍️ Tsuper</a>
+        <a href="admin.html" class="nav-link">🔐 Admin</a>
+        <a href="customer/index.html" class="nav-link">👤 Customer</a>
+        <a href="detalyadong-tulong.html" class="nav-link" style="background:rgba(255,255,255,.35);font-weight:bold;">📘 Gabay</a>
+    </nav>
+    <p class="copyright">© 2026 martodosko — Libre para sa lahat ng Tsuper sa Pilipinas</p>
+</div>
+
+<div class="page">
+
+    <!-- TALAAN NG NILALAMAN -->
+    <div class="toc">
+        <h3>📋 NILALAMAN</h3>
+        <ul>
+            <li><a href="#intro">1. Panimula</a></li>
+            <li><a href="#files">2. Mga File at Istruktura</a></li>
+            <li><a href="#rider">3. Paggamit — Tsuper</a></li>
+            <li><a href="#admin">4. Paggamit — Admin/Dispatcher</a></li>
+            <li><a href="#customer">5. Paggamit — Customer</a></li>
+            <li><a href="#connect">6. Paano Nagkakonekta ang Lahat</a></li>
+            <li><a href="#formula">7. Paano Kinukuwenta ang Kita/Lugi</a></li>
+            <li><a href="#gps">8. Tungkol sa GPS at Mapa</a></li>
+            <li><a href="#tips">9. Mga Payo at Paglutas ng Problema</a></li>
+        </ul>
+    </div>
+
+    <!-- PANIMULA -->
+    <h2 id="intro">1. Panimula</h2>
+    <div class="card">
+        <p>Ang <strong>Rider's Dispatcher System</strong> ay isang libreng sistema na ginawa para tulungan ang mga tsuper, tagapamahala, at mamimili ng serbisyo sa transportasyon sa Pilipinas.</p>
+        
+        <p style="margin-top:10px;">Layunin nito:</p>
+        <ul>
+            <li>✅ Malaman kung kumita o nalugi sa bawat biyahe</li>
+            <li>✅ Makita ang presyo bago umalis</li>
+            <li>✅ Makapagpadala ng utos nang mabilis</li>
+            <li>✅ Masubaybayan ang lokasyon ng tsuper</li>
+            <li>✅ Walang kailangang server — lahat nasa sariling telepono</li>
+        </ul>
+
+        <div class="success">
+            <strong>💡 Tandaan:</strong> Ang sistemang ito ay <strong>walang bayad</strong> at hindi nangongolekta ng pera. Nakabase sa <code>localStorage</code> — ang datos ay nananatili sa iyong sariling aparato.
+        </div>
+    </div>
+
+    <!-- ISTRUKTURA NG MGA FILE -->
+    <h2 id="files">2. Mga File at Istruktura</h2>
+    <div class="card">
+        <p>Ito ang ayos ng mga file sa iyong folder:</p>
+        <div class="file-tree">
+rider-dispatcher/
+│
+├── index.html              ← 📱 Pangunahing App — para sa Tsuper
+│   ├── GPS at Mapa
+│   ├── Pagkuwenta ng Kita/Lugi
+│   ├── Talaan ng Biyahe
+│   └── Koneksyon sa Admin
+│
+├── admin.html              ← 🔐 Pamamahala — para sa Dispatcher
+│   ├── Pagtanggap ng Utos mula sa Customer
+│   ├── Pagtatalaga sa Tsuper
+│   ├── Pagtatakda ng Presyo
+│   ├── Pananalapi / Talaan
+│   └── Pamamahala sa mga Susi
+│
+├── customer/               ← 👤 Para sa Mamimili
+│   ├── index.html          ← Mag-order ng Biyahe
+│   ├── track.html          ← Subaybayan ang Tsuper
+│   └── history.html        ← Kasaysayan at Pagtatasa
+│
+└── detalyadong-tulong.html ← 📘 Ito — Kumpletong Gabay
+        </div>
+
+        <div class="tip">
+            <strong>📂 Paano ilagay:</strong> Gumawa ng folder sa iyong telepono o kompyuter, kopyahin ang lahat ng file, at buksan sa browser (Chrome, Firefox, Safari, atbp.).
+        </div>
+    </div>
+
+    <!-- PAGGAMIT — TSUPER -->
+    <h2 id="rider">3. Paggamit — Tsuper</h2>
+    <div class="card">
+        <h3>3.1 Unang Pagbubukas</h3>
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <p class="step-title">Buksan ang <code>index.html</code></p>
+                <p class="step-desc">Lalabas ang pangunahing pahina ng Rate Calculator</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <p class="step-title">Pumunta sa Pagtatakda ⚙️</p>
+                <p class="step-desc">Ilagay ang uri ng sasakyan, presyo ng gasolina, layunin sa kita, upa/boundary, at gastos sa piyesa</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <p class="step-title">I-save ang mga pagbabago</p>
+                <p class="step-desc">Awtomatikong makikita agad ang pagbabago sa kuwenta</p>
+            </div>
+        </div>
+
+        <h3>3.2 Pagtatala ng Biyahe</h3>
+        <ul>
+            <li><strong>Bagong Ruta sa Mapa</strong> — piliin ang simula at dulo sa mapa, kusang susukat ang distansya</li>
+            <li><strong>Realtime GPS</strong> — habang umaandar, susukat ang aktuwal na layo ng tinahak na daan</li>
+            <li><strong>1-Way o 2-Way</strong> — piliin kung paano ang biyahe</li>
+            <li><strong>Ilagay ang Pamasahe</strong> — makikita agad kung kumita o nalugi</li>
+            <li><strong>Itala</strong> — idadagdag sa kabuuang kita ng araw</li>
+        </ul>
+
+        <h3>3.3 Pag-unawa sa Kita/Lugi</h3>
+        <p>Agad makikita ang kulay:</p>
+        <ul>
+            <li><span style="color:#43A047;font-weight:bold;">● BERDE</span> — Kumita na ang biyaheng ito</li>
+            <li><span style="color:#FFB300;font-weight:bold;">● DILAW</span> — Sakto lang, walang kita</li>
+            <li><span style="color:#E53935;font-weight:bold;">● PULA</span> — Nalugi sa halagang ito</li>
+        </ul>
+
+        <div class="warning">
+            <strong>⚠️ Mahalaga:</strong> Ang gastos sa piyesa at upa/boundary ay <strong>hindi bawat biyahe</strong> kundi <strong>araw-araw</strong>. Ipinapakita sa sistema ang bahaging nakalaan sa bawat biyahe upang makita ang tunay na halaga.
+        </div>
+    </div>
+
+    <!-- PAGGAMIT — ADMIN -->
+    <h2 id="admin">4. Paggamit — Admin/Dispatcher</h2>
+    <div class="card">
+        <h3>4.1 Pagtanggap ng Utos</h3>
+        <p>Ang lahat ng utos mula sa Customer ay lalabas agad sa <code>admin.html</code> — hindi na kailangang i-refresh.</p>
+        
+        <h3>4.2 Pagtatalaga sa Tsuper</h3>
+        <ol>
+            <li>Piliin ang utos mula sa listahan</li>
+            <li>Ilagay ang pangalan at kontak ng tsuper</li>
+            <li>Ipadala — lalabas agad sa pahina ng Tsuper at Customer</li>
+            <li>Masusubaybayan ang katayuan hanggang matapos</li>
+        </ol>
+
+        <h3>4.3 Pagtatakda ng Presyo</h3>
+        <ul>
+            <li>Itakda ang presyo bawat kilometro — susundin ng lahat</li>
+            <li>Magdagdag ng nakatakdang ruta — may nakalaang presyo agad</li>
+            <li>Pamahalaan ang mga susi — itago ang mga tampok na pang-advanced</li>
+        </ul>
+    </div>
+
+    <!-- PAGGAMIT — CUSTOMER -->
+    <h2 id="customer">5. Paggamit — Customer</h2>
+    <div class="card">
+        <h3>5.1 Pag-order ng Biyahe</h3>
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <p class="step-title">Buksan ang <code>customer/index.html</code></p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <p class="step-title">Ilagay kung saan kukunin at saan pupunta</p>
+                <p class="step-desc">Makikita agad ang tantsang presyo</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <p class="step-title">Ipadala ang Utos</p>
+                <p class="step-desc">Titingnan ng Admin at maghahanap ng tsuper</p>
+            </div>
+        </div>
+
+        <h3>5.2 Pagsubaybay</h3>
+        <p>Pumunta sa <code>track.html</code> upang makita ang lokasyon ng tsuper sa mapa at tantsang oras ng pagdating.</p>
+
+        <h3>5.3 Kasaysayan at Pagtatasa</h3>
+        <p>Sa <code>history.html</code> makikita ang lahat ng nakaraang biyahe. Maaaring magbigay ng bituin sa tsuper at muling mag-order ng katulad na ruta sa isang pindutan.</p>
+    </div>
+
+    <!-- PAGKAKONEKTA -->
+    <h2 id="connect">6. Paano Nagkakonekta ang Lahat</h2>
+    <div class="card">
+        <p>Ang sistema ay gumagamit ng <strong>localStorage</strong> — isang imbakan sa loob ng browser. Ganito ang daloy:</p>
+        
+        <div style="background:#F5F5F5;padding:16px;border-radius:12px;margin:12px 0;font-family:monospace;font-size:13px;">
+Customer → <code>customerOrders[]</code> → Admin nakikita<br>
+Admin → <code>riderAssignment</code> → Tsuper nakikita<br>
+Tsuper → <code>tripRecords[]</code> → Admin at Customer nakikita<br>
+Tsuper → <code>riderLastLocation</code> → Customer nakikita sa mapa
+        </div>
+
+        <div class="note">
+            <strong>ℹ️ Mahalagang Paalala:</strong> Dahil nasa browser ang datos, kailangang <strong>buksan ang lahat ng pahina sa parehong telepono</strong> upang magkita ang isa't isa. Kung magkakaibang aparato, kailangang mag-export at mag-import ng datos.
+        </div>
+    </div>
+
+    <!-- FORMULA -->
+    <h2 id="formula">7. Paano Kinukuwenta ang Kita/Lugi</h2>
+    <div class="card">
+        <h3>7.1 Gastos sa Gasolina</h3>
+        <code>Gastos = (Kilometro ÷ Konsumo) × Presyo kada Litro</code>
+        <p style="margin-top:6px;">Halimbawa: 10 km ÷ 20 km/l × ₱92.00 = ₱46.00</p>
+
+        <h3>7.2 Kabuuang Gastos sa Araw</h3>
+        <code>Kabuuang Gastos = Gasolina + Upa/Boundary + Piyesa/Maintenance</code>
+
+        <h3>7.3 Kita sa Bawat Biyahe</h3>
+        <code>Kita = Pamasahe − Gastos sa Biyaheng Ito</code>
+        <p>Ang gastos sa upa at piyesa ay hinahati sa bilang ng biyahe upang makita ang tunay na halaga.</p>
+
+        <h3>7.4 Layunin sa Kita</h3>
+        <p>Ang sistema ay nagpapakita ng progreso patungo sa layunin na kita para sa araw. Kapag nakumpleto na, lalabas na nakamit na ang layunin.</p>
+    </div>
+
+    <!-- GPS AT MAPA -->
+    <h2 id="gps">8. Tungkol sa GPS at Mapa</h2>
+    <div class="card">
+        <h3>8.1 Pagbukas ng GPS</h3>
+        <p>Kailangang <strong>buksan ang Lokasyon/GPS</strong> sa iyong telepono upang magamit ang realtime tracking. Pumayag sa hiling ng pahintulot kapag nagbukas ng mapa.</p>
+
+        <h3>8.2 Katumpakan</h3>
+        <ul>
+            <li><strong>Realtime GPS</strong> — sinusukat ang aktuwal na tinahak na daan, kasama ang mga kurbada</li>
+            <li><strong>Static Map</strong> — tuwid na distansya lamang, maaaring mas maikli sa aktuwal</li>
+            <li><strong>Kilalaang Ruta</strong> — tiyak na sukat na inilagay nang mano-mano</li>
+        </ul>
+
+        <div class="tip">
+            <strong>💡 Payo:</strong> Para sa pinakatumpak na sukat, gamitin ang <strong>Realtime GPS</strong> habang umaandar. Ipakikita ang aktuwal na layo ng tinahak na daan.
+        </div>
+    </div>
+
+    <!-- PAGLUTAS NG PROBLEMA -->
+    <h2 id="tips">9. Mga Payo at Paglutas ng Problema</h2>
+    <div class="card">
+        <h3>9.1 Hindi Nagpapakita ang Pagbabago</h3>
+        <ul>
+            <li>I-refresh ang pahina — pindutin ang pag-update sa browser</li>
+            <li>Siguraduhing parehong browser at parehong telepono ang ginagamit</li>
+            <li>Huwag burahin ang datos ng browser</li>
+        </ul>
+
+        <h3>9.2 Nawala ang Nakaimbak na Datos</h3>
+        <ul>
+            <li>Gamitin ang <strong>I-export</strong> bago maglinis ng browser</li>
+            <li>I-save ang nakaimbak na datos bilang file sa iyong telepono</li>
+            <li>Kapag nawala, gamitin ang <strong>I-import</strong> upang ibalik</li>
+        </ul>
+
+        <h3>9.3 Mabagal ang Mapa</h3>
+        <ul>
+            <li>Mas mahusay na koneksyon sa internet ang kailangan sa unang pagbukas</li>
+            <li>Pagkatapos maikarga, gumagana nang bahagya kahit walang internet</li>
+            <li>Gumamit ng Chrome o Firefox para sa pinakamahusay na pagganap</li>
+        </ul>
+
+        <h3>9.4 Mga Suhestiyon</h3>
+        <p>May tanong o nais idagdag? Maaaring ipadala ang mensahe sa pamamagitan ng pahina ng Suporta sa Admin Panel.</p>
+    </div>
+
+    <!-- PAAYOS -->
+    <div style="text-align:center;margin-top:40px;padding:20px;background:white;border-radius:16px;">
+        <p style="font-size:24px;">🏍️</p>
+        <p style="font-weight:bold;margin-top:8px;">Rider's Dispatcher System</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px;">© 2026 martodosko — Libre para sa lahat ng Tsuper sa Pilipinas</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Bersyon 1.0.0 — Na-update: 2026-09-24</p>
+    </div>
+
+</div>
+
+<script>
+// Awtomatikong pag-scroll sa bahaging pinili
+document.addEventListener('DOMContentLoaded', () => {
+    // Maayos na pag-scroll
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
