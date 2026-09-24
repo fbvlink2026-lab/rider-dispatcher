@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ℹ️ Tungkol sa Sistema | Admin — Rider Dispatcher</title>
+    <!-- File: admin/about.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .sentro { text-align: center; margin-bottom: 24px; }
+        .malaking-icon { font-size: 48px; margin-bottom: 8px; }
+        .buod-tampok { display: grid; gap: 10px; margin: 16px 0; }
+        .tampok-kahon { background: #fff; border-radius: 10px; padding: 12px 14px; border-left: 3px solid #165DFF; }
+        .tampok-kahon h4 { margin: 0 0 4px; font-size: 14px; }
+        .tampok-kahon p { margin: 0; font-size: 13px; color: #4E5969; }
+        .listahan-file { background: #F9FAFB; padding: 14px; border-radius: 10px; font-family: monospace; font-size: 12px; line-height: 1.8; margin: 12px 0; }
+        .berde { color: #00B42A; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- === NABIGASYON === -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">ℹ️ Tungkol</span>
+            <span></span>
+        </nav>
+
+        <!-- === PAMAGAT === -->
+        <div class="sentro">
+            <div class="malaking-icon">🏍️</div>
+            <h1 style="font-size: 22px; margin: 0;">Rider Dispatcher</h1>
+            <p style="color: #4E5969; margin: 4px 0;">Bersyon 1.0.0 • 2026-09-24</p>
+            <p style="font-weight: 600; margin: 0;">Ginawa ni: martodosko</p>
+        </div>
+
+        <!-- === LAYUNIN === -->
+        <section class="form-section">
+            <h3>🎯 Layunin ng Sistema</h3>
+            <p>Tulungan ang mga drayber at rider na malinaw na makita ang tunay na kita, gastos, at kung lugi ba sa bawat biyahe — upang malaman ang tamang halaga ng pamasahe.</p>
+        </section>
+
+        <!-- === BUOD NG TAMPOK === -->
+        <section class="form-section">
+            <h3>✨ Buod ng Lahat ng Tampok</h3>
+            
+            <div class="buod-tampok">
+                <div class="tampok-kahon">
+                    <h4>🚗 Portal — Pagkalkula</h4>
+                    <p>Pumili ng ruta, ilagay ang halaga, at makita agad kung kumita o lugi. Ipinapakita rin ang pinakamababang singil at kailangang singil para sa layong kita.</p>
+                </div>
+
+                <div class="tampok-kahon">
+                    <h4>📍 Pamamahala ng Ruta</h4>
+                    <p>Magdagdag, baguhin, burahin, at ilista ang lahat ng ruta. Awtomatikong nakikita ang kita/lugi sa listahan.</p>
+                </div>
+
+                <div class="tampok-kahon">
+                    <h4>⚙️ Pagtatakda</h4>
+                    <p>Pangkalahatang presyo ng gas, gastos sa piyesa, pagpapalit ng kodigo ng admin, at paglilinis ng lahat ng datos.</p>
+                </div>
+
+                <div class="tampok-kahon">
+                    <h4>💾 Pag-Export / Pag-Import</h4>
+                    <p>Kopyahin ang lahat ng datos at ilipat sa ibang telepono — hindi nawawala kahit magpalit ng aparato.</p>
+                </div>
+
+                <div class="tampok-kahon">
+                    <h4>📖 Buong Gabay</h4>
+                    <p>Mula sa pagsisimula hanggang sa pormula — detalyadong paliwanag at halimbawa gamit ang Lopez → Calauag.</p>
+                </div>
+
+                <div class="tampok-kahon">
+                    <h4>🔒 Ligtas at Walang Internet</h4>
+                    <p>Lahat ng datos ay naiimbak sa sariling telepono — hindi ipinapasa sa labas. Hindi kailangan ng internet para gamitin.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === ESTRUKTURA NG MGA FILE === -->
+        <section class="form-section">
+            <h3>📂 Estratektura ng Sistema</h3>
+            <div class="listahan-file">
+rider-dispatcher/
+├── <span class="berde">index.html</span> — Pangunahing pahina / Pagpasok
+├── <span class="berde">portal.html</span> — Pagkalkula at pamasahe
+├── <span class="berde">help.html</span> — Buong gabay sa paggamit
+│
+├── admin/
+│   ├── <span class="berde">index.html</span> — Panimulang pahina ng Admin
+│   ├── <span class="berde">routes.html</span> — Pamamahala ng Ruta
+│   ├── <span class="berde">settings.html</span> — Pagtatakda
+│   ├── <span class="berde">backup.html</span> — Pag-export / Pag-Import
+│   └── <span class="berde">about.html</span> — Tungkol sa Sistema
+│
+├── css/
+│   └── <span class="berde">styles.css</span> — Pinag-isang anyo at disenyo
+│
+└── js/
+    └── <span class="berde">common.js</span> — Karaniwang utos, pag-iimbak, pagkalkula
+            </div>
+        </section>
+
+        <!-- === PAGPAPAHALAGA === -->
+        <section class="form-section">
+            <h3>📝 Paalala</h3>
+            <ul style="font-size: 14px; line-height: 1.8; padding-left: 20px; margin: 0;">
+                <li>Lahat ng pagbabago ay <strong>awtomatikong naiimbak</strong> sa iyong telepono.</li>
+                <li>Mag-export paminsan-minsan bilang <strong>pag-iimbak</strong> — kung sakaling may mangyari sa telepono.</li>
+                <li>Ang "Kumuha ng Km sa Internet" ay nakalaan para sa susunod na pagpapahusay — sa ngayon, ilagay nang kamay ang kilometro.</li>
+                <li>Kung may mungkahi o napansing mali, isulat sa sariling tala para isama sa susunod na bersyon.</li>
+            </ul>
+        </section>
+
+        <!-- === PABABA === -->
+        <div style="text-align: center; margin: 24px 0;">
+            <a href="../help.html" target="_blank" class="btn primary-btn">📖 Buksan ang Buong Gabay</a>
+            <p style="font-size: 12px; color: #4E5969; margin-top: 12px;">
+                Salamat sa paggamit! — martodosko
+            </p>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+</body>
+</html>
