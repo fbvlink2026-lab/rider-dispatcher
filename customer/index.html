@@ -1,11 +1,10 @@
 <!-- ==================================================
    FILE        : customer/index.html
-   BERSYON     : 1.1.0
+   BERSYON     : 1.2.0 — MAY UTOS SA BOSES
    PETSA       : 2026-09-24
    MAY-AKDA    : martodosko
    LUGAR       : rider-dispatcher/customer/index.html
-   LAYUNIN     : Tahanan — Pangunahing Pahina ng Customer
-   KONEKSYON   : localStorage ↔️ Admin Panel ↔️ Rider App
+   LAYUNIN     : Tahanan — Pangunahing Pahina ng Mamimili
 ================================================== -->
 <!DOCTYPE html>
 <html lang="tl-PH">
@@ -21,18 +20,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#165DFF">
     
-    <!-- === OPEN GRAPH — Inayos: Naka-embed na SVG, hindi na kailangan ng panlabas na file === -->
+    <!-- OPEN GRAPH -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="./">
     <meta property="og:title" content="Rider Dispatcher — Magpa-Biyahe">
     <meta property="og:description" content="Sistema ng pagpapabiyahe — Libre at bukas para sa lahat ng tsuper at pasahero sa Pilipinas.">
-    <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%23165DFF' width='1200' height='630'/><text x='50%' y='45%' font-size='120' text-anchor='middle' fill='white'>🏍️</text><text x='50%' y='65%' font-size='48' text-anchor='middle' fill='white'>Rider Dispatcher</text><text x='50%' y='80%' font-size='24' text-anchor='middle' fill='%23E8F3FF'>v1.1 · ni martodosko</text></svg>">
+    <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%23165DFF' width='1200' height='630'/><text x='50%' y='45%' font-size='120' text-anchor='middle' fill='white'>🏍️</text><text x='50%' y='65%' font-size='48' text-anchor='middle' fill='white'>Rider Dispatcher</text><text x='50%' y='80%' font-size='24' text-anchor='middle' fill='%23E8F3FF'>v1.2 · ni martodosko</text></svg>">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="tl_PH">
     <meta property="og:site_name" content="Rider Dispatcher">
     
-    <!-- === TWITTER / X — Inayos === -->
+    <!-- TWITTER / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="./">
     <meta name="twitter:title" content="Rider Dispatcher — Magpa-Biyahe">
@@ -40,7 +39,7 @@
     <meta name="twitter:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%23165DFF' width='1200' height='630'/><text x='50%' y='50%' font-size='120' text-anchor='middle' fill='white'>🏍️</text></svg>">
     <meta name="twitter:creator" content="@martodosko">
     
-    <!-- === FAVICON / IKON === -->
+    <!-- FAVICON / IKON -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
 
     <style>
@@ -101,6 +100,15 @@
         .tulag-ulo h1 { font-size: 22px; margin-bottom: 6px; }
         .tulag-ulo p { opacity: 0.9; font-size: 14px; line-height: 1.5; }
 
+        .btn-boses {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #7B1FA2 0%, #BA68C8 100%);
+            color: white; padding: 14px 20px; border-radius: 12px;
+            text-decoration: none; font-weight: 600; font-size: 15px;
+            margin-bottom: 20px; transition: transform 0.2s;
+        }
+        .btn-boses:hover { transform: translateY(-2px); }
+
         .grid-pili { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
         .kard-pili {
             background: white; border-radius: 12px; padding: 20px 16px; text-align: center;
@@ -148,6 +156,13 @@
         .secondary-btn { background: var(--kulay-likod); color: var(--teksto); }
         .secondary-btn:hover { background: #E8E9EB; }
         .nakatago { display: none !important; }
+
+        input, select {
+            width: 100%; padding: 12px; border: 1px solid var(--hangganan);
+            border-radius: 10px; font-size: 16px; margin-top: 6px;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--p); box-shadow: 0 0 0 3px rgba(22,93,255,0.1); }
+        label { display: block; font-weight: 600; margin-top: 14px; margin-bottom: 4px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -163,9 +178,9 @@
             <span class="menu-ikon">🏠</span>
             <span>Tahanan</span>
         </a>
-        <a href="index.html#pag-order" class="menu-link">
-            <span class="menu-ikon">🚕</span>
-            <span>Magpa-Biyahe</span>
+        <a href="voice-booking.html" class="menu-link">
+            <span class="menu-ikon">🎤</span>
+            <span>Utos sa Boses</span>
         </a>
         <a href="track.html" class="menu-link">
             <span class="menu-ikon">📍</span>
@@ -223,6 +238,11 @@
             <p>Sistema ng pagpapabiyahe — Lopez, Calauag, at buong Quezon. Libre at walang bayad.</p>
         </div>
 
+        <!-- 🎤 UTOS SA BOSES — BAGONG TAMPOK -->
+        <a href="voice-booking.html" class="btn-boses">
+            🎤 Mag-Order Gamit ang Boses
+        </a>
+
         <!-- MGA PILIIN -->
         <div class="grid-pili">
             <a href="#pag-order" class="kard-pili" onclick="ipakitaPorma()">
@@ -240,10 +260,10 @@
                 <div class="kard-pangalan">Kasaysayan</div>
                 <div class="kard-paliwanag">Nakaraang biyahe</div>
             </a>
-            <a href="../detalyadong-tulong.html" target="_blank" class="kard-pili">
-                <div class="kard-ikon">❓</div>
-                <div class="kard-pangalan">Tulong</div>
-                <div class="kard-paliwanag">Paano gamitin</div>
+            <a href="voice-booking.html" class="kard-pili">
+                <div class="kard-ikon">🎤</div>
+                <div class="kard-pangalan">Sa Boses</div>
+                <div class="kard-paliwanag">Magsalita lang</div>
             </a>
         </div>
 
@@ -251,26 +271,26 @@
         <div id="pag-order" class="kahon-impormasyon nakatago">
             <h3>🚕 Magpa-Biyahe</h3>
             
-            <label style="display:block;font-size:14px;font-weight:600;margin:14px 0 6px;">📍 Saan ka kukunin?</label>
-            <input type="text" id="kukunin" placeholder="Hal. Lopez Bayan, Palengke" style="width:100%;padding:12px;border:1px solid var(--hangganan);border-radius:10px;font-size:16px;">
+            <label>📍 Saan ka kukunin?</label>
+            <input type="text" id="kukunin" placeholder="Hal. Lopez Bayan, Palengke">
             
-            <label style="display:block;font-size:14px;font-weight:600;margin:14px 0 6px;">🏁 Saan ang pupuntahan?</label>
-            <input type="text" id="patutunguhan" placeholder="Hal. Calauag, Sumilang" style="width:100%;padding:12px;border:1px solid var(--hangganan);border-radius:10px;font-size:16px;">
+            <label>🏁 Saan ang pupuntahan?</label>
+            <input type="text" id="patutunguhan" placeholder="Hal. Calauag, Sumilang">
             
-            <label style="display:block;font-size:14px;font-weight:600;margin:14px 0 6px;">⏰ Kailan?</label>
-            <select id="oras-ng-biyahe" style="width:100%;padding:12px;border:1px solid var(--hangganan);border-radius:10px;font-size:16px;">
+            <label>⏰ Kailan?</label>
+            <select id="oras-ng-biyahe">
                 <option value="ngayon">Agad na — Ngayon</option>
                 <option value="nakatakda">Iba pang oras</option>
             </select>
             
-            <div id="nakatakda-oras" class="nakatago" style="margin-top:10px;">
-                <label style="display:block;font-size:13px;color:var(--teksto-pag);margin-bottom:6px;">Piliin ang oras</label>
-                <input type="datetime-local" id="petsa-oras" style="width:100%;padding:12px;border:1px solid var(--hangganan);border-radius:10px;font-size:16px;">
+            <div id="nakatakda-oras" class="nakatago">
+                <label>Piliin ang oras</label>
+                <input type="datetime-local" id="petsa-oras">
             </div>
             
-            <div id="presyo-tantsa" class="nakatago" style="background:var(--p-light);padding:14px;border-radius:10px;margin-top:16px;text-align:center;">
+            <div id="presyo-tantsa" class="nakatago" style="background:var(--p-light);padding:16px;border-radius:10px;margin-top:16px;text-align:center;">
                 <p style="font-size:13px;color:var(--p);">Tantsang Presyo</p>
-                <p style="font-size:24px;font-weight:bold;color:var(--p);margin-top:4px;">₱<span id="halaga-presyo">0.00</span></p>
+                <p style="font-size:28px;font-weight:bold;color:var(--p);margin-top:4px;">₱<span id="halaga-presyo">0.00</span></p>
             </div>
             
             <button class="btn primary-btn" style="margin-top:20px;" onclick="ipadalaUtos()">✅ Ipadala ang Utos</button>
@@ -298,8 +318,8 @@
         <div class="kahon-impormasyon">
             <h3>💡 Paano Gamitin</h3>
             <ul class="listahan-maikli">
-                <li>1️⃣ Pindutin ang <strong>"Magpa-Biyahe"</strong> sa itaas</li>
-                <li>2️⃣ Ilagay kung saan kukunin at saan pupunta</li>
+                <li>1️⃣ Pindutin ang <strong>"Magpa-Biyahe"</strong> o <strong>"Sa Boses"</strong></li>
+                <li>2️⃣ Ilagay o sabihin kung saan kukunin at saan pupunta</li>
                 <li>3️⃣ Tingnan ang presyo → Ipadala ang utos</li>
                 <li>4️⃣ Maghihintay ng tsuper → Subaybayan sa mapa!</li>
             </ul>
@@ -320,9 +340,8 @@ function itakdaDato(susi, halaga) {
 
 // ========== MGA HAYAGANG VARIABL ==========
 let KASALUKUYANG_UTOS = null;
-let PRESYO_KADA_KM = 12.00; // Batayang presyo — maaaring palitan ng Admin
+let PRESYO_KADA_KM = 12.00;
 
-// Mga nakatakdang ruta
 const NAKATAKDANG_RUTA = {
     'Lopez Bayan→Calauag Bayan': { km: 22, presyo: 150 },
     'Calauag Bayan→Sumilang (BLISS)': { km: 3.2, presyo: 50 },
@@ -338,7 +357,6 @@ function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakit
 function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
 btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
 
-// Swipe support
 let simulaX = 0, simulaY = 0;
 document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
 document.addEventListener('touchend', e => {
@@ -348,26 +366,19 @@ document.addEventListener('touchend', e => {
     if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
 }, { passive: true });
 
-// ========== PAGBASA NG PRESYO MULA SA ADMIN ==========
+// ========== PRESYO ==========
 function iangkopPresyo() {
     const pagtatakda = kuninDato('systemSettings');
-    if (pagtatakda && pagtatakda.basePerKm) {
-        PRESYO_KADA_KM = pagtatakda.basePerKm;
-    }
+    if (pagtatakda && pagtatakda.basePerKm) PRESYO_KADA_KM = pagtatakda.basePerKm;
 }
 
 // ========== KASALUKUYANG UTOS ==========
 function suriinKasalukuyangUtos() {
     const mgaUtos = kuninDato('customerOrders') || [];
-    KASALUKUYANG_UTOS = mgaUtos.find(u => 
-        u.status !== 'completed' && u.status !== 'cancelled'
-    );
+    KASALUKUYANG_UTOS = mgaUtos.find(u => u.status !== 'completed' && u.status !== 'cancelled');
 
     const kahon = document.getElementById('kasalukuyang-utos');
-    if (!KASALUKUYANG_UTOS) {
-        kahon.classList.add('nakatago');
-        return;
-    }
+    if (!KASALUKUYANG_UTOS) { kahon.classList.add('nakatago'); return; }
 
     kahon.classList.remove('nakatago');
     ipakitaKatayuanNgUtos();
@@ -409,12 +420,10 @@ function gamitinRuta(mula, papunta) {
     kuwentaPresyo();
 }
 
-// Palitan ang pagpapakita ng oras
 document.getElementById('oras-ng-biyahe').addEventListener('change', function() {
     document.getElementById('nakatakda-oras').classList.toggle('nakatago', this.value !== 'nakatakda');
 });
 
-// Kuwentahin ang presyo habang nagtata-type
 document.getElementById('kukunin').addEventListener('input', kuwentaPresyo);
 document.getElementById('patutunguhan').addEventListener('input', kuwentaPresyo);
 
@@ -423,23 +432,14 @@ function kuwentaPresyo() {
     const papunta = document.getElementById('patutunguhan').value.trim();
     const kahon = document.getElementById('presyo-tantsa');
 
-    if (!mula || !papunta || mula === papunta) {
-        kahon.classList.add('nakatago');
-        return;
-    }
+    if (!mula || !papunta || mula === papunta) { kahon.classList.add('nakatago'); return; }
 
-    // Tingnan kung nakatakda ang ruta
     const susi = `${mula}→${papunta}`;
     const ruta = NAKATAKDANG_RUTA[susi];
-    
     let presyo;
-    if (ruta && ruta.presyo) {
-        presyo = ruta.presyo;
-    } else if (ruta && ruta.km) {
-        presyo = ruta.km * PRESYO_KADA_KM;
-    } else {
-        presyo = 3 * PRESYO_KADA_KM; // Pinakamababang halaga
-    }
+    if (ruta && ruta.presyo) presyo = ruta.presyo;
+    else if (ruta && ruta.km) presyo = ruta.km * PRESYO_KADA_KM;
+    else presyo = 3 * PRESYO_KADA_KM;
 
     document.getElementById('halaga-presyo').textContent = presyo.toFixed(2);
     kahon.classList.remove('nakatago');
@@ -449,58 +449,40 @@ function ipadalaUtos() {
     const pickup = document.getElementById('kukunin').value.trim();
     const dest = document.getElementById('patutunguhan').value.trim();
     
-    if (!pickup || !dest) {
-        alert('⚠️ Ilagay kung saan kukunin at saan pupunta!');
-        return;
-    }
-    if (pickup === dest) {
-        alert('⚠️ Magkaiba dapat ang kukunan at pupuntahan!');
-        return;
-    }
-    if (KASALUKUYANG_UTOS && KASALUKUYANG_UTOS.status !== 'cancelled' && KASALUKUYANG_UTOS.status !== 'completed') {
-        if (!confirm('May kasalukuyan ka pang utos. Sigurado ka bang gumawa ng bago?')) return;
+    if (!pickup || !dest) { alert('⚠️ Ilagay kung saan kukunin at saan pupunta!'); return; }
+    if (pickup === dest) { alert('⚠️ Magkaiba dapat ang kukunan at pupuntahan!'); return; }
+    if (KASALUKUYANG_UTOS && !['completed','cancelled'].includes(KASALUKUYANG_UTOS.status)) {
+        if (!confirm('May kasalukuyan ka pang utos. Gumawa ng bago?')) return;
     }
 
-    // Kunin ang presyo
     const susi = `${pickup}→${dest}`;
     const ruta = NAKATAKDANG_RUTA[susi];
-    let presyo;
-    if (ruta && ruta.presyo) presyo = ruta.presyo;
-    else if (ruta && ruta.km) presyo = ruta.km * PRESYO_KADA_KM;
-    else presyo = 3 * PRESYO_KADA_KM;
+    let presyo = ruta?.presyo || (ruta?.km ? ruta.km * PRESYO_KADA_KM : 3 * PRESYO_KADA_KM);
 
     const mgaUtos = kuninDato('customerOrders') || [];
-    const bagongUtos = {
+    mgaUtos.unshift({
         id: Date.now(),
-        pickup,
-        destination: dest,
-        fare: presyo,
-        status: 'pending',
+        pickup, destination: dest, fare: presyo,
+        status: 'pending', type: 'manual',
         timeType: document.getElementById('oras-ng-biyahe').value,
         scheduledAt: document.getElementById('oras-ng-biyahe').value === 'nakatakda' 
-            ? document.getElementById('petsa-oras').value || null 
-            : null,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-    };
+            ? document.getElementById('petsa-oras').value || null : null,
+        createdAt: new Date().toISOString()
+    });
 
-    mgaUtos.unshift(bagongUtos);
     itakdaDato('customerOrders', mgaUtos);
     localStorage.setItem('adminLastUpdate', new Date().toISOString());
 
-    alert(`✅ Naitala na ang utos!\n\n📍 ${pickup} → ${dest}\n💰 Presyo: ₱${presyo.toFixed(2)}\n\nMakikita ito agad sa Admin. Maghihintay ng pagtugon.`);
+    alert(`✅ Naitala na!\n📍 ${pickup} → ${dest}\n💰 ₱${presyo.toFixed(2)}`);
     
-    // Linisin ang porma
     document.getElementById('kukunin').value = '';
     document.getElementById('patutunguhan').value = '';
     document.getElementById('presyo-tantsa').classList.add('nakatago');
-    
     suriinKasalukuyangUtos();
 }
 
 function kanselahinUtos() {
-    if (!confirm('Sigurado ka bang kanselahin ang utos?')) return;
-    
+    if (!confirm('Sigurado bang kanselahin?')) return;
     const mgaUtos = kuninDato('customerOrders') || [];
     const idx = mgaUtos.findIndex(u => u.id === KASALUKUYANG_UTOS.id);
     if (idx !== -1) {
@@ -509,7 +491,6 @@ function kanselahinUtos() {
         itakdaDato('customerOrders', mgaUtos);
         localStorage.setItem('adminLastUpdate', new Date().toISOString());
     }
-    
     alert('✅ Nakansela na.');
     suriinKasalukuyangUtos();
 }
@@ -518,12 +499,7 @@ function kanselahinUtos() {
 document.addEventListener('DOMContentLoaded', () => {
     iangkopPresyo();
     suriinKasalukuyangUtos();
-    
-    // Awtomatikong suriin tuwing 3 segundo
-    setInterval(() => {
-        iangkopPresyo();
-        suriinKasalukuyangUtos();
-    }, 3000);
+    setInterval(() => { iangkopPresyo(); suriinKasalukuyangUtos(); }, 3000);
 });
 </script>
 
