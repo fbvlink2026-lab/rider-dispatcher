@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📍 Mga Ruta | Admin — Rider Dispatcher</title>
+    <!-- File: admin/routes.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .lista-ruta { margin-top: 10px; }
+        .bagay-ruta { padding: 14px; border-bottom: 1px solid #F2F3F5; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .bagay-ruta:last-child { border-bottom: none; }
+        .detalye-ruta { flex: 1; font-size: 14px; }
+        .detalye-ruta strong { display: block; font-size: 15px; margin-bottom: 4px; }
+        .mga-pindutan { display: flex; flex-direction: column; gap: 6px; min-width: 85px; }
+        .btn-maliit { padding: 6px 10px; font-size: 13px; border-radius: 8px; border: none; cursor: pointer; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 16px; text-align: center; }
+        .babala-lugi { color: #F53F3F; font-weight: 600; }
+        .babala-kita { color: #00B42A; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- === NABIGASYON === -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">📍 Mga Ruta</span>
+            <span></span>
+        </nav>
+
+        <!-- === LISTAHAN NG RUTA === -->
+        <section class="form-section">
+            <h3>Listahan ng Lahat ng Ruta</h3>
+            <div id="lista-ruta" class="lista-ruta">
+                <!-- Lalabas dito ang lahat ng ruta -->
+                <p style="text-align:center; color:#4E5969; padding:20px;">Naglalagay…</p>
+            </div>
+        </section>
+
+        <!-- === MAGDAGDAG NG BAGONG RUTA === -->
+        <section class="form-section">
+            <h3 id="pamagat-anyo">➕ Magdagdag ng Bagong Ruta</h3>
+            
+            <div class="input-group">
+                <label>Pangalan ng Ruta *</label>
+                <input type="text" id="r-pangalan" placeholder="hal. Lopez → Calauag">
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Pinagmulan *</label>
+                    <input type="text" id="r-mula" placeholder="hal. Lopez, Quezon">
+                </div>
+                <div class="input-group">
+                    <label>Patutunguhan *</label>
+                    <input type="text" id="r-papunta" placeholder="hal. Calauag, Quezon">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Kilometro (Isang Daan) *</label>
+                    <input type="number" step="0.1" id="r-km" placeholder="hal. 22.0">
+                </div>
+                <div class="input-group">
+                    <label>Gas (Litro — 2 Daan) *</label>
+                    <input type="number" step="0.01" id="r-litro" placeholder="hal. 0.85">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Presyo ng Gas / Litro</label>
+                    <input type="number" step="0.01" id="r-presyo-gas" placeholder="hal. 92.00">
+                </div>
+                <div class="input-group">
+                    <label>Gastos sa Piyesa / Biyahe</label>
+                    <input type="number" step="0.01" id="r-piyesa" placeholder="hal. 20.00">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Layong Kita (2 Daan)</label>
+                    <input type="number" step="0.01" id="r-layon" placeholder="hal. 300.00">
+                </div>
+                <div class="input-group">
+                    <label>Kasalukuyang Pamasahe (2 Daan)</label>
+                    <input type="number" step="0.01" id="r-pamasahe" placeholder="hal. 150.00">
+                </div>
+            </div>
+
+            <button id="kumuha-km-btn" class="btn secondary-btn btn-full" style="margin: 10px 0;">
+                🌐 Kumuha ng Km sa Internet
+            </button>
+
+            <button id="isumbag-btn" class="btn primary-btn btn-full">
+                ✅ I-save ang Ruta
+            </button>
+        </section>
+
+        <!-- === PATONG: KUMPIRMA SA PAGBURA === -->
+        <div id="patong-bura" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Burahin ang Ruta?</h2>
+                <p id="pangalan-bura" style="text-align:center; margin-bottom:16px; font-weight:600;"></p>
+                <p style="font-size:14px; color:#4E5969; margin-bottom:20px;">Hindi na ito mababawi kapag nabura.</p>
+                <button id="kumpirma-bura" class="btn danger-btn btn-full">🗑️ Oo, Burahin</button>
+                <button id="hindi-bura" class="btn secondary-btn btn-full" style="margin-top:8px;">Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idNagbabago = null;
+            let idBuburahin = null;
+
+            // === ILISTA ANG LAHAT NG RUTA ===
+            function ilistaRuta() {
+                const lugar = document.getElementById('lista-ruta');
+                const lahat = RIDER_APP.lahatNgRuta();
+
+                if (lahat.length === 0) {
+                    lugar.innerHTML = '<p style="text-align:center; color:#4E5969; padding:20px;">Wala pang nakalagay na ruta. Magdagdag sa ibaba.</p>';
+                    return;
+                }
+
+                lugar.innerHTML = '';
+                lahat.forEach(r => {
+                    const kalk = RIDER_APP.kalkulahin(r);
+                    const klaseKita = kalk.kita >= 0 ? 'babala-kita' : 'babala-lugi';
+                    
+                    lugar.innerHTML += `
+                    <div class="bagay-ruta" data-id="${r.id}">
+                        <div class="detalye-ruta">
+                            <strong>${r.pangalan}</strong>
+                            ${r.pinagmulan} → ${r.patutunguhan}<br>
+                            📏 ${r.km_isang_daan} km (isang daan) • ⛽ ${r.litro_biyahe_dalawa} L<br>
+                            💰 Kita: <span class="${klaseKita}">${RIDER_APP.pormatPera(kalk.kita)}</span>
+                        </div>
+                        <div class="mga-pindutan">
+                            <button class="btn-maliit secondary-btn baguhin-btn" data-id="${r.id}">✏️ Baguhin</button>
+                            <button class="btn-maliit danger-btn bura-btn" data-id="${r.id}">🗑️ Burahin</button>
+                        </div>
+                    </div>`;
+                });
+
+                // Maglagay ng gawain sa mga pindutan
+                ilakipGawainSaPindutan();
+            }
+
+            // === ILAGAY ANG GAWAIN SA MGA PINDUTAN ===
+            function ilakipGawainSaPindutan() {
+                // Baguhin
+                document.querySelectorAll('.baguhin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanParaBaguhin(btn.dataset.id));
+                });
+                // Burahin
+                document.querySelectorAll('.bura-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanPatongBura(btn.dataset.id));
+                });
+            }
+
+            // === BAGUHIN — ILAGAY SA ANYO ===
+            function buksanParaBaguhin(id) {
+                const ruta = RIDER_APP.hanapinRuta(id);
+                if (!ruta) return;
+
+                idNagbabago = id;
+                document.getElementById('pamagat-anyo').textContent = '✏️ Baguhin ang Ruta';
+
+                document.getElementById('r-pangalan').value = ruta.pangalan;
+                document.getElementById('r-mula').value = ruta.pinagmulan;
+                document.getElementById('r-papunta').value = ruta.patutunguhan;
+                document.getElementById('r-km').value = ruta.km_isang_daan;
+                document.getElementById('r-litro').value = ruta.litro_biyahe_dalawa;
+                document.getElementById('r-presyo-gas').value = ruta.presyo_gas_litro;
+                document.getElementById('r-piyesa').value = ruta.gastos_piyesa_biyahe;
+                document.getElementById('r-layon').value = ruta.layon_kita_biyahe_dalawa;
+                document.getElementById('r-pamasahe').value = ruta.pamasahe_biyahe_dalawa;
+
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            // === BURA — PATONG NG KUMPIRMA ===
+            function buksanPatongBura(id) {
+                const ruta = RIDER_APP.hanapinRuta(id);
+                if (!ruta) return;
+                idBuburahin = id;
+                document.getElementById('pangalan-bura').textContent = ruta.pangalan;
+                document.getElementById('patong-bura').classList.remove('nakatago');
+            }
+
+            // Isara ang patong ng bura
+            document.getElementById('hindi-bura').addEventListener('click', () => {
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+            });
+
+            // Kumpirmahin ang bura
+            document.getElementById('kumpirma-bura').addEventListener('click', () => {
+                if (!idBuburahin) return;
+                RIDER_APP.burahinRuta(idBuburahin);
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+                ilistaRuta();
+            });
+
+            // === KUMUHA NG KM SA INTERNET ===
+            document.getElementById('kumuha-km-btn').addEventListener('click', async () => {
+                const mula = document.getElementById('r-mula').value.trim();
+                const papunta = document.getElementById('r-papunta').value.trim();
+                if (!mula || !papunta) {
+                    alert('❌ Ilagay muna ang Pinagmulan at Patutunguhan');
+                    return;
+                }
+                const res = await RIDER_APP.kumuhaDistansya(mula, papunta);
+                if (!res.tagumpay) alert(res.mensahe);
+            });
+
+            // === ISUMBAG — BAGONG RUTA O PAGBABAGO ===
+            document.getElementById('isumbag-btn').addEventListener('click', () => {
+                const datos = {
+                    pangalan: document.getElementById('r-pangalan').value.trim(),
+                    pinagmulan: document.getElementById('r-mula').value.trim(),
+                    patutunguhan: document.getElementById('r-papunta').value.trim(),
+                    km_isang_daan: Number(document.getElementById('r-km').value) || 0,
+                    litro_biyahe_dalawa: Number(document.getElementById('r-litro').value) || 0,
+                    presyo_gas_litro: Number(document.getElementById('r-presyo-gas').value) || RIDER_APP.datos.mga_katakda.presyo_gas_pangkalahatan,
+                    gastos_piyesa_biyahe: Number(document.getElementById('r-piyesa').value) || 0,
+                    layon_kita_biyahe_dalawa: Number(document.getElementById('r-layon').value) || 0,
+                    pamasahe_biyahe_dalawa: Number(document.getElementById('r-pamasahe').value) || 0
+                };
+
+                // Pagsusuri sa kinakailangang datos
+                if (!datos.pangalan || !datos.pinagmulan || !datos.patutunguhan || !datos.km_isang_daan || !datos.litro_biyahe_dalawa) {
+                    alert('❌ Kumpletuhin ang lahat ng may *');
+                    return;
+                }
+
+                if (idNagbabago) {
+                    RIDER_APP.baguhinRuta(idNagbabago, datos);
+                    alert('✅ Na-update na ang ruta!');
+                } else {
+                    RIDER_APP.magdagdagRuta(datos);
+                    alert('✅ Naisave na ang bagong ruta!');
+                }
+
+                // Linisin ang anyo
+                linisinAnyo();
+                ilistaRuta();
+            });
+
+            // === LINISIN ANG ANYO ===
+            function linisinAnyo() {
+                idNagbabago = null;
+                document.getElementById('pamagat-anyo').textContent = '➕ Magdagdag ng Bagong Ruta';
+                ['r-pangalan','r-mula','r-papunta','r-km','r-litro','r-presyo-gas','r-piyesa','r-layon','r-pamasahe']
+                .forEach(id => document.getElementById(id).value = '');
+            }
+
+            // Simulan
+            ilistaRuta();
+        });
+    </script>
+</body>
+</html>
