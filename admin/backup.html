@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💾 Pag-Imbak at Paglilipat | Admin — Rider Dispatcher</title>
+    <!-- File: admin/backup.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .teksto-lugar { width: 100%; min-height: 140px; padding: 12px; border: 1px solid #E5E6EB; border-radius: 12px; font-family: monospace; font-size: 11px; background: #F9FAFB; resize: vertical; box-sizing: border-box; }
+        .tandaan-kahon { background: #E8F0FF; border-left: 4px solid #165DFF; padding: 14px; border-radius: 8px; margin: 12px 0; }
+        .babala-kahon { background: #FFF7E8; border-left: 4px solid #FF7D00; padding: 14px; border-radius: 8px; margin: 12px 0; }
+        .tagumpay-kahon { background: #E8FFEE; border-left: 4px solid #00B42A; padding: 14px; border-radius: 8px; margin: 12px 0; display: none; }
+        .hakbang { font-weight: 600; color: #165DFF; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 12px; text-align: center; }
+        .patong-loob p { font-size: 14px; color: #4E5969; margin-bottom: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- === NABIGASYON === -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">💾 Pag-Imbak</span>
+            <span></span>
+        </nav>
+
+        <!-- === PAG-EXPORT — KOPYAHIN ANG DATOS === -->
+        <section class="form-section">
+            <h3>📤 Pag-export — Kopyahin ang Datos</h3>
+            <p style="font-size:14px; color:#4E5969; margin-bottom:10px;">
+                Kopyahin ang buong teksto sa kahon sa ibaba at ilagay sa ligtas na lugar — halimbawa: mensahe sa sarili, tala, o ibang pahina.
+            </p>
+
+            <textarea id="teksto-export" class="teksto-lugar" readonly placeholder="Naghahanda…"></textarea>
+
+            <button id="kopyahin-btn" class="btn primary-btn btn-full" style="margin-top: 10px;">
+                📋 Kopyahin ang Lahat
+            </button>
+
+            <div id="tagumpay-kopya" class="tagumpay-kahon">
+                ✅ Nakopya na! Ilagay ito sa ligtas na lugar.
+            </div>
+        </section>
+
+        <!-- === PAG-IMPORT — IBALIK ANG DATOS === -->
+        <section class="form-section">
+            <h3>📥 Pag-Import — Ibalik ang Datos</h3>
+            <p style="font-size:14px; color:#4E5969; margin-bottom:10px;">
+                Idikit dito ang nakopyang teksto mula sa lumang telepono o sa nakaimbak na kopya.
+            </p>
+
+            <textarea id="teksto-import" class="teksto-lugar" placeholder="Idikit dito ang teksto…"></textarea>
+
+            <div class="babala-kahon">
+                ⚠️ <strong>Paalala:</strong> Kapag naisagawa na, <em>papalitan</em> nito ang kasalukuyang lahat ng ruta at pagtatakda. Hindi na mababawi ang lumang datos.
+            </div>
+
+            <button id="ibalik-btn" class="btn primary-btn btn-full" style="margin-top: 8px;">
+                📂 Ibalik / Ipalit ang Datos
+            </button>
+        </section>
+
+        <!-- === GABAY SA PAGLILIPAT === -->
+        <section class="form-section">
+            <h3>📱 Paano Ilipat sa Ibang Telepono?</h3>
+            
+            <p><span class="hakbang">Hakbang 1:</span> Sa lumang telepono — pindutin ang <strong>Kopyahin ang Lahat</strong> sa itaas.</p>
+            <p><span class="hakbang">Hakbang 2:</span> Ipadala ang nakopyang teksto sa sarili — halimbawa sa Messenger, Tala, o SMS.</p>
+            <p><span class="hakbang">Hakbang 3:</span> Sa bagong telepono — buksan ang pahinang ito, idikit ang teksto sa kahon sa <strong>Pag-Import</strong>.</p>
+            <p><span class="hakbang">Hakbang 4:</span> Pindutin ang <strong>Ibalik / Ipalit ang Datos</strong> — tapos na!</p>
+
+            <div class="tandaan-kahon">
+                💡 <strong>Paalala:</strong> Gawin ito paminsan-minsan bilang pag-iimbak, kahit hindi nagpapalit ng telepono — para hindi mawala kapag may nangyari sa aparato.
+            </div>
+        </section>
+
+        <!-- === PATONG: KUMPIRMA SA PAGPAPALIT === -->
+        <div id="patong-kumpirma" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Sigurado ka ba?</h2>
+                <p>Ang kasalukuyang lahat ng ruta at pagtatakda ay papalitan ng bagong datos. Hindi na mababawi ang luma.</p>
+                <button id="oo-ipalit" class="btn primary-btn btn-full">✅ Oo, Ipalit</button>
+                <button id="hindi-ipalit" class="btn secondary-btn btn-full" style="margin-top: 8px;">❌ Huwag</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === ILAGAY ANG DATOS SA PAG-EXPORT ===
+            function ilagayExport() {
+                const datos = {
+                    bersyon: RIDER_APP.VERSION,
+                    petsa: new Date().toISOString(),
+                    datos: RIDER_APP.datos
+                };
+                document.getElementById('teksto-export').value = JSON.stringify(datos, null, 2);
+                document.getElementById('tagumpay-kopya').style.display = 'none';
+            }
+
+            ilagayExport();
+
+            // === KOPYAHIN SA KLIBOARD ===
+            document.getElementById('kopyahin-btn').addEventListener('click', async () => {
+                const teksto = document.getElementById('teksto-export').value;
+                if (!teksto) {
+                    alert('❌ Wala namang kokopyahin!');
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.writeText(teksto);
+                    document.getElementById('tagumpay-kopya').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('tagumpay-kopya').style.display = 'none';
+                    }, 3000);
+                } catch {
+                    // Kung hindi gumagana ang clipboard — piliin lang ang teksto
+                    document.getElementById('teksto-export').select();
+                    alert('Kopyahin nang kamay ang teksto sa kahon gamit ang "Kopyahin" sa menu.');
+                }
+            });
+
+            // === BUKAS ANG PATONG NG KUMPIRMA ===
+            document.getElementById('ibalik-btn').addEventListener('click', () => {
+                const teksto = document.getElementById('teksto-import').value.trim();
+                if (!teksto) {
+                    alert('❌ Idikit muna ang teksto mula sa pag-export!');
+                    return;
+                }
+                document.getElementById('patong-kumpirma').classList.remove('nakatago');
+            });
+
+            // === HUWAG MAGPALIT ===
+            document.getElementById('hindi-ipalit').addEventListener('click', () => {
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+            });
+
+            // === IPALIT ANG DATOS ===
+            document.getElementById('oo-ipalit').addEventListener('click', () => {
+                const teksto = document.getElementById('teksto-import').value.trim();
+                
+                try {
+                    const nakuha = JSON.parse(teksto);
+                    
+                    // Suriin kung tama ang pormat
+                    if (!nakuha.datos || !nakuha.datos.mga_ruta) {
+                        throw new Error('Hindi tamang pormat');
+                    }
+
+                    // Ilipat ang datos
+                    RIDER_APP.datos = nakuha.datos;
+                    RIDER_APP.iimbak();
+                    
+                    alert('✅ Matagumpay! Naibalik na ang lahat ng datos.');
+                    document.getElementById('teksto-import').value = '';
+                    ilagayExport(); // I-refresh ang export
+                } catch (e) {
+                    alert('❌ Hindi magamit ang teksto!\nSiguraduhing buo ang nakopya mula sa Pag-export.');
+                }
+
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+            });
+        });
+    </script>
+</body>
+</html>
