@@ -3,65 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚙️ Admin — Pangunahin | Rider Dispatcher</title>
-    <!-- File: admin/index.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <title>🏠 Admin — Rider Dispatcher</title>
+    <!-- File: admin/index.html | Bersyon: 1.3.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
     <style>
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        .menu-kard { background: #fff; border-radius: 12px; padding: 20px; text-align: center; text-decoration: none; color: inherit; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
-        .menu-kard:active { transform: scale(0.97); }
-        .menu-icon { font-size: 32px; margin-bottom: 8px; }
-        .menu-pangalan { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
-        .menu-desc { font-size: 12px; color: #4E5969; }
-        @media (max-width: 360px) { .grid-menu { grid-template-columns: 1fr; } }
+        .pamagat-larawan { text-align: center; padding: 20px 0; }
+        .pamagat-larawan h1 { margin: 0; font-size: 22px; color: #1D2129; }
+        .pamagat-larawan p { margin: 4px 0 0; color: #86909C; font-size: 13px; }
+        .kabanata { margin: 16px 0; }
+        .kabanata-pamagat { font-size: 14px; font-weight: 600; color: #86909C; margin-bottom: 8px; padding-left: 4px; }
+        .grid-link { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .link-kahon {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 16px 10px; background: white; border-radius: 12px; border: 1px solid #E5E6EB;
+            text-decoration: none; color: #1D2129; text-align: center; transition: all 0.2s;
+        }
+        .link-kahon:active { transform: scale(0.97); background: #F2F3F5; }
+        .link-ikon { font-size: 24px; margin-bottom: 6px; }
+        .link-pangalan { font-size: 13px; font-weight: 500; line-height: 1.3; }
+        .kabuuang-kahon {
+            background: linear-gradient(135deg, #165DFF 0%, #4080FF 100%);
+            color: white; padding: 16px; border-radius: 12px; margin-bottom: 20px;
+        }
+        .kabuuan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .kabuuan-item { text-align: center; }
+        .kabuuan-halaga { font-size: 20px; font-weight: 700; }
+        .kabuuan-pamagat { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+        .babala-susi {
+            background: #FFF7E8; border-left: 3px solid #FF7D00; padding: 10px 12px; border-radius: 0 8px 8px 0;
+            margin-bottom: 16px; font-size: 13px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <nav class="nav-bar">
-            <a href="../index.html" class="nav-back">← Bumalik</a>
-            <span class="nav-title">⚙️ Panel ng Tagapamahala</span>
-            <span></span>
-        </nav>
 
-        <div style="text-align: center; margin: 20px 0;">
-            <span style="font-size: 40px;">🔧</span>
-            <h1 style="font-size: 20px; margin: 8px 0 4px;">Pamamahala ng Sistema</h1>
-            <p style="color: #4E5969; font-size: 14px;">Pumili ng bahaging nais mong pamahalaan</p>
+        <!-- PAMAGAT -->
+        <div class="pamagat-larawan">
+            <h1>🏍️ Rider Dispatcher</h1>
+            <p>Sistema ng Pamamahala sa Biyahe at Kita — Bersyon 1.3.0</p>
         </div>
 
-        <div class="grid-menu">
-            <a href="routes.html" class="menu-kard">
-                <div class="menu-icon">📍</div>
-                <div class="menu-pangalan">Mga Ruta</div>
-                <div class="menu-desc">Ilista, dagdagan, baguhin, burahin</div>
-            </a>
-
-            <a href="settings.html" class="menu-kard">
-                <div class="menu-icon">⚙️</div>
-                <div class="menu-pangalan">Pagtatakda</div>
-                <div class="menu-desc">Presyo ng gas, piyesa, kodigo</div>
-            </a>
-
-            <a href="backup.html" class="menu-kard">
-                <div class="menu-icon">💾</div>
-                <div class="menu-pangalan">Pag-Imbak</div>
-                <div class="menu-desc">I-export, i-import, kopyahin</div>
-            </a>
-
-            <a href="about.html" class="menu-kard">
-                <div class="menu-icon">ℹ️</div>
-                <div class="menu-pangalan">Tungkol</div>
-                <div class="menu-desc">Bersyon, gabay, may-akda</div>
-            </a>
+        <!-- BABALA KUNG WALANG NAKATAKDANG SUSI -->
+        <div class="babala-susi" id="babala-susi">
+            ⚠️ Hindi pa nakatakda ang Susi ng Admin. Pumunta sa <strong>Seguridad at Antas</strong> para itakda ito.
         </div>
 
-        <div style="margin-top: 24px; text-align: center;">
-            <a href="../help.html" target="_blank" class="btn secondary-btn">📖 Buksan ang Buong Gabay</a>
+        <!-- KABUUAN SA TINGNAN -->
+        <div class="kabuuang-kahon">
+            <h3 style="margin:0 0 10px; font-size:15px; opacity:0.9;">📊 Mabilis na Tingnan</h3>
+            <div class="kabuuan-grid">
+                <div class="kabuuan-item">
+                    <div class="kabuuan-halaga" id="bilang-ruta">0</div>
+                    <div class="kabuuan-pamagat">Ruta</div>
+                </div>
+                <div class="kabuuan-item">
+                    <div class="kabuuan-halaga" id="bilang-rider">0</div>
+                    <div class="kabuuan-pamagat">Rider</div>
+                </div>
+                <div class="kabuuan-item">
+                    <div class="kabuuan-halaga" id="bilang-utos">0</div>
+                    <div class="kabuuan-pamagat">Utos</div>
+                </div>
+                <div class="kabuuan-item">
+                    <div class="kabuuan-halaga" id="kita-araw">₱0</div>
+                    <div class="kabuuan-pamagat">Kita Ngayon</div>
+                </div>
+            </div>
         </div>
+
+        <!-- PANGUNAHING TALAAN -->
+        <div class="kabanata">
+            <div class="kabanata-pamagat">📋 Talaan ng Biyahe</div>
+            <div class="grid-link">
+                <a href="../index.html" class="link-kahon">
+                    <span class="link-ikon">🛣️</span>
+                    <span class="link-pangalan">Pagkalkula<br>ng Ruta</span>
+                </a>
+                <a href="routes.html" class="link-kahon">
+                    <span class="link-ikon">📍</span>
+                    <span class="link-pangalan">Pamamahala<br>sa Ruta</span>
+                </a>
+                <a href="riders.html" class="link-kahon">
+                    <span class="link-ikon">🏍️</span>
+                    <span class="link-pangalan">Talaan<br>ng Rider</span>
+                </a>
+                <a href="customers.html" class="link-kahon">
+                    <span class="link-ikon">👤</span>
+                    <span class="link-pangalan">Mamimili<br>at Utos</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- KITA AT GANTIMPALA -->
+        <div class="kabanata">
+            <div class="kabanata-pamagat">💰 Kita at Gantimpala</div>
+            <div class="grid-link">
+                <a href="orders.html" class="link-kahon">
+                    <span class="link-ikon">📝</span>
+                    <span class="link-pangalan">Talaan<br>ng Utos</span>
+                </a>
+                <a href="rewards.html" class="link-kahon">
+                    <span class="link-ikon">🏆</span>
+                    <span class="link-pangalan">Ranggo<br>at Bonus</span>
+                </a>
+                <a href="promotion.html" class="link-kahon">
+                    <span class="link-ikon">📢</span>
+                    <span class="link-pangalan">Promosyon<br>at Alok</span>
+                </a>
+                <a href="service.html" class="link-kahon">
+                    <span class="link-ikon">💬</span>
+                    <span class="link-pangalan">Serbisyo<br>at Suporta</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- PAMAMAHALA SA SISTEMA -->
+        <div class="kabanata">
+            <div class="kabanata-pamagat">⚙️ Pamamahala sa Sistema</div>
+            <div class="grid-link">
+                <a href="security.html" class="link-kahon">
+                    <span class="link-ikon">🔐</span>
+                    <span class="link-pangalan">Seguridad<br>at Antas</span>
+                </a>
+                <a href="system.html" class="link-kahon">
+                    <span class="link-ikon">🔧</span>
+                    <span class="link-pangalan">Sistema<br>at Pagpapahusay</span>
+                </a>
+                <a href="backup.html" class="link-kahon">
+                    <span class="link-ikon">💾</span>
+                    <span class="link-pangalan">I-backup<br>at Ibalik</span>
+                </a>
+                <a href="../about.html" class="link-kahon">
+                    <span class="link-ikon">ℹ️</span>
+                    <span class="link-pangalan">Tungkol<br>sa Sistema</span>
+                </a>
+            </div>
+        </div>
+
+        <p style="text-align:center; font-size:11px; color:#C9CDD4; margin-top:30px;">
+            Rider Dispatcher v1.3.0 • martodosko • 2026
+        </p>
+
     </div>
 
     <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Bilang ng ruta
+            document.getElementById('bilang-ruta').textContent = RIDER_APP.datos.mga_ruta?.length || 0;
+            // Bilang ng rider
+            document.getElementById('bilang-rider').textContent = RIDER_APP.datos.mga_rider?.length || 0;
+            // Bilang ng utos
+            const lahatUtos = RIDER_APP.datos.mga_utos || [];
+            document.getElementById('bilang-utos').textContent = lahatUtos.length;
+            // Kita sa araw na ito
+            const ngayon = new Date().toISOString().slice(0,10);
+            const kitaAraw = lahatUtos
+                .filter(u => u.petsa?.startsWith(ngayon) && u.katayuan === 'tapos')
+                .reduce((s,u) => s + (Number(u.halaga) || 0), 0);
+            document.getElementById('kita-araw').textContent = RIDER_APP.pormatPera(kitaAraw);
+            // Babala kung walang susi
+            const maySusi = RIDER_APP.datos.mga_katakda.susi_admin || RIDER_APP.datos.mga_katakda.kodigo_admin;
+            if (!maySusi || maySusi === '1234') { // Kung pa rin ang orihinal
+                document.getElementById('babala-susi').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
