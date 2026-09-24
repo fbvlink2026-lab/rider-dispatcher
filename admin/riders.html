@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏍️ Mga Rider | Admin — Rider Dispatcher</title>
+    <!-- File: admin/riders.html | Bersyon: 1.1.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .lista { margin-top: 10px; }
+        .bagay { padding: 14px; border-bottom: 1px solid #F2F3F5; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .bagay:last-child { border-bottom: none; }
+        .detalye { flex: 1; font-size: 14px; }
+        .detalye strong { display: block; font-size: 15px; margin-bottom: 2px; }
+        .estatus-aktibo { color: #00B42A; font-weight: 600; }
+        .estatus-hindi-aktibo { color: #F53F3F; font-weight: 600; }
+        .mga-pindutan { display: flex; flex-direction: column; gap: 6px; min-width: 85px; }
+        .btn-maliit { padding: 6px 10px; font-size: 13px; border-radius: 8px; border: none; cursor: pointer; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">🏍️ Mga Rider</span>
+            <span></span>
+        </nav>
+
+        <!-- LISTAHAN NG RIDER -->
+        <section class="form-section">
+            <h3>Listahan ng Lahat ng Rider</h3>
+            <div id="lista-rider" class="lista">
+                <p style="text-align:center; color:#4E5969; padding:20px;">Naglalagay…</p>
+            </div>
+        </section>
+
+        <!-- MAGDAGDAG / BAGUHIN -->
+        <section class="form-section">
+            <h3 id="pamagat-anyo">➕ Magdagdag ng Bagong Rider</h3>
+            
+            <div class="input-group">
+                <label>Pangalan *</label>
+                <input type="text" id="r-pangalan" placeholder="Buong pangalan">
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Numero ng Telepono</label>
+                    <input type="tel" id="r-telepono" placeholder="09XX XXX XXXX">
+                </div>
+                <div class="input-group">
+                    <label>Plaka / Tanda ng Sasakyan</label>
+                    <input type="text" id="r-sasakyan" placeholder="Hal. ABC-123">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Pangunahing Ruta</label>
+                <select id="r-ruta">
+                    <option value="">— Pumili ng ruta —</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Katayuan</label>
+                <select id="r-katayuan">
+                    <option value="aktibo" selected>✅ Aktibo</option>
+                    <option value="hindi_aktibo">❌ Hindi Aktibo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Tala / Paalala</label>
+                <textarea id="r-tala" style="width:100%; min-height:70px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;" placeholder="Iba pang impormasyon…"></textarea>
+            </div>
+
+            <button id="isumbag-btn" class="btn primary-btn btn-full">✅ I-save</button>
+        </section>
+
+        <!-- PATONG NG PAGBURA -->
+        <div id="patong-bura" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Burahin ang Rider?</h2>
+                <p id="pangalan-bura" style="text-align:center; margin-bottom:16px; font-weight:600;"></p>
+                <p style="font-size:14px; color:#4E5969; margin-bottom:20px;">Hindi na mababawi kapag nabura.</p>
+                <button id="kumpirma-bura" class="btn danger-btn btn-full">🗑️ Oo, Burahin</button>
+                <button id="hindi-bura" class="btn secondary-btn btn-full" style="margin-top:8px;">Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idNagbabago = null;
+            let idBuburahin = null;
+
+            // ILAGAY ANG MGA RUTA SA PAGPIPILIAN
+            function ilagayMgaRutaSaPagpipilian() {
+                const lugar = document.getElementById('r-ruta');
+                lugar.innerHTML = '<option value="">— Pumili ng ruta —</option>';
+                (RIDER_APP.datos.mga_ruta || []).forEach(r => {
+                    lugar.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+            }
+
+            // ILISTA ANG LAHAT NG RIDER
+            function ilistaRider() {
+                const lugar = document.getElementById('lista-rider');
+                const lahat = RIDER_APP.datos.mga_rider || [];
+
+                if (lahat.length === 0) {
+                    lugar.innerHTML = '<p style="text-align:center; color:#4E5969; padding:20px;">Wala pang nakalagay na rider.</p>';
+                    return;
+                }
+
+                lugar.innerHTML = '';
+                lahat.forEach(r => {
+                    const klase = r.katayuan === 'aktibo' ? 'estatus-aktibo' : 'estatus-hindi-aktibo';
+                    const rutaPangalan = kuninPangalanNgRuta(r.rutaId);
+                    
+                    lugar.innerHTML += `
+                    <div class="bagay" data-id="${r.id}">
+                        <div class="detalye">
+                            <strong>${r.pangalan}</strong>
+                            ☎️ ${r.telepono || 'Wala'} • 🚗 ${r.sasakyan || 'Wala'}<br>
+                            📍 ${rutaPangalan || 'Walang itinakdang ruta'} • <span class="${klase}">${r.katayuan === 'aktibo' ? 'Aktibo' : 'Hindi Aktibo'}</span>
+                        </div>
+                        <div class="mga-pindutan">
+                            <button class="btn-maliit secondary-btn baguhin-btn" data-id="${r.id}">✏️ Baguhin</button>
+                            <button class="btn-maliit danger-btn bura-btn" data-id="${r.id}">🗑️ Burahin</button>
+                        </div>
+                    </div>`;
+                });
+
+                ilakipGawainSaPindutan();
+            }
+
+            function kuninPangalanNgRuta(id) {
+                if (!id) return '';
+                const ruta = (RIDER_APP.datos.mga_ruta || []).find(r => r.id === id);
+                return ruta ? ruta.pangalan : '';
+            }
+
+            function ilakipGawainSaPindutan() {
+                document.querySelectorAll('.baguhin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanParaBaguhin(btn.dataset.id));
+                });
+                document.querySelectorAll('.bura-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanPatongBura(btn.dataset.id));
+                });
+            }
+
+            function buksanParaBaguhin(id) {
+                const rider = (RIDER_APP.datos.mga_rider || []).find(r => r.id === id);
+                if (!rider) return;
+                idNagbabago = id;
+                document.getElementById('pamagat-anyo').textContent = '✏️ Baguhin ang Rider';
+                document.getElementById('r-pangalan').value = rider.pangalan || '';
+                document.getElementById('r-telepono').value = rider.telepono || '';
+                document.getElementById('r-sasakyan').value = rider.sasakyan || '';
+                document.getElementById('r-ruta').value = rider.rutaId || '';
+                document.getElementById('r-katayuan').value = rider.katayuan || 'aktibo';
+                document.getElementById('r-tala').value = rider.tala || '';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            function buksanPatongBura(id) {
+                const rider = (RIDER_APP.datos.mga_rider || []).find(r => r.id === id);
+                if (!rider) return;
+                idBuburahin = id;
+                document.getElementById('pangalan-bura').textContent = rider.pangalan;
+                document.getElementById('patong-bura').classList.remove('nakatago');
+            }
+
+            document.getElementById('hindi-bura').addEventListener('click', () => {
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+            });
+
+            document.getElementById('kumpirma-bura').addEventListener('click', () => {
+                if (!idBuburahin) return;
+                RIDER_APP.datos.mga_rider = RIDER_APP.datos.mga_rider.filter(r => r.id !== idBuburahin);
+                RIDER_APP.iimbak();
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+                ilistaRider();
+            });
+
+            document.getElementById('isumbag-btn').addEventListener('click', () => {
+                const pangalan = document.getElementById('r-pangalan').value.trim();
+                if (!pangalan) { alert('❌ Ilagay ang pangalan'); return; }
+
+                const bagongDato = {
+                    id: idNagbabago || 'rider_' + Date.now(),
+                    pangalan,
+                    telepono: document.getElementById('r-telepono').value.trim(),
+                    sasakyan: document.getElementById('r-sasakyan').value.trim(),
+                    rutaId: document.getElementById('r-ruta').value,
+                    katayuan: document.getElementById('r-katayuan').value,
+                    tala: document.getElementById('r-tala').value.trim()
+                };
+
+                if (idNagbabago) {
+                    const idx = RIDER_APP.datos.mga_rider.findIndex(r => r.id === idNagbabago);
+                    RIDER_APP.datos.mga_rider[idx] = bagongDato;
+                    alert('✅ Na-update na!');
+                } else {
+                    if (!RIDER_APP.datos.mga_rider) RIDER_APP.datos.mga_rider = [];
+                    RIDER_APP.datos.mga_rider.push(bagongDato);
+                    alert('✅ Naisave na!');
+                }
+
+                linisinAnyo();
+                ilistaRider();
+            });
+
+            function linisinAnyo() {
+                idNagbabago = null;
+                document.getElementById('pamagat-anyo').textContent = '➕ Magdagdag ng Bagong Rider';
+                ['r-pangalan','r-telepono','r-sasakyan','r-ruta','r-tala'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('r-katayuan').value = 'aktibo';
+            }
+
+            ilagayMgaRutaSaPagpipilian();
+            ilistaRider();
+        });
+    </script>
+</body>
+</html>
