@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tl">
 <head>
-       <!-- ================================================== -->
+    <!-- ================================================== -->
     <!-- 🏍️ HABAL-HABAL RATE CALCULATOR                    -->
     <!-- File: index.html                                   -->
     <!-- Bersyon: 11.0.0                                    -->
@@ -11,17 +11,69 @@
     <!-- Karapatang-ari: © 2026 martodosko                  -->
     <!-- Lisensya: Libre — Para sa mga Tsuper ng Pilipinas  -->
     <!-- ================================================== -->
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habal-Habal Rate Calculator v11.0 — by martodosko</title>
-    <meta name="description" content="Kuwentahin ang kita o lugi sa bawat biyahe. Realtime GPS + Mapa. Libre at walang bayad.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- 📋 PANGALAN AT PAGLALARAWAN NG APP -->
+    <title>Habal-Habal Rate Calculator v11.0 — Rider's Dispatcher System</title>
+    <meta name="application-name" content="Habal-Habal Rate Calculator">
+    <meta name="description" content="Kuwentahin ang kita o lugi sa bawat biyahe. Realtime GPS tracking + OpenStreetMap. Konektado sa Admin Dispatcher Panel. Libre at walang bayad para sa mga tsuper sa Pilipinas.">
+    <meta name="keywords" content="habal-habal, rate calculator, kita, lugi, pamasahe, GPS, mapa, dispatcher, rider, transportasyon, Pilipinas">
     <meta name="author" content="martodosko">
-    <meta property="og:title" content="Habal-Habal Rate Calculator">
-    <meta property="og:description" content="Alamin kung kumita ka ba o nalugi sa bawat biyahe.">
+    <meta name="creator" content="martodosko">
+    <meta name="generator" content="martodosko">
+    <meta name="robots" content="index, follow">
+    
+    <!-- 🔐 PAGTUKOY SA SISTEMA -->
+    <meta name="version" content="11.0.0">
+    <meta name="build-date" content="2026-09-24T12:30:00+08:00">
+    <meta name="category" content="Transport / Business / Finance">
+    <meta name="system-connection" content="Admin Panel (admin.html)">
+    <meta name="storage-mode" content="LocalStorage Shared">
+    
+    <!-- 📱 MOBILE & PWA -->
+    <meta name="theme-color" content="#1565C0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Habal-Habal Calc">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=yes">
+    
+    <!-- 🔗 OPEN GRAPH — FACEBOOK / MESSENGER / SOCMED -->
     <meta property="og:type" content="website">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="Habal-Habal Rate Calculator">
+    <meta property="og:title" content="🏍️ Habal-Habal Rate Calculator — Alamin ang Kita o Lugi">
+    <meta property="og:description" content="Kuwentahin ang kinita o nalugi sa bawat biyahe. May GPS tracking, mapa, at koneksyon sa Admin Dispatcher. Libre para sa lahat ng tsuper.">
+    <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%231565C0' width='1200' height='630'/><text x='50%' y='45%' font-size='120' text-anchor='middle' fill='white'>🏍️</text><text x='50%' y='65%' font-size='48' text-anchor='middle' fill='white'>Habal-Habal Rate Calculator</text><text x='50%' y='80%' font-size='24' text-anchor='middle' fill='%23E3F2FD'>v11.0 · ni martodosko</text></svg>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="tl_PH">
+    <meta property="og:locale:alternate" content="en_PH">
+    
+    <!-- 🐦 TWITTER / X CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🏍️ Habal-Habal Rate Calculator">
+    <meta name="twitter:description" content="Alamin kung kumita ka ba o nalugi sa bawat biyahe. GPS + Mapa + Dispatcher System.">
+    <meta name="twitter:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%231565C0' width='1200' height='630'/><text x='50%' y='45%' font-size='120' text-anchor='middle' fill='white'>🏍️</text><text x='50%' y='65%' font-size='48' text-anchor='middle' fill='white'>Habal-Habal Rate Calculator</text></svg>">
+    <meta name="twitter:creator" content="@martodosko">
+    
+    <!-- 💬 WHATSAPP / MESSENGER PREVIEW -->
+    <meta itemprop="name" content="Habal-Habal Rate Calculator">
+    <meta itemprop="description" content="Kuwentahin ang kita/lugi sa bawat biyahe — GPS + Mapa + Dispatcher Connection">
+    <meta itemprop="image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%231565C0' width='1200' height='630'/><text x='50%' y='50%' font-size='120' text-anchor='middle' fill='white'>🏍️</text></svg>">
+    
+    <!-- 📌 FAVICON / IKON -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    
+    <!-- 🗺️ MAPA — LEAFLET -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 🎨 ESTILO — ILAGAY ANG <style> DITO SA IBABA -->
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
         :root {
@@ -212,6 +264,7 @@
         @keyframes fadeIn { from { opacity:0; transform: translateY(-5px); } to { opacity:1; transform: translateY(0); } }
     </style>
 </head>
+
 <body>
 
 <!-- ===== SIDE MENU ===== -->
@@ -811,3 +864,114 @@ function openImportExport() {
         a.click();
     }
 }
+
+function showHelp() { document.getElementById('help-modal').style.display = 'flex'; }
+function closeHelp() { document.getElementById('help-modal').style.display = 'none'; }
+
+function shareFB() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+function shareWA() {
+    const text = encodeURIComponent("🏍️ Habal-Habal Rate Calculator — Alamin kung kumita ka ba o nalugi sa bawat biyahe!");
+    window.open(`https://wa.me/?text=${text} ${window.location.href}`, '_blank');
+}
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => alert("✅ Nakopya na ang link!"));
+}
+
+function recordTripFromList(routeId) {
+    useRoute(routeId);
+}
+
+function goBack() {
+    document.getElementById('calc-screen').classList.add('hidden');
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('menu-screen').classList.remove('hidden');
+    renderRouteList();
+    updateGrandTotal();
+    updateProgress();
+}
+
+function updateProgress() {
+    if (!DAILY_GOAL || tripRecords.length === 0) {
+        document.getElementById('progress-card').style.display = 'none';
+        return;
+    }
+    document.getElementById('progress-card').style.display = 'block';
+    const earned = tripRecords.reduce((s, t) => s + t.net, 0);
+    const pct = Math.min(100, Math.round((earned / DAILY_GOAL) * 100));
+    const remaining = Math.max(0, DAILY_GOAL - earned);
+    
+    document.getElementById('progress-earned').textContent = earned.toFixed(2);
+    document.getElementById('progress-remaining').textContent = remaining.toFixed(2);
+    document.getElementById('progress-percent').textContent = pct + '%';
+    
+    const bar = document.getElementById('progress-bar');
+    bar.style.width = pct + '%';
+    bar.classList.remove('progress-red', 'progress-orange', 'progress-complete');
+    if (pct >= 100) bar.classList.add('progress-complete');
+    else if (pct >= 50) bar.classList.add('progress-orange');
+    else bar.classList.add('progress-red');
+}
+
+// ========== PAGBABASA NG DATOS MULA SA ADMIN ==========
+function syncFromAdmin() {
+    // I-refresh ang mga ruta mula sa shared storage
+    const sharedRoutes = getSharedData('sharedRoutes');
+    if (sharedRoutes) routes = sharedRoutes;
+    
+    // I-refresh ang mga pagtatakda mula sa Admin
+    const sharedSettings = getSharedData('systemSettings');
+    if (sharedSettings) {
+        if (sharedSettings.vehicle) SEL_VEHICLE = sharedSettings.vehicle;
+        if (sharedSettings.maintenance !== undefined) MAINTENANCE = sharedSettings.maintenance;
+        if (sharedSettings.rent !== undefined) RENT = sharedSettings.rent;
+        if (sharedSettings.gasPrice !== undefined) GAS_PRICE = sharedSettings.gasPrice;
+    }
+    
+    // I-refresh ang layunin mula sa Admin
+    const goal = localStorage.getItem('dailyGoal');
+    if (goal) DAILY_GOAL = parseFloat(goal);
+    
+    // Ipakita sa screen
+    document.getElementById('show-vehicle').textContent = 
+        SEL_VEHICLE === 'custom' && CUSTOM_VEH ? CUSTOM_VEH.name : VEHICLES[SEL_VEHICLE].name;
+    document.getElementById('show-maint').textContent = MAINTENANCE.toFixed(2);
+    document.getElementById('show-rent').textContent = RENT.toFixed(2);
+    document.getElementById('show-gas-global').textContent = GAS_PRICE ? GAS_PRICE.toFixed(2) : 'Hindi nakatakda';
+    document.getElementById('show-daily-goal').textContent = DAILY_GOAL.toFixed(2);
+    
+    renderRouteList();
+    updateGrandTotal();
+    updateProgress();
+}
+
+// ========== PAGSISIMULA NG APP ==========
+document.addEventListener('DOMContentLoaded', () => {
+    // Magbasa ng mga nakatagong halaga
+    if (localStorage.getItem('selVehicle')) SEL_VEHICLE = localStorage.getItem('selVehicle');
+    if (localStorage.getItem('maintPerDay')) MAINTENANCE = parseFloat(localStorage.getItem('maintPerDay'));
+    if (localStorage.getItem('rentPerDay')) RENT = parseFloat(localStorage.getItem('rentPerDay'));
+    if (localStorage.getItem('gasPrice')) GAS_PRICE = parseFloat(localStorage.getItem('gasPrice'));
+    if (localStorage.getItem('dailyGoal')) DAILY_GOAL = parseFloat(localStorage.getItem('dailyGoal'));
+    if (localStorage.getItem('tripRecords')) tripRecords = JSON.parse(localStorage.getItem('tripRecords'));
+    
+    // Custom vehicle kung mayroon
+    if (localStorage.getItem('customVeh')) CUSTOM_VEH = JSON.parse(localStorage.getItem('customVeh'));
+    
+    // Unang pag-sync mula sa Admin
+    syncFromAdmin();
+    checkAdminAssignments();
+    
+    // Awtomatikong mag-sync tuwing 5 segundo
+    setInterval(() => {
+        syncFromAdmin();
+        checkAdminAssignments();
+    }, 5000);
+});
+</script>
+
+</body>
+</html>
