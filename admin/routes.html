@@ -1,43 +1,12 @@
 <!DOCTYPE html>
 <html lang="tl-PH">
 <head>
-    <!-- ==========================================================
-         FILE: admin/routes.html
-         PROJECT: Rider Dispatcher System
-         VERSION: 1.2.0
-         LAST UPDATED: 2026-09-24
-         AUTHOR: martodosko
-         DESCRIPTION: Pamamahala ng Ruta — Magdagdag/Baguhin/Burahin/Kumuha ng Distansya
-         DEPENDENCIES: ../js/common.js, ../css/styles.css
-         STATUS: Aktibo
-         ========================================================== -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Admin Panel — Pamahalaan ang mga ruta, distansya, at pagkalkula ng pamasahe at kita para sa Rider Dispatcher System">
-    <meta name="author" content="martodosko">
-    <meta name="robots" content="noindex, nofollow">
-
-    <!-- Open Graph / Social Media Sharing -->
-    <meta property="og:title" content="Mga Ruta | Admin — Rider Dispatcher">
-    <meta property="og:description" content="Listahan at pamamahala ng lahat ng ruta — magdagdag, magbago, o magtanggal ng biyahe">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="tl_PH">
-    <meta property="og:site_name" content="Rider Dispatcher System">
-    <meta property="og:image" content="https://yourdomain.com/assets/og-banner.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <!-- Twitter / X Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mga Ruta | Admin — Rider Dispatcher">
-    <meta name="twitter:description" content="Pamamahala ng ruta at pagtutuos ng kita para sa mga rider">
-    <meta name="twitter:image" content="https://yourdomain.com/assets/og-banner.jpg">
-
-    <title>Mga Ruta | Admin — Rider Dispatcher</title>
+    <title>📍 Mga Ruta | Admin — Rider Dispatcher</title>
+    <!-- File: admin/routes.html | Bersyon: 1.1.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
-
     <style>
         .lista-ruta { margin-top: 10px; }
         .bagay-ruta { padding: 14px; border-bottom: 1px solid #F2F3F5; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
@@ -151,11 +120,6 @@
 
     <script src="../js/common.js"></script>
     <script>
-        // ==========================================================
-        // MODULE: admin/routes.html — PANGUNAHING LOHIKA
-        // DEPENDS: RIDER_APP (common.js)
-        // ==========================================================
-
         document.addEventListener('DOMContentLoaded', () => {
             let idNagbabago = null;
             let idBuburahin = null;
