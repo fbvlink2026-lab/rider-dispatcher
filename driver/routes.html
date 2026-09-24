@@ -1,0 +1,270 @@
+<!-- ==================================================
+   FILE        : driver/routes.html
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/driver/routes.html
+   LAYUNIN     : Magdagdag / Magbago / Magbura ng Ruta
+   KONEKSYON   : ../js/languages.js | ../js/common.js | ../css/styles.css
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Mga Ruta — Drayber</title>
+    <meta name="description" content="Pamahalaan ang listahan ng mga ruta — magdagdag, magbago, magbura.">
+    <meta name="author" content="martodosko">
+    <meta name="theme-color" content="#00B42A">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo" style="background: linear-gradient(135deg, #00B42A 0%, #009A29 100%);">
+        <h2>🏍️ Drayber</h2>
+        <p>Pamamahala sa Biyahe at Kita</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="index.html" class="menu-link">
+            <span class="menu-ikon">🏠</span>
+            <span>Tahanan</span>
+        </a>
+        <a href="routes.html" class="menu-link aktibo">
+            <span class="menu-ikon">📍</span>
+            <span>Mga Ruta</span>
+        </a>
+        <a href="calculator.html" class="menu-link">
+            <span class="menu-ikon">💰</span>
+            <span>Kalkulahin Presyo</span>
+        </a>
+        <a href="trips.html" class="menu-link">
+            <span class="menu-ikon">📋</span>
+            <span>Talaan ng Biyahe</span>
+        </a>
+        <a href="settings.html" class="menu-link">
+            <span class="menu-ikon">⚙️</span>
+            <span>Pagtatakda</span>
+        </a>
+        <a href="../faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            <span>Gabay / FAQ</span>
+        </a>
+        <a href="../index.html" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔙</span>
+            <span>Bumalik sa Portal</span>
+        </a>
+    </nav>
+    <div class="menu-ibaba">
+        <button class="btn outline-btn" style="margin-bottom: 8px; font-size: 13px; padding: 8px;" onclick="palitanWika()">
+            🌐 <span id="teksto_wika">English</span>
+        </button>
+        <p>© 2026 martodosko</p>
+    </div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar" style="background: linear-gradient(90deg, #00B42A 0%, #009A29 100%); color: white;">
+        <button class="pindutan-menu" id="btnMenu" style="color: white;">☰</button>
+        <span class="pangalan-pahina">📍 Mga Ruta</span>
+    </div>
+
+    <div class="app-container">
+        <!-- MAGDAGDAG / MAGBAGO NG RUTA -->
+        <div class="kahon">
+            <h3 id="titulo_anyo">➕ Magdagdag ng Bagong Ruta</h3>
+            
+            <input type="hidden" id="editing_id" value="">
+            
+            <div class="form-linya">
+                <label class="form-etiketa">Mula</label>
+                <input type="text" id="r_mula" class="form-patlang" placeholder="Hal. Lopez, Quezon">
+            </div>
+            
+            <div class="form-linya">
+                <label class="form-etiketa">Papuntang</label>
+                <input type="text" id="r_papuntang" class="form-patlang" placeholder="Hal. Calauag, Quezon">
+            </div>
+            
+            <div class="form-linya">
+                <label class="form-etiketa">Distansya (km)</label>
+                <input type="number" step="0.1" id="r_layo" class="form-patlang" placeholder="Hal. 22.0">
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button class="btn primary-btn" id="btn_isagaw" onclick="isagawRuta()">
+                    💾 I-save
+                </button>
+                <button class="btn outline-btn" id="btn_kansela" style="display: none;" onclick="kanselaPagbabago()">
+                    ❌ Kansela
+                </button>
+            </div>
+        </div>
+
+        <!-- LISTAHAN NG RUTA -->
+        <div class="kahon">
+            <h3>📋 Nakatakdang Ruta</h3>
+            <div id="listahan_ruta">
+                <p style="text-align: center; color: var(--teksto-mahina); padding: 20px 0;">Wala pang nakalistang ruta.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../js/languages.js"></script>
+<script src="../js/common.js"></script>
+<script>
+// Gilid na Talaan
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// Palitan ang Wika
+function palitanWika() {
+    const kasalukuyan = RiderWika.kunin();
+    RiderWika.itakda(kasalukuyan === 'tl' ? 'en' : 'tl');
+    document.getElementById('teksto_wika').textContent = RiderWika.kunin() === 'tl' ? 'English' : 'Tagalog';
+}
+
+// Ipakita ang lahat ng ruta
+function ipakitaLahat() {
+    const datos = RiderDato.kunin();
+    const lalagyan = document.getElementById('listahan_ruta');
+    
+    if (datos.mga_ruta.length === 0) {
+        lalagyan.innerHTML = `<p style="text-align: center; color: var(--teksto-mahina); padding: 20px 0;">Wala pang nakalistang ruta.</p>`;
+        return;
+    }
+    
+    // Ayusin: mula → papuntang + papuntang → mula (iwas dobleng)
+    const nakita = new Set();
+    lalagyan.innerHTML = '';
+    
+    datos.mga_ruta.forEach((ruta, index) => {
+        const susi = [ruta.mula, ruta.papuntang].sort().join('|');
+        if (nakita.has(susi)) return;
+        nakita.add(susi);
+        
+        // Kunin ang presyo
+        const kwenta = RiderDato.kwenta(ruta.layo_km, 'isahan');
+        
+        lalagyan.innerHTML += `
+            <div style="padding: 14px 0; border-bottom: 1px solid var(--hangganan-liwanag);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 15px;">${ruta.mula} → ${ruta.papuntang}</div>
+                        <div style="font-size: 13px; color: var(--teksto-pag); margin-top: 2px;">
+                            ${ruta.layo_km} km · Presyo: ₱${kwenta.inirerekomenda.toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <button class="btn outline-btn" style="padding: 6px 10px; font-size: 13px; flex: 1;" 
+                            onclick="magbagoRuta(${index})">✏️ Baguhin</button>
+                    <button class="btn danger-btn" style="padding: 6px 10px; font-size: 13px; flex: 1;" 
+                            onclick="burahinRuta(${index})">🗑️ Bura</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Magdagdag / Magbago
+function isagawRuta() {
+    const mula = document.getElementById('r_mula').value.trim();
+    const papuntang = document.getElementById('r_papuntang').value.trim();
+    const layo = parseFloat(document.getElementById('r_layo').value);
+    const editingId = document.getElementById('editing_id').value;
+    
+    if (!mula || !papuntang || !layo || layo <= 0) {
+        alert('Punan nang tama ang lahat ng patlang.');
+        return;
+    }
+    if (mula === papuntang) {
+        alert('Hindi maaaring magkatulad ang "Mula" at "Papuntang".');
+        return;
+    }
+    
+    if (editingId !== '') {
+        // Pagbabago
+        RiderDato.baguhinRuta(parseInt(editingId), { mula, papuntang, layo_km: layo });
+        alert('✅ Nai-update na ang ruta!');
+    } else {
+        // Bagong dagdag
+        RiderDato.dagdagRuta({ mula, papuntang, layo_km: layo });
+        alert('✅ Nai-save na ang bagong ruta!');
+    }
+    
+    // I-reset
+    malinisAnyo();
+    ipakitaLahat();
+}
+
+// Magbago — ilagay sa anyo
+function magbagoRuta(index) {
+    const datos = RiderDato.kunin();
+    const ruta = datos.mga_ruta[index];
+    if (!ruta) return;
+    
+    document.getElementById('editing_id').value = index;
+    document.getElementById('r_mula').value = ruta.mula;
+    document.getElementById('r_papuntang').value = ruta.papuntang;
+    document.getElementById('r_layo').value = ruta.layo_km;
+    
+    document.getElementById('titulo_anyo').textContent = '✏️ Baguhin ang Ruta';
+    document.getElementById('btn_kansela').style.display = 'inline-block';
+    document.getElementById('btn_isagaw').textContent = '💾 I-update';
+}
+
+// Kansela ang pagbabago
+function kanselaPagbabago() {
+    malinisAnyo();
+}
+
+// Burahin ang ruta
+function burahinRuta(index) {
+    if (!confirm('Sigurado ka bang burahin ito? Hindi na ito makikita sa listahan.')) return;
+    RiderDato.burahinRuta(index);
+    ipakitaLahat();
+}
+
+// Malinis ang anyo
+function malinisAnyo() {
+    document.getElementById('editing_id').value = '';
+    document.getElementById('r_mula').value = '';
+    document.getElementById('r_papuntang').value = '';
+    document.getElementById('r_layo').value = '';
+    
+    document.getElementById('titulo_anyo').textContent = '➕ Magdagdag ng Bagong Ruta';
+    document.getElementById('btn_kansela').style.display = 'none';
+    document.getElementById('btn_isagaw').textContent = '💾 I-save';
+}
+
+// Pagsisimula
+document.addEventListener('DOMContentLoaded', () => {
+    ipakitaLahat();
+    document.getElementById('teksto_wika').textContent = RiderWika.kunin() === 'tl' ? 'English' : 'Tagalog';
+});
+window.addEventListener('datoNagbago', ipakitaLahat);
+</script>
+</body>
+</html>
