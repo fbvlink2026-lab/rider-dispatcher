@@ -1,0 +1,341 @@
+<!-- ==================================================
+   FILE        : customer/booking.html
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/customer/booking.html
+   LAYUNIN     : Magpa-Biyahe — Piliin Ruta, Kwenta, Magpadala
+   KONEKSYON   : ../js/languages.js | ../js/common.js | ../css/styles.css
+   METADATA    : Socmed Ready
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Magpa-Biyahe — Rider Dispatcher</title>
+    <meta name="description" content="Magpa-biyahe mula sa Lopez, Calauag, at iba pa — awtomatikong kwenta ang presyo.">
+    <meta name="author" content="martodosko">
+    <meta name="theme-color" content="#165DFF">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Magpa-Biyahe — Rider Dispatcher">
+    <meta property="og:description" content="Piliin ang mula at papuntang lugar — agad makikita ang presyo.">
+    <meta property="og:image" content="https://martodosko.github.io/rider-dispatcher/og-image.png">
+    <meta property="og:locale" content="tl_PH">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Magpa-Biyahe — Rider Dispatcher">
+    <meta name="twitter:description" content="Awtomatikong pagkalkula ng pamasahe — walang hula.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo">
+        <h2>🏍️ Rider Dispatcher</h2>
+        <p>Pamasahe at Pagpapabiyahe</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="../index.html" class="menu-link">
+            <span class="menu-ikon">🏠</span>
+            <span data-wika="tahanan">Tahanan</span>
+        </a>
+        <a href="booking.html" class="menu-link aktibo">
+            <span class="menu-ikon">🚕</span>
+            <span data-wika="magpabiyahe">Magpa-Biyahe</span>
+        </a>
+        <a href="my-orders.html" class="menu-link">
+            <span class="menu-ikon">📋</span>
+            <span data-wika="aking_utos">Aking mga Utos</span>
+        </a>
+        <a href="voice-booking.html" class="menu-link">
+            <span class="menu-ikon">🎤</span>
+            <span data-wika="utos_sa_boses">Utos sa Boses</span>
+        </a>
+        <a href="promo.html" class="menu-link">
+            <span class="menu-ikon">🎁</span>
+            <span data-wika="promo">Promosyon</span>
+        </a>
+        <a href="support.html" class="menu-link">
+            <span class="menu-ikon">❓</span>
+            <span data-wika="tulong">Tulong</span>
+        </a>
+        <a href="../faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            FAQ / Gabay
+        </a>
+        <a href="../about.html" class="menu-link">
+            <span class="menu-ikon">ℹ️</span>
+            Tungkol sa Amin
+        </a>
+        <a href="../admin/" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔐</span>
+            Admin Panel
+        </a>
+    </nav>
+    <div class="menu-ibaba">martodosko © 2026</div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar">
+        <button class="pindutan-menu" id="btnMenu">☰</button>
+        <span class="pangalan-pahina" data-wika="magpabiyahe">Magpa-Biyahe</span>
+    </div>
+
+    <div class="app-container">
+        <div class="ulo-pahina">
+            <h1>🚕 Magpa-Biyahe</h1>
+            <p>Piliin ang ruta — awtomatikong makikita ang presyo bago ipadala.</p>
+        </div>
+
+        <!-- PAGPIPILI NG RUTA -->
+        <div class="kahon">
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="mula">Mula</label>
+                <select id="mula">
+                    <option value="">— Pumili —</option>
+                </select>
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="papuntang">Papuntang</label>
+                <select id="papuntang">
+                    <option value="">— Pumili —</option>
+                </select>
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="uri_biyahe">Uri ng Biyahe</label>
+                <select id="uri_biyahe">
+                    <option value="isahan" data-wika="isahan">Isahan (1-Way)</option>
+                    <option value="pabalik" data-wika="pabalik">Pabalik (2-Way)</option>
+                </select>
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="petsa">Petsa</label>
+                <input type="date" id="petsa" class="form-patlang">
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="oras">Oras</label>
+                <input type="time" id="oras" class="form-patlang">
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa">Kabisadong Distansya (km)</label>
+                <input type="number" step="0.1" id="layo_km" class="form-patlang" placeholder="Hal. 22.0 — kusang napupunan kapag pinili ang ruta">
+            </div>
+        </div>
+
+        <!-- KUWENTA NG PRESYO -->
+        <div class="kahon" id="kahon_kwenta" style="display: none;">
+            <h3>💰 Pagkalkula</h3>
+            
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--hangganan-liwanag);">
+                <span data-wika="layo">Distansya</span>
+                <strong id="res_layo">0 km</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--hangganan-liwanag);">
+                <span data-wika="gasolina">Gasolina</span>
+                <strong id="res_gas">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--hangganan-liwanag);">
+                <span>Pagpapanatili</span>
+                <strong id="res_piyesa">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--hangganan-liwanag);">
+                <span>Upa ng Sasakyan</span>
+                <strong id="res_upa">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 2px solid var(--hangganan);">
+                <span data-wika="kabuuan">Kabuuang Gastos</span>
+                <strong id="res_gastos" style="color: var(--pula);">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 14px 0; font-size: 18px; font-weight: 700;">
+                <span>Inirerekomendang Pamasahe</span>
+                <strong id="res_pamasahe" style="color: var(--s);">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0 14px; font-size: 14px; color: var(--teksto-pag);">
+                <span>Para sa Isang Daan</span>
+                <strong id="res_isahan">₱0.00</strong>
+            </div>
+
+            <div class="form-linya" style="margin-top: 10px;">
+                <label class="form-etiketa">Itakdang Pamasahe</label>
+                <input type="number" step="1" id="pamasahe" class="form-patlang" placeholder="Baguhin kung nais">
+            </div>
+
+            <div class="form-linya">
+                <label class="form-etiketa" data-wika="paraan_bayad">Paraan ng Pagbabayad</label>
+                <select id="paraan_bayad">
+                    <option value="pera_kamay" data-wika="pera_kamay">Pera sa Kamay</option>
+                    <option value="gcash" data-wika="gcash">GCash</option>
+                    <option value="maya" data-wika="maya">Maya</option>
+                    <option value="bangko" data-wika="bangko">Paglilipat sa Bangko</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- PINDUTAN NG PAGPADALA -->
+        <button class="btn primary-btn" id="btn_ipadala" style="margin-top: 10px; display: none;" onclick="ipadalaUtos()">
+            📤 <span data-wika="ipadala">Ipadala ang Utos</span>
+        </button>
+
+        <div style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--teksto-mahina);">
+            <p>Kailangan ng tulong? <a href="support.html" style="color: var(--p); font-weight: 600;">Pumunta sa Tulong →</a></p>
+        </div>
+    </div>
+</main>
+
+<script src="../js/languages.js"></script>
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// ---------------- PAGBUKAS NG PAHINA ----------------
+const selectMula = document.getElementById('mula');
+const selectPapuntang = document.getElementById('papuntang');
+const uriBiyahe = document.getElementById('uri_biyahe');
+const inputLayo = document.getElementById('layo_km');
+const inputPamasahe = document.getElementById('pamasahe');
+const kahonKwenta = document.getElementById('kahon_kwenta');
+const btnIpadala = document.getElementById('btn_ipadala');
+
+// Itakda ang petsa ngayon
+document.getElementById('petsa').valueAsDate = new Date();
+
+// Ihanda ang mga ruta
+function ihandaRuta() {
+    const datos = RiderDato.kunin();
+    const lugar = new Set();
+    datos.mga_ruta.forEach(r => { lugar.add(r.mula); lugar.add(r.papuntang); });
+    
+    selectMula.innerHTML = '<option value="">— Pumili —</option>';
+    selectPapuntang.innerHTML = '<option value="">— Pumili —</option>';
+    
+    [...lugar].sort().forEach(pangalan => {
+        selectMula.innerHTML += `<option value="${pangalan}">${pangalan}</option>`;
+        selectPapuntang.innerHTML += `<option value="${pangalan}">${pangalan}</option>`;
+    });
+}
+
+// Hanapin ang distansya mula sa nakalistang ruta
+function hanapinLayo(mula, papuntang) {
+    const datos = RiderDato.kunin();
+    return datos.mga_ruta.find(r => 
+        (r.mula === mula && r.papuntang === papuntang) ||
+        (r.papuntang === mula && r.mula === papuntang)
+    )?.layo_km || null;
+}
+
+// Magkwenta kapag nagbago ang pagpili
+[selectMula, selectPapuntang, uriBiyahe, inputLayo].forEach(el => 
+    el.addEventListener('change', magKwenta)
+);
+inputLayo.addEventListener('input', magKwenta);
+
+function magKwenta() {
+    const mula = selectMula.value;
+    const papuntang = selectPapuntang.value;
+    let layo = parseFloat(inputLayo.value) || 0;
+
+    // Kung may napiling ruta at walang inilagay na distansya — kunin mula sa listahan
+    if (mula && papuntang && !layo) {
+        const nakita = hanapinLayo(mula, papuntang);
+        if (nakita) {
+            layo = nakita;
+            inputLayo.value = layo;
+        }
+    }
+
+    if (!mula || !papuntang || !layo || mula === papuntang) {
+        kahonKwenta.style.display = 'none';
+        btnIpadala.style.display = 'none';
+        return;
+    }
+
+    // Isagawa ang pagkalkula
+    const kwenta = RiderDato.kwenta(layo, uriBiyahe.value);
+
+    // Ipakita ang resulta
+    document.getElementById('res_layo').textContent = `${kwenta.layo_km} km`;
+    document.getElementById('res_gas').textContent = `₱${kwenta.gastos_gas.toFixed(2)}`;
+    document.getElementById('res_piyesa').textContent = `₱${kwenta.hatian_piyesa.toFixed(2)}`;
+    document.getElementById('res_upa').textContent = `₱${kwenta.hatian_upa.toFixed(2)}`;
+    document.getElementById('res_gastos').textContent = `₱${kwenta.kabuuan_gastos.toFixed(2)}`;
+    document.getElementById('res_pamasahe').textContent = `₱${kwenta.inirerekomenda.toFixed(2)}`;
+    document.getElementById('res_isahan').textContent = `₱${kwenta.para_isahan.toFixed(2)}`;
+
+    inputPamasahe.value = kwenta.inirerekomenda;
+
+    kahonKwenta.style.display = 'block';
+    btnIpadala.style.display = 'block';
+}
+
+// Ipadala ang utos
+function ipadalaUtos() {
+    const mula = selectMula.value;
+    const papuntang = selectPapuntang.value;
+    const layo = parseFloat(inputLayo.value);
+    const pamasahe = parseFloat(inputPamasahe.value);
+    const petsa = document.getElementById('petsa').value;
+    const oras = document.getElementById('oras').value;
+    const paraan = document.getElementById('paraan_bayad').value;
+
+    if (!mula || !papuntang || !layo || !pamasahe || mula === papuntang) {
+        alert('Punan ang lahat ng kinakailangang patlang.');
+        return;
+    }
+
+    // Itala sa talaan
+    RiderDato.itala({
+        mula,
+        papuntang,
+        layo_km: layo,
+        uri_biyahe: uriBiyahe.value,
+        pamasahe,
+        petsa,
+        oras,
+        paraan_pagbabayad: paraan
+    });
+
+    alert('✅ Matagumpay na naitala ang iyong utos!');
+    
+    // I-reset ang anyo
+    selectMula.value = '';
+    selectPapuntang.value = '';
+    inputLayo.value = '';
+    inputPamasahe.value = '';
+    kahonKwenta.style.display = 'none';
+    btnIpadala.style.display = 'none';
+}
+
+// Ihanda sa pagbukas
+document.addEventListener('DOMContentLoaded', ihandaRuta);
+window.addEventListener('datoNagbago', ihandaRuta);
+</script>
+</body>
+</html>
