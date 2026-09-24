@@ -1,7 +1,7 @@
 <!-- ================================================== -->
 <!-- 📍 SUBAYBAY SA BIYAHE — CUSTOMER TRACKING          -->
 <!-- File: customer/track.html                         -->
-<!-- Bersyon: 1.1.0                                     -->
+<!-- Bersyon: 1.2.0 — May Suporta sa Wika              -->
 <!-- Petsa: 2026-09-24                                  -->
 <!-- May-akda: martodosko                               -->
 <!-- Proyekto: Rider's Dispatcher & Transport System    -->
@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Subaybayan ang Biyahe — Rider Dispatcher</title>
+    <title data-wika-pamagat="subaybayan">Subaybayan ang Biyahe — Rider Dispatcher</title>
     <meta name="description" content="Tingnan ang lokasyon ng tsuper, katayuan ng biyahe, at tantsang oras ng pagdating. Konektado sa Rider App at Admin Panel.">
     <meta name="author" content="martodosko">
     <meta name="theme-color" content="#165DFF">
@@ -23,6 +23,9 @@
     <!-- 🗺️ Leaflet Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 🌐 Sistema ng Wika -->
+    <script src="../js/languages.js"></script>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
 
@@ -86,7 +89,7 @@
         #map { height: 100%; width: 100%; }
         .map-legend {
             position: absolute; bottom: 12px; left: 12px; background: white;
-            padding: 8px 12px; border-radius: 10px; font-size: 11px;
+            padding: 8px 12px; border-radius: 10px font-size: 11px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 400;
         }
 
@@ -151,35 +154,35 @@
 <div class="side-menu" id="sideMenu">
     <div class="menu-ulo">
         <h2>🏍️ Rider Dispatcher</h2>
-        <p>Pamasahe at Pagpapabiyahe</p>
+        <p data-wika="paglilingkod">Pamasahe at Pagpapabiyahe</p>
     </div>
     <nav class="menu-talaan">
         <a href="index.html" class="menu-link">
             <span class="menu-ikon">🏠</span>
-            <span>Tahanan</span>
+            <span data-wika="tahanan"></span>
         </a>
         <a href="track.html" class="menu-link aktibo">
             <span class="menu-ikon">📍</span>
-            <span>Subaybayan</span>
+            <span data-wika="subaybayan"></span>
         </a>
         <a href="history.html" class="menu-link">
             <span class="menu-ikon">📋</span>
-            <span>Aking mga Biyahe</span>
+            <span data-wika="aking_biyahe"></span>
         </a>
         <a href="../detalyadong-tulong.html" class="menu-link" target="_blank">
             <span class="menu-ikon">📘</span>
-            <span>Tulong at Gabay</span>
+            <span data-wika="tulong_gabay"></span>
         </a>
         <a href="../admin.html" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
             <span class="menu-ikon">🔐</span>
-            <span>Admin Panel</span>
+            <span data-wika="admin_panel"></span>
         </a>
         <a href="../index.html" class="menu-link">
             <span class="menu-ikon">🏍️</span>
-            <span>Para sa Tsuper</span>
+            <span data-wika="para_sa_tsuper"></span>
         </a>
     </nav>
-    <div class="menu-ibaba">© 2026 martodosko — Libre para sa lahat</div>
+    <div class="menu-ibaba">© 2026 martodosko — <span data-wika="libre_para_lahat">Libre para sa lahat</span></div>
 </div>
 
 <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
@@ -188,7 +191,7 @@
 <main>
     <div class="itaas-na-bar">
         <button class="pindutan-menu" id="btnMenu">☰</button>
-        <span class="pangalan-pahina">📍 Subaybayan ang Biyahe</span>
+        <span class="pangalan-pahina">📍 <span data-wika="subaybayan_ang_biyahe">Subaybayan ang Biyahe</span></span>
     </div>
 
     <div class="app-container">
@@ -196,9 +199,9 @@
         <!-- WALANG AKTIBONG BIYAHE -->
         <div id="walang-utos" class="walang-utos">
             <p class="ikon">🚕</p>
-            <h3>Walang Aktibong Biyahe</h3>
-            <p style="margin: 8px 0 24px;">Gumawa muna ng utos sa pahina ng Pag-order</p>
-            <a href="index.html" class="btn btn-pangunahin">➕ Magpa-Biyahe Ngayon</a>
+            <h3 data-wika="walang_aktibong_biyahe">Walang Aktibong Biyahe</h3>
+            <p style="margin: 8px 0 24px;" data-wika="gumawa_muna_utos">Gumawa muna ng utos sa pahina ng Pag-order</p>
+            <a href="index.html" class="btn btn-pangunahin">➕ <span data-wika="magpabiyahe_ngayon">Magpa-Biyahe Ngayon</span></a>
         </div>
 
         <!-- MAY AKTIBONG BIYAHE -->
@@ -207,73 +210,73 @@
             <!-- KATAYUAN -->
             <div id="banner-katayuan" class="katayuan-banner kt-pending">
                 <span id="ikon-katayuan" style="font-size:20px;display:block;margin-bottom:4px;">⏳</span>
-                <strong id="teksto-katayuan">Naghihintay sa tsuper...</strong>
+                <strong id="teksto-katayuan" data-wika_text="naghihintay_tsuper">Naghihintay sa tsuper...</strong>
             </div>
 
             <!-- MAPA -->
             <div id="map-container">
                 <div id="map"></div>
                 <div class="map-legend">
-                    <div>🏍️ Tsuper</div>
-                    <div>📍 Kukunin</div>
-                    <div>🏁 Patutunguhan</div>
+                    <div>🏍️ <span data-wika="tsuper">Tsuper</span></div>
+                    <div>📍 <span data-wika="kukunin">Kukunin</span></div>
+                    <div>🏁 <span data-wika="patutunguhan">Patutunguhan</span></div>
                 </div>
             </div>
 
             <!-- KABUUANG DETALYE -->
             <div class="kahon">
-                <h3>📋 Detalye ng Biyahe</h3>
+                <h3>📋 <span data-wika="detalye_ng_biyahe">Detalye ng Biyahe</span></h3>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">📍 Kukunin</span>
+                    <span class="etiketa" data-wika="kukunin_lok">📍 Kukunin</span>
                     <span class="halaga" id="d-kukunin">—</span>
                 </div>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">🏁 Patutunguhan</span>
+                    <span class="etiketa" data-wika="patutunguhan_lok">🏁 Patutunguhan</span>
                     <span class="halaga" id="d-patutunguhan">—</span>
                 </div>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">💰 Presyo</span>
+                    <span class="etiketa" data-wika="presyo">💰 Presyo</span>
                     <span class="halaga" id="d-presyo">—</span>
                 </div>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">🕐 Inilagay</span>
+                    <span class="etiketa" data-wika="inilagay">🕐 Inilagay</span>
                     <span class="halaga" id="d-oras">—</span>
                 </div>
             </div>
 
             <!-- TANTSANG ORAS NG PAGDATING -->
             <div id="kahon-eta" class="kahon-eta nakatago">
-                <p style="font-size:13px;opacity:0.9;">Tantsang Pagdating</p>
+                <p style="font-size:13px;opacity:0.9;" data-wika="tantsang_pagdating">Tantsang Pagdating</p>
                 <p class="eta-oras" id="eta-oras">—</p>
-                <p class="eta-detalyadong" id="eta-detalyadong">papunta sa iyo</p>
+                <p class="eta-detalyadong" id="eta-detalyadong" data-wika_text="papunta_sa_iyo">papunta sa iyo</p>
             </div>
 
             <!-- IMPORMASYON NG TSUPER -->
             <div id="kahon-tsuper" class="kahon nakatago">
-                <h3>🏍️ Impormasyon ng Tsuper</h3>
+                <h3>🏍️ <span data-wika="impormasyon_ng_tsuper">Impormasyon ng Tsuper</span></h3>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">Pangalan</span>
+                    <span class="etiketa" data-wika="pangalan">Pangalan</span>
                     <span class="halaga" id="tsuper-pangalan">—</span>
                 </div>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">Sasakyan</span>
-                    <span class="halaga" id="tsuper-sasakyan">—</span>
+                    <span class="etiketa" data-wika="sasakyan">Sasakyan</span>
+                    <span class="halaga" id="tsuper-sasakyan" data-wika_text="hindi_nakalagay">Hindi nakalagay</span>
                 </div>
                 <div class="hanay-impormasyon">
-                    <span class="etiketa">Kontak</span>
-                    <span class="halaga" id="tsuper-kontak">—</span>
+                    <span class="etiketa" data-wika="kontak">Kontak</span>
+                    <span class="halaga" id="tsuper-kontak" data-wika_text="hindi_nakalagay">Hindi nakalagay</span>
                 </div>
-                <button class="btn btn-pangunahin" style="margin-top:12px;" id="btn-tawag" onclick="tawaganTsuper()">📞 Tawagan ang Tsuper</button>
+                <button class="btn btn-pangunahin" style="margin-top:12px;" id="btn-tawag" onclick="tawaganTsuper()">📞 <span data-wika="tawagan_tsuper">Tawagan ang Tsuper</span></button>
             </div>
 
             <!-- MGA PINDUTAN -->
             <div id="kahon-pindutan">
-                <button class="btn btn-pula" onclick="kanselahinUtos()">❌ Kanselahin ang Utos</button>
+                <button class="btn btn-pula" onclick="kanselahinUtos()">❌ <span data-wika="kanselahin_utos">Kanselahin ang Utos</span></button>
             </div>
 
             <p class="huling-suri">
-                Huling pagsusuri: <span id="oras-huling-suri">—</span>
-                <span class="kumukurap" style="margin-left:6px;">• Sinusuri...</span>
+                <span data-wika="huling_pagsusuri">Huling pagsusuri</span>: <span id="oras-huling-suri">—</span>
+                <span class="kumukurap" style="margin-left:6px;">• <span data-wika="sinusuri">Sinusuri...</span></span>
             </p>
         </div>
 
@@ -345,21 +348,21 @@ function ipakitaDetalye() {
     document.getElementById('d-presyo').textContent = `₱${KASALUKUYANG_UTOS.fare.toFixed(2)}`;
     document.getElementById('d-oras').textContent = new Date(KASALUKUYANG_UTOS.createdAt).toLocaleString('tl-PH');
 
-    // Katayuan
+    // Katayuan — Gagamitin ang sistema ng wika
     const k = {
-        pending: { ikon: '⏳', teksto: 'Naghihintay sa Admin...', klase: 'kt-pending', mayETA: false, mayTsuper: false },
-        accepted: { ikon: '✅', teksto: 'Tinanggap — naghahanap ng tsuper', klase: 'kt-tinatanggap', mayETA: false, mayTsuper: false },
-        assigned: { ikon: '🏍️', teksto: 'May tsuper na — papunta sa iyo', klase: 'kt-nakatalaga', mayETA: true, mayTsuper: true },
-        enroute: { ikon: '🚀', teksto: 'Nasa biyahe na patungo sa patutunguhan', klase: 'kt-nasadaan', mayETA: true, mayTsuper: true },
-        arrived: { ikon: '📍', teksto: 'Nakarating na!', klase: 'kt-nakarating', mayETA: false, mayTsuper: true },
-        completed: { ikon: '✅', teksto: 'Tapos na — Salamat!', klase: 'kt-tapos', mayETA: false, mayTsuper: true },
-        cancelled: { ikon: '❌', teksto: 'Nakansela na', klase: 'kt-nakansela', mayETA: false, mayTsuper: false }
-    }[KASALUKUYANG_UTOS.status] || { ikon: '⏳', teksto: 'Naghihintay...', klase: 'kt-pending', mayETA: false, mayTsuper: false };
+        pending: { ikon: '⏳', susi: 'hinihintay_admin', klase: 'kt-pending', mayETA: false, mayTsuper: false },
+        accepted: { ikon: '✅', susi: 'tinanggap_naghahanap_tsuper', klase: 'kt-tinatanggap', mayETA: false, mayTsuper: false },
+        assigned: { ikon: '🏍️', susi: 'may_tsuper_na_papunta', klase: 'kt-nakatalaga', mayETA: true, mayTsuper: true },
+        enroute: { ikon: '🚀', susi: 'nasa_biyahe_na', klase: 'kt-nasadaan', mayETA: true, mayTsuper: true },
+        arrived: { ikon: '📍', susi: 'nakarating_na', klase: 'kt-nakarating', mayETA: false, mayTsuper: true },
+        completed: { ikon: '✅', susi: 'tapos_na_salamat', klase: 'kt-tapos', mayETA: false, mayTsuper: true },
+        cancelled: { ikon: '❌', susi: 'nakansela_na', klase: 'kt-nakansela', mayETA: false, mayTsuper: false }
+    }[KASALUKUYANG_UTOS.status] || { ikon: '⏳', susi: 'hinihintay', klase: 'kt-pending', mayETA: false, mayTsuper: false };
 
     const banner = document.getElementById('banner-katayuan');
     banner.className = `katayuan-banner ${k.klase}`;
     document.getElementById('ikon-katayuan').textContent = k.ikon;
-    document.getElementById('teksto-katayuan').textContent = k.teksto;
+    document.getElementById('teksto-katayuan').textContent = __(k.susi);
 
     document.getElementById('kahon-eta').classList.toggle('nakatago', !k.mayETA);
     document.getElementById('kahon-tsuper').classList.toggle('nakatago', !k.mayTsuper);
@@ -370,8 +373,8 @@ function ipakitaDetalye() {
     // Impormasyon ng tsuper
     if (KASALUKUYANG_UTOS.riderName) {
         document.getElementById('tsuper-pangalan').textContent = KASALUKUYANG_UTOS.riderName;
-        document.getElementById('tsuper-sasakyan').textContent = KASALUKUYANG_UTOS.riderVehicle || 'Hindi nakalagay';
-        document.getElementById('tsuper-kontak').textContent = KASALUKUYANG_UTOS.riderContact || 'Hindi nakalagay';
+        document.getElementById('tsuper-sasakyan').textContent = KASALUKUYANG_UTOS.riderVehicle || __('hindi_nakalagay');
+        document.getElementById('tsuper-kontak').textContent = KASALUKUYANG_UTOS.riderContact || __('hindi_nakalagay');
     }
 
     // I-refresh ang mapa
@@ -393,21 +396,21 @@ function ipakitaMapa() {
 
     // Kunin ang mga koordinada
     const lokasyonTsuper = kuninDato('riderLastLocation');
-    const kukuninLok = KASALUKUYANG_UTOS.pickupCoords || [13.948, 122.065]; // Lopez Bayan
-    const patutunguhanLok = KASALUKUYANG_UTOS.destCoords || [13.926, 122.118]; // Calauag Bayan
+    const kukuninLok = KASALUKUYANG_UTOS.pickupCoords || [13.948, 122.065];
+    const patutunguhanLok = KASALUKUYANG_UTOS.destCoords || [13.926, 122.118];
 
     // Tuldok ng kukunan
     if (!kukuninTuldok) {
         kukuninTuldok = L.marker(kukuninLok, {
             icon: L.divIcon({ html: '<div style="font-size:24px;">📍</div>', className: '', iconSize: [24,24], iconAnchor: [12,12] })
-        }).addTo(mapa).bindPopup('Kukunin: ' + KASALUKUYANG_UTOS.pickup);
+        }).addTo(mapa).bindPopup(__('kukunin') + ': ' + KASALUKUYANG_UTOS.pickup);
     }
 
     // Tuldok ng patutunguhan
     if (!patutunguhanTuldok) {
         patutunguhanTuldok = L.marker(patutunguhanLok, {
             icon: L.divIcon({ html: '<div style="font-size:24px;">🏁</div>', className: '', iconSize: [24,24], iconAnchor: [12,12] })
-        }).addTo(mapa).bindPopup('Patutunguhan: ' + KASALUKUYANG_UTOS.destination);
+        }).addTo(mapa).bindPopup(__('patutunguhan') + ': ' + KASALUKUYANG_UTOS.destination);
     }
 
     // Tuldok ng tsuper
@@ -420,7 +423,7 @@ function ipakitaMapa() {
                     html: '<div style="font-size:28px;" class="talon">🏍️</div>', 
                     className: '', iconSize: [28,28], iconAnchor: [14,14] 
                 })
-            }).addTo(mapa).bindPopup('Lokasyon ng Tsuper');
+            }).addTo(mapa).bindPopup(__('lokasyon_ng_tsuper'));
         } else {
             tsuperTuldok.setLatLng(tsuperLok);
         }
@@ -438,15 +441,15 @@ function ipakitaMapa() {
         tantsahinOras(tsuperLok, kukuninLok, patutunguhanLok);
         mapa.fitBounds([tsuperLok, kukuninLok, patutunguhanLok], { padding: [30,30] });
     } else {
-        // Walang lokasyon ng tsuper — ipakita ang ruta lamang
+        // Walang lokasyon ng tsuper
         if (!guhitRuta) {
             guhitRuta = L.polyline([kukuninLok, patutunguhanLok], {
                 color: '#165DFF', weight: 3, opacity: 0.7
             }).addTo(mapa);
         }
         mapa.fitBounds([kukuninLok, patutunguhanLok], { padding: [30,30] });
-        document.getElementById('eta-oras').textContent = 'Hinihintay...';
-        document.getElementById('eta-detalyadong').textContent = 'Sinusubaybayan ang signal ng GPS...';
+        document.getElementById('eta-oras').textContent = __('hinihintay');
+        document.getElementById('eta-detalyadong').textContent = __('sinusubaybayan_gps');
     }
 }
 
@@ -454,16 +457,16 @@ function ipakitaMapa() {
 function tantsahinOras(tsuper, mula, papunta) {
     const distMulaTsuper = sukatDistansya(tsuper, mula);
     const distKabuuan = distMulaTsuper + sukatDistansya(mula, papunta);
-    const bilis = 30; // km/oras — karaniwang bilis sa daan
+    const bilis = 30;
     const minPapuntangKukunin = Math.round((distMulaTsuper / bilis) * 60);
     const minKabuuan = Math.round((distKabuuan / bilis) * 60);
 
     if (KASALUKUYANG_UTOS.status === 'assigned') {
-        document.getElementById('eta-oras').textContent = minPapuntangKukunin + ' min';
-        document.getElementById('eta-detalyadong').textContent = `${distMulaTsuper.toFixed(2)} km papunta sa iyo`;
+        document.getElementById('eta-oras').textContent = minPapuntangKukunin + ' ' + __('minuto');
+        document.getElementById('eta-detalyadong').textContent = `${distMulaTsuper.toFixed(2)} km ${__('papunta_sa_iyo')}`;
     } else if (KASALUKUYANG_UTOS.status === 'enroute') {
-        document.getElementById('eta-oras').textContent = minKabuuan + ' min';
-        document.getElementById('eta-detalyadong').textContent = `kabuuan ${distKabuuan.toFixed(2)} km`;
+        document.getElementById('eta-oras').textContent = minKabuuan + ' ' + __('minuto');
+        document.getElementById('eta-detalyadong').textContent = `${__('kabuuan')} ${distKabuuan.toFixed(2)} km`;
     }
 }
 
@@ -481,13 +484,13 @@ function tawaganTsuper() {
     if (num && (num.startsWith('09') || num.startsWith('+'))) {
         window.location.href = `tel:${num}`;
     } else {
-        alert(`Kontak: ${num || 'Wala pang nakalagay'}`);
+        alert(`${__('kontak')}: ${num || __('wala_pang_nakalagay')}`);
     }
 }
 
 // ========== KANSELAHIN ==========
 function kanselahinUtos() {
-    if (!confirm('Sigurado ka bang kanselahin ang utos?')) return;
+    if (!confirm(__('sigurado_kansela'))) return;
     
     const mgaUtos = kuninDato('customerOrders') || [];
     const idx = mgaUtos.findIndex(u => u.id === KASALUKUYANG_UTOS.id);
@@ -498,7 +501,7 @@ function kanselahinUtos() {
         localStorage.setItem('adminLastUpdate', new Date().toISOString());
     }
     
-    alert('✅ Nakansela na ang utos.');
+    alert(__('nakansela_na'));
     suriinUtos();
 }
 
@@ -507,7 +510,6 @@ document.addEventListener('DOMContentLoaded', () => {
     simulanMapa();
     suriinUtos();
     
-    // Awtomatikong suriin tuwing 3 segundo
     setInterval(() => {
         suriinUtos();
     }, 3000);
