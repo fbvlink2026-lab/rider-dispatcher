@@ -1,0 +1,266 @@
+<!-- ==================================================
+   FILE        : about.html
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/about.html
+   LAYUNIN     : Tungkol sa Sistema — Impormasyon, Developer, Layunin
+   KONEKSYON   : js/languages.js | css/styles.css
+   METADATA    : OpenGraph / Twitter Cards / Socmed Ready
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- === PANGUNAHING METADATA === -->
+    <title>Tungkol sa Amin — Rider Dispatcher System</title>
+    <meta name="description" content="Sistema ng pagpapabiyahe at pagkalkula ng pamasahe — ginawa para sa mga pasahero at drayber sa Quezon at buong Pilipinas. Libre at bukas para sa lahat.">
+    <meta name="keywords" content="rider dispatcher, pamasahe, habal-habal, Lopez Quezon, Calauag, sistema ng biyahe, pamasahe calculator">
+    <meta name="author" content="martodosko">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#165DFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#165DFF">
+    
+    <!-- === OPEN GRAPH — Facebook, WhatsApp, LinkedIn, atbp. === -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://martodosko.github.io/rider-dispatcher/about.html">
+    <meta property="og:title" content="Tungkol sa Amin — Rider Dispatcher System">
+    <meta property="og:description" content="Sistema ng pagpapabiyahe at pagkalkula ng pamasahe — ginawa para sa mga pasahero at drayber sa Quezon at buong Pilipinas. Libre at bukas para sa lahat.">
+    <meta property="og:image" content="https://martodosko.github.io/rider-dispatcher/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="tl_PH">
+    <meta property="og:site_name" content="Rider Dispatcher">
+    
+    <!-- === TWITTER / X CARDS === -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://martodosko.github.io/rider-dispatcher/about.html">
+    <meta name="twitter:title" content="Tungkol sa Amin — Rider Dispatcher System">
+    <meta name="twitter:description" content="Sistema ng pagpapabiyahe at pagkalkula ng pamasahe — libre at bukas para sa lahat.">
+    <meta name="twitter:image" content="https://martodosko.github.io/rider-dispatcher/og-image.png">
+    <meta name="twitter:creator" content="@martodosko">
+    
+    <!-- === FAVICON / ICON === -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ℹ️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    
+    <script src="js/languages.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --p: #165DFF; --p-dark: #0E42D2; --p-light: #E8F3FF;
+            --s: #00B42A; --babala: #FF7D00; --pula: #F53F3F;
+            --teksto: #1D2129; --teksto-pag: #4E5969; --hangganan: #E5E6EB;
+            --puti: #FFFFFF; --kulay-likod: #F7F8FA;
+        }
+        body { background: var(--kulay-likod); color: var(--teksto); min-height: 100vh; }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: white;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.1); transform: translateX(-100%);
+            transition: transform 0.3s ease; z-index: 1000; overflow-y: auto;
+        }
+        .side-menu.bukas { transform: translateX(0); }
+        .menu-ulo {
+            background: linear-gradient(135deg, var(--p) 0%, var(--p-dark) 100%);
+            color: white; padding: 24px 16px;
+        }
+        .menu-ulo h2 { font-size: 18px; margin-bottom: 4px; }
+        .menu-ulo p { opacity: 0.85; font-size: 13px; }
+        .menu-talaan { padding: 16px 0; }
+        .menu-link {
+            display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+            color: var(--teksto); text-decoration: none; transition: 0.2s;
+        }
+        .menu-link:hover { background: var(--p-light); color: var(--p); }
+        .menu-link.aktibo { background: var(--p-light); color: var(--p); font-weight: 600; border-right: 3px solid var(--p); }
+        .menu-ikon { font-size: 18px; }
+        .menu-ibaba { padding: 20px; font-size: 12px; color: var(--teksto-pag); text-align: center; border-top: 1px solid var(--hangganan); margin-top: 20px; }
+        .tabing {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: none;
+        }
+        .tabing.nakita { display: block; }
+
+        /* Pangunahing Bahagi */
+        .pangunahing-larawan { min-height: 100vh; }
+        .itaas-na-bar {
+            background: white; padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .pindutan-menu {
+            background: none; border: none; font-size: 22px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+        }
+        .pindutan-menu:hover { background: var(--kulay-likod); }
+        .pangalan-pahina { font-weight: 600; font-size: 15px; }
+
+        .app-container { padding: 20px; max-width: 520px; margin: 0 auto; }
+
+        .ulo-pahina {
+            background: linear-gradient(135deg, var(--p) 0%, var(--p-dark) 100%);
+            color: white; padding: 28px 20px; border-radius: 16px; margin-bottom: 24px; text-align: center;
+        }
+        .ulo-pahina h1 { font-size: 22px; margin-bottom: 8px; }
+        .ulo-pahina p { opacity: 0.9; font-size: 14px; }
+        .logo-malaki { font-size: 48px; margin-bottom: 12px; }
+
+        .kahon {
+            background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px;
+        }
+        .kahon h2 { font-size: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .kahon p { font-size: 14px; line-height: 1.7; color: var(--teksto-pag); margin-bottom: 10px; }
+        .kahon p:last-child { margin-bottom: 0; }
+        
+        .talaan-impormasyon { list-style: none; margin-top: 12px; }
+        .talaan-impormasyon li { padding: 10px 0; border-bottom: 1px solid var(--hangganan); font-size: 14px; }
+        .talaan-impormasyon li:last-child { border-bottom: none; }
+        .etiketa { font-weight: 600; color: var(--teksto); display: inline-block; min-width: 100px; }
+        
+        .misyon {
+            background: var(--s-light); border-left: 3px solid var(--s); padding: 14px; border-radius: 0 10px 10px 0;
+            margin: 16px 0;
+        }
+        
+        .sosmed { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .sosmed-link {
+            padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;
+        }
+        .sosmed-fb { background: #E8F3FF; color: #165DFF; }
+        .sosmed-fb:hover { background: #165DFF; color: white; }
+        .sosmed-wa { background: #F0FFF4; color: #00B42A; }
+        .sosmed-wa:hover { background: #00B42A; color: white; }
+        .sosmed-gh { background: #F7F8FA; color: #1D2129; }
+        .sosmed-gh:hover { background: #1D2129; color: white; }
+        
+        .ibaba-pahina {
+            text-align: center; padding: 24px; font-size: 13px; color: var(--teksto-pag); margin-top: 20px;
+        }
+        .bersyon { display: inline-block; background: var(--p-light); color: var(--p); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo">
+        <h2>🏍️ Rider Dispatcher</h2>
+        <p>Pamasahe at Pagpapabiyahe</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="index.html" class="menu-link">
+            <span class="menu-ikon">🏠</span>
+            Tahanan
+        </a>
+        <a href="customer/booking.html" class="menu-link">
+            <span class="menu-ikon">🚕</span>
+            Magpa-Biyahe
+        </a>
+        <a href="faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            FAQ / Gabay
+        </a>
+        <a href="about.html" class="menu-link aktibo">
+            <span class="menu-ikon">ℹ️</span>
+            Tungkol sa Amin
+        </a>
+        <a href="customer/support.html" class="menu-link">
+            <span class="menu-ikon">❓</span>
+            Tulong at Suporta
+        </a>
+        <a href="admin/" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔐</span>
+            Admin Panel
+        </a>
+    </nav>
+    <div class="menu-ibaba">martodosko © 2026</div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar">
+        <button class="pindutan-menu" id="btnMenu">☰</button>
+        <span class="pangalan-pahina">ℹ️ Tungkol sa Amin</span>
+    </div>
+
+    <div class="app-container">
+        <div class="ulo-pahina">
+            <div class="logo-malaki">🏍️</div>
+            <h1>Rider Dispatcher System</h1>
+            <p>Sistema ng Pagpapabiyahe at Pagkalkula ng Pamasahe</p>
+            <span class="bersyon">Bersyon 1.0.0 — 2026-09-24</span>
+        </div>
+
+        <div class="kahon">
+            <h2>📌 Tungkol sa Sistema</h2>
+            <p>Ang <strong>Rider Dispatcher</strong> ay isang bukas at libreng sistema na ginawa upang makatulong sa mga pasahero at drayber — lalo na sa mga lugar tulad ng Lopez, Calauag, at buong lalawigan ng Quezon.</p>
+            
+            <div class="misyon">
+                <strong>🎯 Layunin:</strong>
+                <p style="margin: 6px 0 0 0;">Magkaroon ng malinaw, patas, at tumpak na pagtukoy sa presyo ng pamasahe — walang hula, walang pagtatalo, tumpak ang lahat.</p>
+            </div>
+        </div>
+
+        <div class="kahon">
+            <h2>👤 Tungkol sa May-akda</h2>
+            <ul class="talaan-impormasyon">
+                <li><span class="etiketa">Developer:</span> <strong>martodosko</strong></li>
+                <li><span class="etiketa">Ginawa:</span> Setyembre 2026</li>
+                <li><span class="etiketa">Lugar:</span> Pilipinas</li>
+                <li><span class="etiketa">Lisensya:</span> Libre / Bukas na Kodigo</li>
+            </ul>
+        </div>
+
+        <div class="kahon">
+            <h2>✨ Mga Tampok</h2>
+            <ul class="talaan-impormasyon">
+                <li>✅ Tumpak na pagkalkula base sa distansya at gastos</li>
+                <li>✅ Suporta sa GCash, Maya, Bangko, at Pera sa Kamay</li>
+                <li>✅ Pagpapabiyahe sa pagsasalita — Utos sa Boses</li>
+                <li>✅ GPS at Mapa — awtomatikong sukat ng ruta</li>
+                <li>✅ Libre — walang bayad magpakailanman</li>
+                <li>✅ Nakatutok sa komunidad — para sa lahat</li>
+            </ul>
+        </div>
+
+        <div class="kahon">
+            <h2>🔗 Ibahagi</h2>
+            <p>Ibahagi sa iba upang makatulong din sila:</p>
+            <div class="sosmed">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://martodosko.github.io/rider-dispatcher/" target="_blank" class="sosmed-link sosmed-fb">📘 Facebook</a>
+                <a href="https://api.whatsapp.com/send?text=Rider%20Dispatcher%20-%20Sistema%20ng%20Pamasahe%20at%20Pagpapabiyahe:%20https://martodosko.github.io/rider-dispatcher/" target="_blank" class="sosmed-link sosmed-wa">💬 WhatsApp</a>
+                <a href="https://github.com/martodosko/rider-dispatcher" target="_blank" class="sosmed-link sosmed-gh">💻 GitHub</a>
+            </div>
+        </div>
+
+        <div class="ibaba-pahina">
+            <p>© 2026 martodosko — Lahat ng Karapatang Nakareserba</p>
+            <p style="margin-top: 6px; font-size: 12px;">Ginawa nang buong puso para sa Pilipinas 🇵🇭</p>
+        </div>
+    </div>
+</main>
+
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe support
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+</script>
+</body>
+</html>
