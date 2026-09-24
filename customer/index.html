@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <!-- ================================================== -->
+    <!-- 👤 TAHANANG CUSTOMER — PAG-ORDER NG BIYAHE        -->
+    <!-- File: customer/index.html                         -->
+    <!-- Bersyon: 1.0.0                                     -->
+    <!-- Petsa: 2026-09-24                                  -->
+    <!-- May-akda: martodosko                               -->
+    <!-- Proyekto: Rider's Dispatcher & Transport System    -->
+    <!-- Karapatang-ari: © 2026 martodosko                  -->
+    <!-- Lisensya: Libre — Para sa Serbisyo sa Pilipinas    -->
+    <!-- ================================================== -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 📋 PANGALAN AT PAGLALARAWAN NG APP -->
+    <title>Mag-Order ng Biyahe — Rider's Dispatcher System</title>
+    <meta name="application-name" content="Customer — Rider's Dispatcher">
+    <meta name="description" content="Mag-order ng sasakyan mula sa iyong lugar patungo sa pupuntahan. Makita ang presyo, katayuan ng biyahe, at makipag-ugnayan sa tsuper. Konektado sa Admin at Rider.">
+    <meta name="keywords" content="mag-order, biyahe, sasakyan, habal-habal, dispatcher, pamasahe, transportasyon, Pilipinas">
+    <meta name="author" content="martodosko">
+    <meta name="creator" content="martodosko">
+    <meta name="robots" content="index, follow">
+
+    <!-- 🔐 PAGTUKOY SA SISTEMA -->
+    <meta name="version" content="1.0.0">
+    <meta name="build-date" content="2026-09-24T12:45:00+08:00">
+    <meta name="category" content="Transport / Booking">
+    <meta name="system-connection" content="Admin Panel (../admin.html) — Rider App (../index.html)">
+    <meta name="storage-mode" content="LocalStorage Shared">
+
+    <!-- 📱 MOBILE & PWA -->
+    <meta name="theme-color" content="#43A047">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mag-Order Biyahe">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- 🔗 OPEN GRAPH — SOCMED PREVIEW -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="Rider's Dispatcher — Mag-Order Biyahe">
+    <meta property="og:title" content="👤 Mag-Order ng Biyahe — Rider's Dispatcher">
+    <meta property="og:description" content="Pumili ng simula at pupuntahan → makita ang presyo → ipadala ang utos. Awtomatikong ipapasa sa Admin at tsuper.">
+    <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%2343A047' width='1200' height='630'/><text x='50%' y='45%' font-size='120' text-anchor='middle' fill='white'>🚘</text><text x='50%' y='65%' font-size='48' text-anchor='middle' fill='white'>Mag-Order ng Biyahe</text><text x='50%' y='80%' font-size='24' text-anchor='middle' fill='%23E8F5E9'>v1.0 · ni martodosko</text></svg>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="tl_PH">
+
+    <!-- 🐦 TWITTER / X CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="👤 Mag-Order ng Biyahe — Rider's Dispatcher">
+    <meta name="twitter:description" content="Mabilis at madaling pag-order ng sasakyan. Konektado sa tunay na sistema ng pagpapasahe.">
+    <meta name="twitter:creator" content="@martodosko">
+
+    <!-- 📌 FAVICON / IKON -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚘</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚘</text></svg>">
+
+    <!-- 🎨 ESTILO -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --p: #43A047; --p-light: #E8F5E9; --s: #FF6F00;
+            --info: #1976D2; --warn: #FFB300; --danger: #E53935;
+            --bg: #F5F7FA; --card: #FFFFFF; --txt: #263238; --muted: #78909C;
+        }
+        body { background: var(--bg); color: var(--txt); min-height: 100vh; padding-bottom: 40px; }
+
+        .header {
+            background: linear-gradient(90deg, #43A047, #66BB6A); color: white;
+            padding: 24px 20px; border-radius: 0 0 24px 24px; margin-bottom: 20px;
+        }
+        .header h1 { font-size: 20px; margin-bottom: 4px; }
+        .header p { font-size: 13px; opacity: .9; }
+        .copyright { font-size: 11px; opacity: .7; margin-top: 10px; }
+        .nav-links { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .nav-link { color: white; text-decoration: none; font-size: 12px; background: rgba(255,255,255,.2); padding: 6px 12px; border-radius: 8px; }
+        .nav-link:hover { background: rgba(255,255,255,.3); }
+
+        .page { padding: 0 16px; max-width: 480px; margin: 0 auto; }
+        .card {
+            background: white; border-radius: 20px; padding: 20px;
+            margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+        .card-info { background: var(--p-light); border-left: 4px solid var(--p); }
+        .card-warn { background: #FFF3E0; border-left: 4px solid var(--s); }
+
+        label { display: block; font-size: 14px; font-weight: 600; color: #546E7A; margin: 16px 0 6px; }
+        input, select, textarea {
+            width: 100%; padding: 12px 14px; border: 1px solid #DDD;
+            border-radius: 12px; font-size: 16px; background: white;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p); }
+
+        .btn {
+            border: none; border-radius: 14px; padding: 14px 10px; font-size: 15px;
+            font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            transition: transform .1s; width: 100%; justify-content: center;
+        }
+        .btn:active { transform: scale(.97); }
+        .btn-pri { background: var(--p); color: white; }
+        .btn-sec { background: var(--s); color: white; }
+        .btn-info { background: var(--info); color: white; }
+        .btn-out { background: transparent; border: 1px solid #CCC; color: var(--txt); }
+        .btn-sm { padding: 10px 14px; font-size: 13px; width: auto; }
+
+        .status-card {
+            background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px;
+            border-left: 4px solid #CCC; transition: all .3s;
+        }
+        .status-pending { border-left-color: var(--warn); background: #FFF8E1; }
+        .status-accepted { border-left-color: var(--p); background: #E8F5E9; }
+        .status-assigned { border-left-color: var(--info); background: #E3F2FD; }
+        .status-completed { border-left-color: var(--p); background: #E8F5E9; opacity: .85; }
+        .status-cancelled { border-left-color: var(--danger); background: #FFEBEE; opacity: .7; }
+
+        .status-badge {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; margin-left: 8px;
+        }
+        .badge-pending { background: #FFF3E0; color: #E65100; }
+        .badge-accepted { background: #E8F5E9; color: #2E7D32; }
+        .badge-assigned { background: #E3F2FD; color: #1565C0; }
+        .badge-completed { background: #E8F5E9; color: #2E7D32; }
+        .badge-cancelled { background: #FFEBEE; color: #C62828; }
+
+        .price-preview {
+            background: linear-gradient(90deg, #43A047, #66BB6A); color: white;
+            padding: 16px; border-radius: 14px; margin-top: 16px; text-align: center;
+        }
+        .price-amount { font-size: 28px; font-weight: bold; margin-top: 4px; }
+
+        .hidden { display: none !important; }
+        .divider { height: 1px; background: #EEE; margin: 16px 0; }
+        .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+        .empty-state { text-align: center; padding: 30px 20px; color: var(--muted); }
+        .spin { display: inline-block; width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: .5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<!-- ===== ULO NG PAHINA ===== -->
+<div class="header">
+    <h1>👤 MAG-ORDER NG BIYAHE</h1>
+    <p>Ipadala ang iyong utos — aalamin ng Admin at tsuper</p>
+    <nav class="nav-links">
+        <a href="index.html" class="nav-link" style="background:rgba(255,255,255,.3);">🏠 Pag-order</a>
+        <a href="track.html" class="nav-link">📍 Subaybayan</a>
+        <a href="history.html" class="nav-link">📋 Kasaysayan</a>
+        <a href="../admin.html" class="nav-link" target="_blank">🔐 Admin</a>
+        <a href="../index.html" class="nav-link" target="_blank">🏍️ Rider</a>
+    </nav>
+    <p class="copyright">© 2026 martodosko — Rider's Dispatcher System</p>
+</div>
+
+<div class="page">
+
+    <!-- KASALUKUYANG UTOS -->
+    <div id="current-order-section" class="hidden">
+        <h3 style="margin-bottom:10px;">📤 Kasalukuyang Utos</h3>
+        <div id="current-order-card" class="status-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                    <p style="font-size:12px;color:var(--muted);" id="order-time"></p>
+                    <p style="font-weight:bold;margin-top:4px;" id="order-route"></p>
+                    <p style="font-size:14px;margin-top:4px;">Presyo: <strong id="order-fare">₱0.00</strong></p>
+                </div>
+                <span id="order-status-badge" class="status-badge">Naghihintay</span>
+            </div>
+            <p style="margin-top:10px;font-size:14px;" id="order-status-text"></p>
+            <div id="order-actions" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-out btn-sm" onclick="cancelCurrentOrder()">❌ Kanselahin</button>
+                <a href="track.html" class="btn btn-info btn-sm">📍 Subaybayan</a>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- PAG-ORDER NG BAGONG BIYAHE -->
+    <div class="card">
+        <h3 style="margin-bottom:16px;">➕ Bagong Utos</h3>
+
+        <label>📍 Saan ka kukunin?</label>
+        <input type="text" id="pickup" placeholder="Hal. Lopez Bayan, Quezon">
+
+        <label>🏁 Saan ang pupuntahan?</label>
+        <input type="text" id="destination" placeholder="Hal. Calauag, Palengke">
+
+        <label>⏰ Kailan ang pagbiyahe?</label>
+        <select id="trip-time">
+            <option value="now" selected>Agad na — Ngayon</option>
+            <option value="later">Iba pang oras — Nakatakda</option>
+        </select>
+
+        <div id="scheduled-time-field" class="hidden">
+            <label>Ilagay ang oras ng pagbiyahe</label>
+            <input type="datetime-local" id="scheduled-datetime">
+        </div>
+
+        <label>💬 Karagdagang Paalala (opsyonal)</label>
+        <textarea id="notes" placeholder="Hal. May dalang gamit, maghintay sa labas..."></textarea>
+
+        <div id="price-preview-area" class="hidden">
+            <div class="price-preview">
+                <p style="font-size:13px;opacity:.9;">Tantsang Presyo ng Pamasahe</p>
+                <p class="price-amount">₱<span id="estimated-fare">0.00</span></p>
+                <p style="font-size:11px;opacity:.8;margin-top:4px;">Batay sa nakatakdang presyo sa sistema</p>
+            </div>
+        </div>
+
+        <button class="btn btn-pri" style="margin-top:20px;" onclick="submitOrder()">
+            ✅ Ipadala ang Utos
+        </button>
+    </div>
+
+    <!-- MGA KAMAKAILANG NA RUTA -->
+    <div class="card card-info">
+        <h3 style="margin-bottom:12px;">📌 Mga Madalas Gamitin</h3>
+        <div id="recent-routes-list">
+            <p class="note">Wala pang nakaraang ruta — mag-order para makita dito</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ========== KONEKSYON SA SISTEMA ==========
+function getShared(key) {
+    const val = localStorage.getItem(key);
+    try { return val ? JSON.parse(val) : null; }
+    catch { return val; }
+}
+function setShared(key, value) {
+    localStorage.setItem(key, typeof value === 'object' ? JSON.stringify(value) : value);
+}
+
+// ========== PAGBABASA NG DATOS ==========
+let PRICE_PER_KM = 12.00; // Batayang presyo — maaaring palitan ng Admin
+let KNOWN_ROUTES = getShared('sharedRoutes') || [];
+let CUSTOMER_ORDERS = getShared('customerOrders') || [];
+let CURRENT_ORDER = null;
+
+// Kunin ang presyo mula sa pagtatakda ng Admin
+function loadSystemRates() {
+    const settings = getShared('systemSettings');
+    const fareRates = getShared('fareRates');
+    if (fareRates && fareRates.basePerKm) {
+        PRICE_PER_KM = fareRates.basePerKm;
+    }
+    // I-refresh ang mga ruta
+    KNOWN_ROUTES = getShared('sharedRoutes') || [];
+}
+
+// ========== KASALUKUYANG UTOS ==========
+function checkCurrentOrder() {
+    // Hanapin ang utos na hindi pa tapos o nakansela
+    CURRENT_ORDER = CUSTOMER_ORDERS.find(o => 
+        o.status !== 'completed' && o.status !== 'cancelled'
+    );
+    
+    const section = document.getElementById('current-order-section');
+    if (!CURRENT_ORDER) {
+        section.classList.add('hidden');
+        return;
+    }
+    
+    section.classList.remove('hidden');
+    updateOrderDisplay();
+}
+
+function updateOrderDisplay() {
+    if (!CURRENT_ORDER) return;
+    
+    document.getElementById('order-time').textContent = new Date(CURRENT_ORDER.createdAt).toLocaleString('tl-PH');
+    document.getElementById('order-route').textContent = `${CURRENT_ORDER.pickup} → ${CURRENT_ORDER.destination}`;
+    document.getElementById('order-fare').textContent = `₱${CURRENT_ORDER.fare.toFixed(2)}`;
+    
+    const statusMap = {
+        pending: { text: 'Naghihintay sa Admin', badge: 'badge-pending', card: 'status-pending', desc: 'Ipapasa sa Admin para maghanap ng tsuper' },
+        accepted: { text: 'Tinanggap ng Admin', badge: 'badge-accepted', card: 'status-accepted', desc: 'Inihahanda na ang pagtatalaga sa tsuper' },
+        assigned: { text: 'May tsuper na', badge: 'badge-assigned', card: 'status-assigned', desc: 'Papunta na sa iyo ang tsuper — tingnan sa Subaybayan' },
+        enroute: { text: 'Nasa biyahe na', badge: 'badge-assigned', card: 'status-assigned', desc: 'Papunta na sa patutunguhan' },
+        completed: { text: 'Tapos na', badge: 'badge-completed', card: 'status-completed', desc: 'Salamat sa paggamit!' },
+        cancelled: { text: 'Nakansela na', badge: 'badge-cancelled', card: 'status-cancelled', desc: 'Hindi na isasagawa ang biyahe' }
+    };
+    
+    const s = statusMap[CURRENT_ORDER.status] || statusMap.pending;
+    const card = document.getElementById('current-order-card');
+    
+    card.className = 'status-card ' + s.card;
+    document.getElementById('order-status-badge').textContent = s.text;
+    document.getElementById('order-status-badge').className = 'status-badge ' + s.badge;
+    document.getElementById('order-status-text').textContent = s.desc;
+}
+
+function cancelCurrentOrder() {
+    if (!confirm('Sigurado ka bang kanselahin ang utos?')) return;
+    CURRENT_ORDER.status = 'cancelled';
+    CURRENT_ORDER.cancelledAt = new Date().toISOString();
+    saveOrders();
+    checkCurrentOrder();
+    alert('✅ Nakansela na ang utos.');
+}
+
+// ========== PAGTANTYA NG PRESYO ==========
+function estimateFare(pickup, destination) {
+    // Tingnan kung kilala ang ruta
+    const known = KNOWN_ROUTES.find(r => 
+        (r.start.includes(pickup) && r.end.includes(destination)) ||
+        (r.start.includes(destination) && r.end.includes(pickup))
+    );
+    
+    let km = known ? known.km : null;
+    
+    // Kung hindi kilala, gamitin ang tantsa (min 3km)
+    if (!km) {
+        km = 3.0; // Paunang halaga
+    }
+    
+    return km * PRICE_PER_KM;
+}
+
+// ========== PAGPASA NG UTOS ==========
+function submitOrder() {
+    const pickup = document.getElementById('pickup').value.trim();
+    const dest = document.getElementById('destination').value.trim();
+    const timeType = document.getElementById('trip-time').value;
+    const notes = document.getElementById('notes').value.trim();
+    
+    if (!pickup || !dest) {
+        alert('⚠️ Ilagay kung saan kukunin at saan pupunta!');
+        return;
+    }
+    
+    if (pickup === dest) {
+        alert('⚠️ Ang pagkuhanan at pupuntahan ay magkatulad?');
+        return;
+    }
+    
+    // Kung may kasalukuyang utos pa
+    if (CURRENT_ORDER && CURRENT_ORDER.status !== 'cancelled') {
+        if (!confirm('May kasalukuyan ka pang utos. Sigurado ka bang gumawa ng bago?')) return;
+    }
+    
+    const fare = estimateFare(pickup, dest);
+    
+    const order = {
+        id: Date.now(),
+        pickup,
+        destination: dest,
+        fare,
+        status: 'pending',
+        timeType,
+        scheduledAt: timeType === 'later' 
+            ? document.getElementById('scheduled-datetime').value || null 
+            : null,
+        notes,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+    
+    // Ipasok sa listahan — makikita agad sa Admin
+    CUSTOMER_ORDERS.unshift(order);
+    saveOrders();
+    
+    alert(`✅ Naitala na ang utos!\n\n📍 ${pickup} → ${dest}\n💰 Presyo: ₱${fare.toFixed(2)}\n\nMakikita ito agad sa Admin Panel. Maghihintay ng pagtugon.`);
+    
+    // Linisin ang porma
+    document.getElementById('pickup').value = '';
+    document.getElementById('destination').value = '';
+    document.getElementById('notes').value = '';
+    document.getElementById('price-preview-area').classList.add('hidden');
+    
+    checkCurrentOrder();
+    renderRecentRoutes();
+}
+
+function saveOrders() {
+    setShared('customerOrders', CUSTOMER_ORDERS);
+    // Ipaalam sa Admin na may bagong utos
+    localStorage.setItem('adminLastUpdate', new Date().toISOString());
+}
+
+// ========== MGA KAMAKAILANG NA RUTA ==========
+function renderRecentRoutes() {
+    const list = document.getElementById('recent-routes-list');
+    const recent = CUSTOMER_ORDERS
+        .filter(o => o.status === 'completed')
+        .slice(0, 3);
+    
+    if (!recent.length) {
+        list.innerHTML = '<p class="note">Wala pang nakaraang ruta — mag-order para makita dito</p>';
+        return;
+    }
+    
+    list.innerHTML = recent.map(o => `
+        <div style="padding:10px;background:white;border-radius:10px;margin-bottom:8px;cursor:pointer;" 
+             onclick="useRecentRoute('${o.pickup}','${o.destination}')">
+            <p style="font-size:14px;font-weight:bold;">${o.pickup} → ${o.destination}</p>
+            <p style="font-size:12px;color:var(--muted);">₱${o.fare.toFixed(2)} · ${new Date(o.createdAt).toLocaleDateString('tl-PH')}</p>
+        </div>
+    `).join('');
+}
+
+function useRecentRoute(pickup, dest) {
+    document.getElementById('pickup').value = pickup;
+    document.getElementById('destination').value = dest;
+    updatePricePreview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== PAGTANTYA NG PRESYO HABANG NAGTATYPE ==========
+document.getElementById('pickup').addEventListener('input', updatePricePreview);
+document.getElementById('destination').addEventListener('input', updatePricePreview);
+
+function updatePricePreview() {
+    const p = document.getElementById('pickup').value.trim();
+    const d = document.getElementById('destination').value.trim();
+    const area = document.getElementById('price-preview-area');
+    
+    if (p && d && p !== d) {
+        const fare = estimateFare(p, d);
+        document.getElementById('estimated-fare').textContent = fare.toFixed(2);
+        area.classList.remove('hidden');
+    } else {
+        area.classList.add('hidden');
+    }
+}
+
+// ========== IPALIT ANG ORAS ==========
+document.getElementById('trip-time').addEventListener('change', function() {
+    document.getElementById('scheduled-time-field').classList.toggle('hidden', this.value !== 'later');
+});
+
+// ========== PAGSISIMULA ==========
+document.addEventListener('DOMContentLoaded', () => {
+    loadSystemRates();
+    checkCurrentOrder();
+    renderRecentRoutes();
+    
+    // Awtomatikong suriin tuwing 3 segundo
+    setInterval(() => {
+        loadSystemRates();
+        checkCurrentOrder();
+    }, 3000);
+});
+</script>
+
+</body>
+</html>
