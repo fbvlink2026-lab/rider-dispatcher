@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <!-- ================================================== -->
+    <!-- 📋 KASAYSAYAN NG BIYAHE — CUSTOMER HISTORY         -->
+    <!-- File: customer/history.html                        -->
+    <!-- Bersyon: 1.0.0                                      -->
+    <!-- Petsa: 2026-09-24                                   -->
+    <!-- May-akda: martodosko                                -->
+    <!-- Proyekto: Rider's Dispatcher & Transport System    -->
+    <!-- Karapatang-ari: © 2026 martodosko                   -->
+    <!-- Lisensya: Libre — Para sa Serbisyo sa Pilipinas     -->
+    <!-- ================================================== -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Kasaysayan ng Biyahe — Rider's Dispatcher</title>
+    <meta name="description" content="Tingnan ang lahat ng nakaraang biyahe, magbigay ng pagtatasa sa tsuper, at muling mag-order ng katulad na ruta.">
+    <meta name="keywords" content="kasaysayan, nakaraan, biyahe, pagtatasa, puntos, muling pag-order">
+    <meta name="author" content="martodosko">
+    <meta name="version" content="1.0.0">
+    <meta name="system-connection" content="Customer Orders, Trip Records, Ratings">
+
+    <meta name="theme-color" content="#7B1FA2">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --p: #7B1FA2; --p-light: #F3E5F5; --ok: #43A047;
+            --warn: #FFB300; --danger: #E53935; --info: #1976D2;
+            --bg: #F5F7FA; --card: #FFFFFF; --txt: #263238; --muted: #78909C;
+        }
+        body { background: var(--bg); min-height: 100vh; padding-bottom: 40px; }
+
+        .header {
+            background: linear-gradient(90deg, #7B1FA2, #BA68C8); color: white;
+            padding: 20px; border-radius: 0 0 20px 20px;
+        }
+        .header h1 { font-size: 18px; margin-bottom: 4px; }
+        .header p { font-size: 12px; opacity: .9; }
+        .nav-links { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav-link { color: white; text-decoration: none; font-size: 12px; background: rgba(255,255,255,.2); padding: 6px 12px; border-radius: 8px; }
+        .nav-link.active { background: rgba(255,255,255,.35); font-weight: bold; }
+
+        .page { padding: 16px; max-width: 480px; margin: 0 auto; }
+
+        .summary-card {
+            background: white; border-radius: 16px; padding: 16px;
+            margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,.05);
+        }
+        .summary-row { display: flex; justify-content: space-between; padding: 6px 0; }
+        .summary-label { font-size: 13px; color: var(--muted); }
+        .summary-value { font-size: 15px; font-weight: 600; }
+        .summary-total { border-top: 1px solid #EEE; margin-top: 8px; padding-top: 12px; font-size: 18px; }
+
+        .trip-card {
+            background: white; border-radius: 16px; padding: 16px;
+            margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,.05);
+            border-left: 4px solid var(--ok);
+            transition: transform .2s;
+        }
+        .trip-card:hover { transform: translateY(-2px); }
+        .trip-cancelled { border-left-color: var(--danger); opacity: .8; }
+        .trip-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .trip-route { font-weight: 600; font-size: 15px; }
+        .trip-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+        .trip-fare { font-size: 16px; font-weight: bold; color: var(--ok); }
+        .trip-cancelled .trip-fare { color: var(--danger); }
+        .trip-meta { margin-top: 10px; padding-top: 10px; border-top: 1px solid #F5F5F5; }
+        .rider-name { font-size: 13px; color: var(--info); }
+
+        .stars { display: flex; gap: 4px; margin: 8px 0; }
+        .star { font-size: 24px; cursor: pointer; color: #DDD; transition: color .2s; }
+        .star.filled { color: #FFC107; }
+        .star:hover { transform: scale(1.2); }
+        .rating-note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+        .btn {
+            border: none; border-radius: 10px; padding: 10px 14px; font-size: 14px;
+            font-weight: 600; cursor: pointer; transition: transform .1s;
+        }
+        .btn:active { transform: scale(.97); }
+        .btn-pri { background: var(--p); color: white; }
+        .btn-ok { background: var(--ok); color: white; }
+        .btn-out { background: transparent; border: 1px solid #CCC; color: var(--txt); }
+        .btn-sm { padding: 8px 12px; font-size: 13px; }
+        .btn-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+        .filter-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 6px 12px; border-radius: 20px; border: none;
+            background: #EEE; font-size: 12px; cursor: pointer;
+        }
+        .filter-btn.active { background: var(--p); color: white; }
+
+        .empty-state { text-align: center; padding: 50px 20px; color: var(--muted); }
+        .empty-icon { font-size: 48px; margin-bottom: 12px; }
+        .hidden { display: none !important; }
+        .divider { height: 1px; background: #EEE; margin: 16px 0; }
+
+        /* Modal */
+        .modal-bg {
+            position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; z-index: 999;
+        }
+        .modal {
+            background: white; border-radius: 20px; padding: 24px;
+            width: 100%; max-width: 380px;
+        }
+        .modal h3 { margin-bottom: 16px; text-align: center; }
+        textarea {
+            width: 100%; padding: 12px; border: 1px solid #DDD;
+            border-radius: 10px; font-size: 14px; margin-top: 8px; resize: vertical;
+            min-height: 80px;
+        }
+        .modal-btns { display: flex; gap: 10px; margin-top: 16px; }
+        .modal-btns .btn { flex: 1; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📋 KASAYSAYAN NG BIYAHE</h1>
+    <p>Lahat ng nakaraang pagbyahe at pagtatasa</p>
+    <nav class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Pag-order</a>
+        <a href="track.html" class="nav-link">📍 Subaybayan</a>
+        <a href="history.html" class="nav-link active">📋 Kasaysayan</a>
+        <a href="../admin.html" class="nav-link" target="_blank">🔐 Admin</a>
+    </nav>
+</div>
+
+<div class="page">
+
+    <!-- BUOD -->
+    <div class="summary-card">
+        <div class="summary-row">
+            <span class="summary-label">Kabuuang Biyahe</span>
+            <span class="summary-value" id="total-trips">0</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Tinapos na</span>
+            <span class="summary-value" id="completed-trips">0</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Kabuuang Ibinayad</span>
+            <span class="summary-value" id="total-spent">₱0.00</span>
+        </div>
+        <div class="summary-row summary-total">
+            <span class="summary-label">Karaniwang Presyo</span>
+            <span class="summary-value" id="avg-fare">₱0.00</span>
+        </div>
+    </div>
+
+    <!-- PAGSALA -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">Lahat</button>
+        <button class="filter-btn" data-filter="completed">Tinapos</button>
+        <button class="filter-btn" data-filter="cancelled">Nakansela</button>
+        <button class="filter-btn" data-filter="rated">May Puntos</button>
+    </div>
+
+    <!-- LISTAHAN NG BIYAHE -->
+    <div id="trips-list">
+        <div class="empty-state">
+            <p class="empty-icon">🚕</p>
+            <h3>Wala pang nakaraang biyahe</h3>
+            <p style="margin:8px 0 20px;">Ang lahat ng iyong pag-order ay lalabas dito</p>
+            <a href="index.html" class="btn btn-pri" style="display:inline-block;text-decoration:none;">➕ Mag-Order Ngayon</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL: PAGTATASA -->
+<div class="modal-bg hidden" id="ratingModal">
+    <div class="modal">
+        <h3>⭐ Magbigay ng Puntos</h3>
+        <p style="text-align:center;color:var(--muted);margin-bottom:10px;" id="rating-route-text"></p>
+        <div class="stars" id="starsContainer">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <p class="rating-note" id="rating-note-text">Piliin ang bilang ng bituin</p>
+        <label style="margin-top:12px;display:block;font-size:13px;color:var(--muted);">Paliwanag (opsyonal)</label>
+        <textarea id="rating-comment" placeholder="Ibahagi ang iyong karanasan..."></textarea>
+        <div class="modal-btns">
+            <button class="btn btn-out" onclick="closeRatingModal()">Isara</button>
+            <button class="btn btn-ok" onclick="submitRating()">💾 I-save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ========== KONEKSYON SA DATOS ==========
+function getShared(key) {
+    const val = localStorage.getItem(key);
+    try { return val ? JSON.parse(val) : null; }
+    catch { return val; }
+}
+function setShared(key, value) {
+    localStorage.setItem(key, typeof value === 'object' ? JSON.stringify(value) : value);
+}
+
+// ========== MGA HAYAGANG VARIABL ==========
+let ALL_ORDERS = [];
+let CURRENT_FILTER = 'all';
+let SELECTED_ORDER_ID = null;
+let SELECTED_RATING = 0;
+
+// ========== PAGBASA NG DATOS ==========
+function loadData() {
+    ALL_ORDERS = getShared('customerOrders') || [];
+    updateSummary();
+    renderTrips();
+}
+
+// ========== BUOD ==========
+function updateSummary() {
+    const completed = ALL_ORDERS.filter(o => o.status === 'completed');
+    const totalFare = completed.reduce((sum, o) => sum + (o.fare || 0), 0);
+
+    document.getElementById('total-trips').textContent = ALL_ORDERS.length;
+    document.getElementById('completed-trips').textContent = completed.length;
+    document.getElementById('total-spent').textContent = `₱${totalFare.toFixed(2)}`;
+    
+    const avg = completed.length > 0 ? totalFare / completed.length : 0;
+    document.getElementById('avg-fare').textContent = `₱${avg.toFixed(2)}`;
+}
+
+// ========== PAGSALA ==========
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        CURRENT_FILTER = btn.dataset.filter;
+        renderTrips();
+    });
+});
+
+// ========== PAGLILISTA NG BIYAHE ==========
+function renderTrips() {
+    const container = document.getElementById('trips-list');
+    
+    let filtered = ALL_ORDERS.filter(o => {
+        if (CURRENT_FILTER === 'all') return true;
+        if (CURRENT_FILTER === 'rated') return o.rating && o.rating.stars;
+        return o.status === CURRENT_FILTER;
+    });
+
+    // Ayusin: pinakabago sa itaas
+    filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    if (!filtered.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <p class="empty-icon">${CURRENT_FILTER === 'rated' ? '⭐' : '📋'}</p>
+                <h3>Walang nakitang biyahe</h3>
+                <p style="margin:8px 0 20px;">${
+                    CURRENT_FILTER === 'rated' ? 'Magbigay ng puntos sa natapos na biyahe' :
+                    CURRENT_FILTER === 'cancelled' ? 'Wala pang nakanselang utos' :
+                    'Ang lahat ng iyong pag-order ay lalabas dito'
+                }</p>
+                <a href="index.html" class="btn btn-pri" style="display:inline-block;text-decoration:none;">➕ Mag-Order Ngayon</a>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(order => {
+        const isCancelled = order.status === 'cancelled';
+        const isCompleted = order.status === 'completed';
+        const hasRating = order.rating && order.rating.stars;
+
+        return `
+            <div class="trip-card ${isCancelled ? 'trip-cancelled' : ''}">
+                <div class="trip-header">
+                    <div>
+                        <p class="trip-route">${order.pickup} → ${order.destination}</p>
+                        <p class="trip-date">${new Date(order.createdAt).toLocaleString('tl-PH')}</p>
+                        ${order.riderName ? `<p class="rider-name">🏍️ ${order.riderName}</p>` : ''}
+                    </div>
+                    <p class="trip-fare">${isCancelled ? 'Nakansela' : '₱' + (order.fare || 0).toFixed(2)}</p>
+                </div>
+                ${order.notes ? `<p style="font-size:12px;color:var(--muted);margin-top:4px;">💬 ${order.notes}</p>` : ''}
+                <div class="trip-meta">
+                    ${hasRating ? 
+                        `<p style="font-size:14px;color:var(--warn);">⭐ ${order.rating.stars}/5 — ${order.rating.comment || 'Walang paliwanag'}</p>` : 
+                        (isCompleted ? `<p style="font-size:13px;color:var(--muted);">Hindi pa nakapuntos</p>` : '')
+                    }
+                    <div class="btn-row">
+                        ${isCompleted && !hasRating ? 
+                            `<button class="btn btn-ok btn-sm" onclick="openRatingModal(${order.id})">⭐ Magbigay ng Puntos</button>` : ''}
+                        ${isCompleted || isCancelled ? 
+                            `<button class="btn btn-pri btn-sm" onclick="reorder('${order.pickup}','${order.destination}')">🔁 Muli</button>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ========== MULING PAG-ORDER ==========
+function reorder(pickup, destination) {
+    sessionStorage.setItem('reorderPickup', pickup);
+    sessionStorage.setItem('reorderDest', destination);
+    window.location.href = 'index.html';
+}
+
+// ========== PAGTATASA — MODAL ==========
+function openRatingModal(orderId) {
+    SELECTED_ORDER_ID = orderId;
+    SELECTED_RATING = 0;
+    
+    const order = ALL_ORDERS.find(o => o.id === orderId);
+    document.getElementById('rating-route-text').textContent = `${order.pickup} → ${order.destination}`;
+    document.getElementById('rating-comment').value = '';
+    document.getElementById('rating-note-text').textContent = 'Piliin ang bilang ng bituin';
+    
+    resetStars();
+    document.getElementById('ratingModal').classList.remove('hidden');
+}
+
+function closeRatingModal() {
+    document.getElementById('ratingModal').classList.add('hidden');
+    SELECTED_ORDER_ID = null;
+    SELECTED_RATING = 0;
+}
+
+// Pamamahala sa bituin
+document.getElementById('starsContainer').addEventListener('click', e => {
+    if (e.target.classList.contains('star')) {
+        SELECTED_RATING = parseInt(e.target.dataset.value);
+        updateStarsDisplay();
+        const notes = [
+            'Napakapangit', 'Kulang sa inaasahan', 'Maayos', 'Maganda', 'Napakahusay!'
+        ];
+        document.getElementById('rating-note-text').textContent = notes[SELECTED_RATING - 1];
+    }
+});
+
+function updateStarsDisplay() {
+    document.querySelectorAll('#starsContainer .star').forEach((star, idx) => {
+        star.classList.toggle('filled', idx < SELECTED_RATING);
+    });
+}
+function resetStars() {
+    document.querySelectorAll('#starsContainer .star').forEach(star => star.classList.remove('filled'));
+}
+
+function submitRating() {
+    if (SELECTED_RATING === 0) {
+        alert('⚠️ Pumili muna ng bilang ng bituin!');
+        return;
+    }
+
+    const idx = ALL_ORDERS.findIndex(o => o.id === SELECTED_ORDER_ID);
+    if (idx !== -1) {
+        ALL_ORDERS[idx].rating = {
+            stars: SELECTED_RATING,
+            comment: document.getElementById('rating-comment').value.trim(),
+            ratedAt: new Date().toISOString()
+        };
+        setShared('customerOrders', ALL_ORDERS);
+        alert('✅ Salamat sa iyong pagtatasa!');
+    }
+
+    closeRatingModal();
+    renderTrips();
+}
+
+// ========== KUNG MULING PAG-ORDER — ILAGAY SA PORM ==========
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    
+    // Ilagay ang nakaraang ruta kung galing sa muling pag-order
+    const reorderPickup = sessionStorage.getItem('reorderPickup');
+    const reorderDest = sessionStorage.getItem('reorderDest');
+    if (reorderPickup && window.location.pathname.includes('history.html')) {
+        // Nasa history — huwag gawin
+    }
+});
+
+// Kapag nasa index.html — kunin ang muling pag-order
+if (window.location.pathname.includes('index.html')) {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const pickup = sessionStorage.getItem('reorderPickup');
+            const dest = sessionStorage.getItem('reorderDest');
+            if (pickup && dest) {
+                const pInput = document.getElementById('pickup');
+                const dInput = document.getElementById('destination');
+                if (pInput && dInput) {
+                    pInput.value = pickup;
+                    dInput.value = dest;
+                    pInput.dispatchEvent(new Event('input'));
+                }
+                sessionStorage.removeItem('reorderPickup');
+                sessionStorage.removeItem('reorderDest');
+            }
+        }, 100);
+    });
+}
+</script>
+
+</body>
+</html>
