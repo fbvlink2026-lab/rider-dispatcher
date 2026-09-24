@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Pagtatakda | Admin — Rider Dispatcher</title>
+    <!-- File: admin/settings.html | Bersyon: 1.0.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .babala-kahon { background: #FFF7E8; border-left: 4px solid #FF7D00; padding: 14px; border-radius: 8px; margin: 16px 0; }
+        .panganib-kahon { background: #FFECEC; border-left: 4px solid #F53F3F; padding: 14px; border-radius: 8px; margin: 20px 0 8px; }
+        .tandaan-kahon { background: #E8F0FF; border-left: 4px solid #165DFF; padding: 14px; border-radius: 8px; margin: 16px 0; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 12px; text-align: center; }
+        .patong-loob p { font-size: 14px; color: #4E5969; margin-bottom: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- === NABIGASYON === -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">⚙️ Pagtatakda</span>
+            <span></span>
+        </nav>
+
+        <!-- === PANGKALAHATANG HALAGA === -->
+        <section class="form-section">
+            <h3>⛽ Pangkalahatang Halaga</h3>
+            
+            <div class="input-group">
+                <label>Karaniwang Presyo ng Gas (₱ bawat Litro)</label>
+                <input type="number" step="0.01" id="presyo-gas" placeholder="hal. 92.00">
+                <p style="font-size:13px; color:#4E5969; margin-top:4px;">Gagamitin ito kapag walang nakalagay na presyo sa ruta</p>
+            </div>
+
+            <div class="input-group">
+                <label>Gastos sa Piyesa — Buong Araw (₱)</label>
+                <input type="number" step="0.01" id="piyesa-araw" placeholder="hal. 20.00">
+                <p style="font-size:13px; color:#4E5969; margin-top:4px;">Halimbawa: ₱20 bawat araw. Hatiin sa dami ng biyahe para sa bawat biyahe.</p>
+            </div>
+
+            <button id="isumbag-halaga" class="btn primary-btn btn-full" style="margin-top: 8px;">
+                💾 I-save ang Halaga
+            </button>
+        </section>
+
+        <!-- === KODIGO NG PAGPASOK === -->
+        <section class="form-section">
+            <h3>🔐 Seguridad</h3>
+            
+            <div class="input-group">
+                <label>Kodigo ng Pagpasok sa Admin</label>
+                <input type="password" id="kodigo-admin" placeholder="Ipasok ang bagong kodigo">
+            </div>
+            <div class="input-group">
+                <label>Ulitin ang Kodigo</label>
+                <input type="password" id="kodigo-ulit" placeholder="Ulitin ang bagong kodigo">
+            </div>
+
+            <button id="palitan-kodigo" class="btn secondary-btn btn-full" style="margin-top: 8px;">
+                🔑 Palitan ang Kodigo
+            </button>
+
+            <div class="babala-kahon">
+                <strong>Paalala:</strong> Huwag kalimutan ang kodigo. Kapag nawala, kailangang linisin ang datos ng sistema para makapasok muli.
+            </div>
+        </section>
+
+        <!-- === IMPORMASYON NG SISTEMA === -->
+        <section class="form-section">
+            <h3>ℹ️ Impormasyon</h3>
+            <ul style="font-size:14px; line-height:1.8; padding-left:20px;">
+                <li><strong>Bersyon:</strong> 1.0.0</li>
+                <li><strong>Petsa:</strong> 2026-09-24</li>
+                <li><strong>May-akda:</strong> martodosko</li>
+                <li><strong>Bilang ng ruta:</strong> <span id="bilang-ruta">0</span></li>
+                <li><strong>Lugar ng pag-iimbak:</strong> Telepono (hindi sa internet)</li>
+            </ul>
+        </section>
+
+        <!-- === PAGLILINIS NG LAHAT === -->
+        <section class="form-section">
+            <h3>⚠️ Paglilinis</h3>
+            
+            <div class="panganib-kahon">
+                <strong>Burahin ang Lahat ng Datos</strong><br>
+                Buburahin nito ang lahat ng ruta, halaga, at kodigo — babalik sa bagong simula. <strong>Hindi na mababawi.</strong>
+            </div>
+
+            <button id="linisin-lahat" class="btn danger-btn btn-full">
+                🗑️ Burahin ang Lahat at Magsimula Muli
+            </button>
+        </section>
+
+        <!-- === PATONG: KUMPIRMA SA PAGBURA === -->
+        <div id="patong-kumpirma" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Sigurado ka ba?</h2>
+                <p>Ang lahat ng ruta, pagtatakda, at kodigo ay mabubura nang tuluyan.</p>
+                <button id="oo-linis" class="btn danger-btn btn-full">✅ Oo, Burahin ang Lahat</button>
+                <button id="hindi-linis" class="btn secondary-btn btn-full" style="margin-top: 8px;">❌ Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === ILAGAY ANG KASALUKUYANG HALAGA ===
+            function ilagayHalaga() {
+                document.getElementById('presyo-gas').value = RIDER_APP.datos.mga_katakda.presyo_gas_pangkalahatan;
+                document.getElementById('piyesa-araw').value = RIDER_APP.datos.mga_katakda.gastos_piyesa_buong_araw;
+                document.getElementById('kodigo-admin').value = '';
+                document.getElementById('kodigo-ulit').value = '';
+                document.getElementById('bilang-ruta').textContent = RIDER_APP.datos.mga_ruta.length;
+            }
+
+            // === I-SAVE ANG PANGKALAHATANG HALAGA ===
+            document.getElementById('isumbag-halaga').addEventListener('click', () => {
+                RIDER_APP.datos.mga_katakda.presyo_gas_pangkalahatan = Number(document.getElementById('presyo-gas').value) || 0;
+                RIDER_APP.datos.mga_katakda.gastos_piyesa_buong_araw = Number(document.getElementById('piyesa-araw').value) || 0;
+                RIDER_APP.iimbak();
+                alert('✅ Nai-save na ang pagtatakda!');
+            });
+
+            // === PALITAN ANG KODIGO ===
+            document.getElementById('palitan-kodigo').addEventListener('click', () => {
+                const una = document.getElementById('kodigo-admin').value.trim();
+                const pangalawa = document.getElementById('kodigo-ulit').value.trim();
+
+                if (!una) {
+                    alert('❌ Ipasok ang bagong kodigo');
+                    return;
+                }
+                if (una !== pangalawa) {
+                    alert('❌ Hindi magkatulad ang kodigo! Ulitin muli.');
+                    return;
+                }
+
+                RIDER_APP.datos.mga_katakda.kodigo_admin = una;
+                RIDER_APP.iimbak();
+                alert('✅ Napalitan na ang kodigo! Tandaan ito.');
+                document.getElementById('kodigo-admin').value = '';
+                document.getElementById('kodigo-ulit').value = '';
+            });
+
+            // === BUKAS ANG PATONG NG KUMPIRMA ===
+            document.getElementById('linisin-lahat').addEventListener('click', () => {
+                document.getElementById('patong-kumpirma').classList.remove('nakatago');
+            });
+
+            // === HUWAG MAGLINIS ===
+            document.getElementById('hindi-linis').addEventListener('click', () => {
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+            });
+
+            // === MAGLINIS NG LAHAT ===
+            document.getElementById('oo-linis').addEventListener('click', () => {
+                localStorage.removeItem(RIDER_APP.SUSI_IMBAK);
+                RIDER_APP.ibalik(); // ibalik sa orihinal na datos
+                ilagayHalaga();
+                document.getElementById('patong-kumpirma').classList.add('nakatago');
+                alert('✅ Nalinisan na ang lahat! Babalik sa orihinal na halaga.');
+            });
+
+            // === SIMULAN ===
+            ilagayHalaga();
+        });
+    </script>
+</body>
+</html>
