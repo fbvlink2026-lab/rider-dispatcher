@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Seguridad at Antas | Admin — Rider Dispatcher</title>
+    <!-- File: admin/security.html | Bersyon: 1.3.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .susi-kahon { background: #F9FAFB; padding: 12px; border-radius: 10px; font-family: monospace; font-size: 14px; letter-spacing: 2px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
+        .antas-kahon { border-left: 3px solid #165DFF; padding: 12px 14px; background: #F0F5FF; border-radius: 0 10px 10px 0; margin: 8px 0; }
+        .antas-kahon.manager { border-color: #722ED1; background: #F7F1FF; }
+        .antas-kahon.super { border-color: #F53F3F; background: #FFECEC; }
+        .tanda-pagbabago { font-size: 12px; color: #86909C; margin-top: 4px; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">🔐 Seguridad at Antas</span>
+            <span></span>
+        </nav>
+
+        <!-- SUSI NG PAGPASOK -->
+        <section class="form-section">
+            <h3>🔑 Mga Susi ng Pagpasok</h3>
+            
+            <div class="input-group">
+                <label>Susi ng Rider — Ginagamit para makapasok sa sariling pahina</label>
+                <div class="susi-kahon" id="susi-rider">••••••••</div>
+                <button id="ipakita-rider" class="btn secondary-btn" style="margin: 4px 0 12px; font-size: 13px; padding: 6px 10px;">👁️ Ipakita / Baguhin</button>
+            </div>
+
+            <div class="input-group">
+                <label>Susi ng Admin — Buong kapangyarihan sa sistema</label>
+                <div class="susi-kahon" id="susi-admin">••••••••</div>
+                <button id="ipakita-admin" class="btn secondary-btn" style="margin: 4px 0 12px; font-size: 13px; padding: 6px 10px;">👁️ Ipakita / Baguhin</button>
+            </div>
+
+            <div class="tandaan-kahon">
+                💡 Ang susi ay naiimbak lamang sa telepono. Kapag nawala, kailangang linisin ang datos para makabago.
+            </div>
+        </section>
+
+        <!-- ANTAS NG PAGPAPASOK -->
+        <section class="form-section">
+            <h3>👑 Antas at Kapangyarihan</h3>
+
+            <div class="antas-kahon super">
+                <strong>👑 Super Admin</strong><br>
+                <small>Buong kapangyarihan — bawal sa lahat maliban sa may-ari</small>
+                <ul style="margin: 6px 0; padding-left: 18px; font-size: 13px;">
+                    <li>Pagbabago sa sistema at mga pahina</li>
+                    <li>Pagtatakda ng susi at antas</li>
+                    <li>Paglilinis at pag-export ng lahat ng datos</li>
+                </ul>
+            </div>
+
+            <div class="antas-kahon manager">
+                <strong>🎖️ Manager / Tagapamahala</strong><br>
+                <small>Pamamahala sa biyahe, rider, mamimili, at utos</small>
+                <ul style="margin: 6px 0; padding-left: 18px; font-size: 13px;">
+                    <li>Pagdagdag / Pagbabago / Pagbura ng ruta, rider, mamimili, utos</li>
+                    <li>Pamamahala sa promosyon, bonus, at komisyon</li>
+                    <li>Pagtingin sa kabuuan ng kita at ulat</li>
+                </ul>
+            </div>
+
+            <div class="antas-kahon">
+                <strong>🏍️ Rider</strong><br>
+                <small>Pagtingin sa sariling utos at kita</small>
+                <ul style="margin: 6px 0; padding-left: 18px; font-size: 13px;">
+                    <li>Pagtanggap at pagtapos ng sariling utos</li>
+                    <li>Pagtingin sa sariling kasaysayan at kita</li>
+                    <li>Pagbabago sa sariling impormasyon</li>
+                </ul>
+            </div>
+
+            <div class="antas-kahon" style="border-color: #86909C; background: #F2F3F5;">
+                <strong>👤 Mamimili</strong><br>
+                <small>Pag-uutos at pagtingin sa katayuan</small>
+                <ul style="margin: 6px 0; padding-left: 18px; font-size: 13px;">
+                    <li>Paglikha ng bagong utos</li>
+                    <li>Pagtingin sa kasaysayan</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PAGBABAGO NG ANTAS NG RIDER -->
+        <section class="form-section">
+            <h3>🎖️ Itakda ang Antas ng Rider</h3>
+            <div class="input-group">
+                <label>Pumili ng Rider</label>
+                <select id="rider-antas">
+                    <option value="">— Pumili —</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Antas / Ranggo</label>
+                <select id="antas-bago">
+                    <option value="rider">🏍️ Rider</option>
+                    <option value="manager">🎖️ Manager</option>
+                    <option value="super_admin">👑 Super Admin</option>
+                </select>
+            </div>
+            <button id="itakda-antas" class="btn primary-btn btn-full">✅ Itakda ang Antas</button>
+        </section>
+
+        <!-- PATONG: BAGUHIN ANG SUSI -->
+        <div id="patong-susi" class="patong nakatago">
+            <div class="patong-loob">
+                <h2 id="pamagat-susi">Baguhin ang Susi</h2>
+                <div class="input-group">
+                    <label>Bagong Susi</label>
+                    <input type="password" id="bagong-susi">
+                </div>
+                <div class="input-group">
+                    <label>Ulitin ang Susi</label>
+                    <input type="password" id="ulit-susi">
+                </div>
+                <button id="tanggapin-susi" class="btn primary-btn btn-full">✅ Tanggapin</button>
+                <button id="isara-susi" class="btn secondary-btn btn-full" style="margin-top: 8px;">❌ Isara</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let uriNgSusi = null;
+
+            // ILAGAY ANG MGA RIDER SA PAGPIPILIAN
+            function ilagayMgaRider() {
+                const lugar = document.getElementById('rider-antas');
+                lugar.innerHTML = '<option value="">— Pumili —</option>';
+                (RIDER_APP.datos.mga_rider || []).forEach(r => {
+                    const antas = r.antas || 'rider';
+                    lugar.innerHTML += `<option value="${r.id}">${r.pangalan} — ${antas}</option>`;
+                });
+            }
+
+            // Ipakita ang kasalukuyang susi (nakatago)
+            function ilagaySusi() {
+                const sRider = RIDER_APP.datos.mga_katakda.susi_rider || 'Hindi itinakda';
+                const sAdmin = RIDER_APP.datos.mga_katakda.susi_admin || RIDER_APP.datos.mga_katakda.kodigo_admin || 'Hindi itinakda';
+                document.getElementById('susi-rider').dataset.aktwal = sRider;
+                document.getElementById('susi-admin').dataset.aktwal = sAdmin;
+            }
+
+            // Ipakita / Itago ang susi
+            ['rider', 'admin'].forEach(uri => {
+                document.getElementById(`ipakita-${uri}`).addEventListener('click', () => {
+                    uriNgSusi = uri;
+                    document.getElementById('pamagat-susi').textContent = `Baguhin ang Susi ng ${uri.charAt(0).toUpperCase() + uri.slice(1)}`;
+                    document.getElementById('bagong-susi').value = '';
+                    document.getElementById('ulit-susi').value = '';
+                    document.getElementById('patong-susi').classList.remove('nakatago');
+                });
+            });
+
+            document.getElementById('isara-susi').addEventListener('click', () => {
+                document.getElementById('patong-susi').classList.add('nakatago');
+            });
+
+            document.getElementById('tanggapin-susi').addEventListener('click', () => {
+                const una = document.getElementById('bagong-susi').value.trim();
+                const pangalawa = document.getElementById('ulit-susi').value.trim();
+                if (!una) { alert('❌ Ipasok ang bagong susi'); return; }
+                if (una !== pangalawa) { alert('❌ Hindi magkatulad ang susi'); return; }
+                
+                if (uriNgSusi === 'rider') {
+                    RIDER_APP.datos.mga_katakda.susi_rider = una;
+                } else {
+                    RIDER_APP.datos.mga_katakda.susi_admin = una;
+                    RIDER_APP.datos.mga_katakda.kodigo_admin = una;
+                }
+                RIDER_APP.iimbak();
+                alert('✅ Napalitan na ang susi!');
+                ilagaySusi();
+                document.getElementById('patong-susi').classList.add('nakatago');
+            });
+
+            // ITAKDA ANG ANTAS NG RIDER
+            document.getElementById('itakda-antas').addEventListener('click', () => {
+                const riderId = document.getElementById('rider-antas').value;
+                const bagongAntas = document.getElementById('antas-bago').value;
+                if (!riderId) { alert('❌ Pumili ng rider'); return; }
+
+                const idx = RIDER_APP.datos.mga_rider.findIndex(r => r.id === riderId);
+                RIDER_APP.datos.mga_rider[idx].antas = bagongAntas;
+                RIDER_APP.iimbak();
+                alert('✅ Napalitan na ang antas!');
+                ilagayMgaRider();
+            });
+
+            ilagaySusi();
+            ilagayMgaRider();
+        });
+    </script>
+</body>
+</html>
