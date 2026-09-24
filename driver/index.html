@@ -1,0 +1,268 @@
+<!-- ==================================================
+   FILE        : driver/index.html
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/driver/index.html
+   LAYUNIN     : Tahanan ng Drayber — Kwenta, Talaan, Pagtatakda
+   KONEKSYON   : ../js/languages.js | ../js/common.js | ../css/styles.css
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Drayber — Rider Dispatcher</title>
+    <meta name="description" content="Kwentahin ang kita, alamin kung lugi, pamahalaan ang mga ruta at biyahe.">
+    <meta name="author" content="martodosko">
+    <meta name="theme-color" content="#00B42A">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo" style="background: linear-gradient(135deg, #00B42A 0%, #009A29 100%);">
+        <h2>🏍️ Drayber</h2>
+        <p>Pamamahala sa Biyahe at Kita</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="index.html" class="menu-link aktibo">
+            <span class="menu-ikon">🏠</span>
+            <span>Tahanan</span>
+        </a>
+        <a href="routes.html" class="menu-link">
+            <span class="menu-ikon">📍</span>
+            <span>Mga Ruta</span>
+        </a>
+        <a href="calculator.html" class="menu-link">
+            <span class="menu-ikon">💰</span>
+            <span>Kalkulahin Presyo</span>
+        </a>
+        <a href="trips.html" class="menu-link">
+            <span class="menu-ikon">📋</span>
+            <span>Talaan ng Biyahe</span>
+        </a>
+        <a href="settings.html" class="menu-link">
+            <span class="menu-ikon">⚙️</span>
+            <span>Pagtatakda</span>
+        </a>
+        <a href="../faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            <span>Gabay / FAQ</span>
+        </a>
+        <a href="../index.html" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔙</span>
+            <span>Bumalik sa Portal</span>
+        </a>
+    </nav>
+    <div class="menu-ibaba">
+        <button class="btn outline-btn" style="margin-bottom: 8px; font-size: 13px; padding: 8px;" onclick="palitanWika()">
+            🌐 <span id="teksto_wika">English</span>
+        </button>
+        <p>© 2026 martodosko</p>
+    </div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar" style="background: linear-gradient(90deg, #00B42A 0%, #009A29 100%); color: white;">
+        <button class="pindutan-menu" id="btnMenu" style="color: white;">☰</button>
+        <span class="pangalan-pahina">🏠 Tahanan ng Drayber</span>
+    </div>
+
+    <div class="app-container">
+        <!-- BUOD NG ARAW -->
+        <div class="kahon" style="background: linear-gradient(135deg, #00B42A 0%, #009A29 100%); color: white;">
+            <h3 style="color: white; margin-bottom: 16px;">📈 Buod Ngayong Araw</h3>
+            
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <span>Bilang ng Biyahe</span>
+                <strong id="d_bilang">0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <span>Kabuuang Pasok</span>
+                <strong id="d_pasok">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <span>Kabuuang Gastos</span>
+                <strong id="d_gastos">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; font-size: 20px; font-weight: 700;">
+                <span>Purong Kita</span>
+                <strong id="d_kita">₱0.00</strong>
+            </div>
+
+            <!-- PROGRESS BAR → LAYUNIN -->
+            <div style="margin-top: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                    <span>Pag-abot sa Layunin</span>
+                    <span id="d_porsyento">0%</span>
+                </div>
+                <div style="height: 12px; background: rgba(255,255,255,0.25); border-radius: 6px; overflow: hidden;">
+                    <div id="d_progress" style="height: 100%; background: #FFD700; width: 0%; transition: width 0.4s ease; border-radius: 6px;"></div>
+                </div>
+                <div style="font-size: 12px; margin-top: 6px; opacity: 0.9;">
+                    Layunin: ₱<span id="d_layunin">300.00</span> / araw
+                </div>
+            </div>
+        </div>
+
+        <!-- MABILISANG PAGPILI -->
+        <div class="kahon">
+            <h2>⚡ Mabilisang Gawain</h2>
+            <p style="margin-bottom: 16px;">Pumunta agad sa kailangan mong gawin:</p>
+
+            <div class="grid-pili">
+                <a href="calculator.html" class="kard-pili">
+                    <div class="kard-ikon">💰</div>
+                    <div class="kard-pangalan">Kalkulahin Presyo</div>
+                    <div class="kard-paliwanag">Ilagay ang layo → makita agad ang presyo</div>
+                </a>
+
+                <a href="routes.html" class="kard-pili">
+                    <div class="kard-ikon">📍</div>
+                    <div class="kard-pangalan">Mga Ruta</div>
+                    <div class="kard-paliwanag">Magdagdag / Magbago ng ruta</div>
+                </a>
+
+                <a href="trips.html" class="kard-pili">
+                    <div class="kard-ikon">📋</div>
+                    <div class="kard-pangalan">Talaan ng Biyahe</div>
+                    <div class="kard-paliwanag">Tingnan lahat ng naitala</div>
+                </a>
+
+                <a href="settings.html" class="kard-pili">
+                    <div class="kard-ikon">⚙️</div>
+                    <div class="kard-pangalan">Pagtatakda</div>
+                    <div class="kard-paliwanag">Gas, sasakyan, layunin, upa</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- KASALUKUYANG PAGTATAKDA -->
+        <div class="kahon">
+            <h3>⚙️ Kasalukuyang Pagtatakda</h3>
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
+                <span>Sasakyan</span>
+                <strong id="set_sasakyan">—</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
+                <span>Presyo ng Gas</span>
+                <strong id="set_gas">₱0.00/L</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
+                <span>Piyesa/Araw</span>
+                <strong id="set_piyesa">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px;">
+                <span>Upa/Araw</span>
+                <strong id="set_upa">₱0.00</strong>
+            </div>
+            <button class="btn outline-btn" style="margin-top: 12px; padding: 8px; font-size: 14px;" onclick="window.location.href='settings.html'">
+                ✏️ Baguhin ang Pagtatakda
+            </button>
+        </div>
+
+        <!-- I-EXPORT / I-IMPORT -->
+        <div class="kahon">
+            <h3>💾 Pag-iimbak ng Datos</h3>
+            <p style="font-size: 13px; color: var(--teksto-pag); margin-bottom: 12px;">I-save ang lahat ng biyahe bilang backup file.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn primary-btn" onclick="iExporta()">📤 I-Exporta ang Lahat</button>
+                <label class="btn outline-btn" style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin: 0;">
+                    📂 I-Importa ang Backup
+                    <input type="file" accept=".json" id="file_import" style="display: none;" onchange="iImporta(this.files[0])">
+                </label>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../js/languages.js"></script>
+<script src="../js/common.js"></script>
+<script>
+// Gilid na Talaan
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// Palitan ang Wika
+function palitanWika() {
+    const kasalukuyan = RiderWika.kunin();
+    RiderWika.itakda(kasalukuyan === 'tl' ? 'en' : 'tl');
+    document.getElementById('teksto_wika').textContent = RiderWika.kunin() === 'tl' ? 'English' : 'Tagalog';
+}
+
+// Ipakita ang Buod at Pagtatakda
+function ipakitaLahat() {
+    const buod = RiderDato.buod();
+    const datos = RiderDato.kunin();
+
+    // Buod
+    document.getElementById('d_bilang').textContent = buod.bilang_biyahe;
+    document.getElementById('d_pasok').textContent = `₱${buod.kabuuan_pasok.toFixed(2)}`;
+    document.getElementById('d_gastos').textContent = `₱${buod.kabuuan_gastos.toFixed(2)}`;
+    
+    const elKita = document.getElementById('d_kita');
+    elKita.textContent = `₱${buod.purong_kita.toFixed(2)}`;
+    elKita.style.color = buod.purong_kita >= 0 ? '#FFD700' : '#FF9E9E';
+
+    document.getElementById('d_porsyento').textContent = `${buod.layunin_natamo}%`;
+    document.getElementById('d_progress').style.width = `${buod.layunin_natamo}%`;
+    document.getElementById('d_layunin').textContent = datos.pagtatakda.layunin_kita.toFixed(2);
+
+    // Pagtatakda
+    const sasakyan = datos.pagtatakda.sasakyan === 'Custom' 
+        ? `Custom (${datos.pagtatakda.konsumo_litro_km} L/km)` 
+        : datos.pagtatakda.sasakyan;
+    document.getElementById('set_sasakyan').textContent = sasakyan;
+    document.getElementById('set_gas').textContent = `₱${datos.pagtatakda.presyo_gas.toFixed(2)}/L`;
+    document.getElementById('set_piyesa').textContent = `₱${datos.pagtatakda.piyesa_araw.toFixed(2)}`;
+    document.getElementById('set_upa').textContent = `₱${datos.pagtatakda.upa_sasakyan_araw.toFixed(2)}`;
+}
+
+// I-Exporta / I-Importa
+function iExporta() {
+    if (RiderDato.iExporta()) {
+        alert('✅ Nai-save na ang backup sa iyong telepono!');
+    }
+}
+
+async function iImporta(file) {
+    if (!file) return;
+    const resulta = await RiderDato.iImporta(file);
+    if (resulta.tagumpay) {
+        alert('✅ Matagumpay na naibalik ang datos!');
+        ipakitaLahat();
+    } else {
+        alert('❌ Hindi mabasa ang file: ' + resulta.mali);
+    }
+}
+
+// Pagsisimula
+document.addEventListener('DOMContentLoaded', () => {
+    ipakitaLahat();
+    document.getElementById('teksto_wika').textContent = RiderWika.kunin() === 'tl' ? 'English' : 'Tagalog';
+});
+window.addEventListener('datoNagbago', ipakitaLahat);
+</script>
+</body>
+</html>
