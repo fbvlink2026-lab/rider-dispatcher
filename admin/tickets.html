@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎫 Tiket ng Suporta — Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎫</text></svg>">
+    <style>
+        .katayuan-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .tiket-kard {
+            background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px;
+            border: 1px solid #E5E6EB;
+        }
+        .tiket-kard.bago {
+            border-left: 3px solid #FF7D00;
+        }
+        .sagot-larawan {
+            background: #F0F4FF; border-radius: 8px; padding: 12px; margin-top: 10px;
+            border-left: 3px solid #165DFF;
+        }
+    </style>
+</head>
+<body>
+<div class="katawan-aplikasyon">
+
+    <!-- SIDE MENU — ADMIN -->
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-ulo">
+            <h2>🏠 Admin Panel</h2>
+            <p>Pamamahala sa Sistema — v1.3.0</p>
+        </div>
+        <nav class="menu-talaan">
+            <div class="menu-kabanata-pamagat">Pangunahin</div>
+            <a href="index.html" class="menu-link">
+                <span class="menu-ikon">📊</span> Dashboard
+            </a>
+            <a href="../index.html" class="menu-link">
+                <span class="menu-ikon">🛣️</span> Pagkalkula ng Ruta
+            </a>
+
+            <div class="menu-kabanata-pamagat">Talaan</div>
+            <a href="routes.html" class="menu-link">
+                <span class="menu-ikon">📍</span> Ruta
+            </a>
+            <a href="riders.html" class="menu-link">
+                <span class="menu-ikon">🏍️</span> Rider
+            </a>
+            <a href="customers.html" class="menu-link">
+                <span class="menu-ikon">👤</span> Mamimili
+            </a>
+            <a href="orders.html" class="menu-link">
+                <span class="menu-ikon">📝</span> Utos
+            </a>
+
+            <div class="menu-kabanata-pamagat">Kita at Suporta</div>
+            <a href="rewards.html" class="menu-link">
+                <span class="menu-ikon">🏆</span> Ranggo at Bonus
+            </a>
+            <a href="promotion.html" class="menu-link">
+                <span class="menu-ikon">📢</span> Promosyon
+            </a>
+            <a href="tickets.html" class="menu-link aktibo">
+                <span class="menu-ikon">🎫</span> Tiket ng Suporta
+            </a>
+
+            <div class="menu-kabanata-pamagat">Sistema</div>
+            <a href="security.html" class="menu-link">
+                <span class="menu-ikon">🔐</span> Seguridad
+            </a>
+            <a href="system.html" class="menu-link">
+                <span class="menu-ikon">⚙️</span> Pagpapahusay
+            </a>
+        </nav>
+        <div class="menu-ibaba">
+            martodosko © 2026 — v1.3.0
+        </div>
+    </aside>
+
+    <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+    <main class="pangunahing-larawan">
+        <div class="itaas-na-bar">
+            <button class="pindutan-menu" id="btnMenu">☰</button>
+            <span class="pangalan-pahina">🎫 Tiket ng Suporta</span>
+        </div>
+
+        <div class="app-container">
+
+            <!-- MGA TABI NG KATAYUAN -->
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px;">
+                <button class="tab-katayuan aktibo" data-filter="lahat" style="white-space: nowrap; padding: 8px 14px; border-radius: 20px; border: none; background: #165DFF; color: white; font-size: 13px; font-weight: 500;">
+                    Lahat <span id="bilang-lahat">0</span>
+                </button>
+                <button class="tab-katayuan" data-filter="hinihintay" style="white-space: nowrap; padding: 8px 14px; border-radius: 20px; border: 1px solid #E5E6EB; background: white; font-size: 13px;">
+                    Hinihintay <span id="bilang-bago">0</span>
+                </button>
+                <button class="tab-katayuan" data-filter="tinugunan" style="white-space: nowrap; padding: 8px 14px; border-radius: 20px; border: 1px solid #E5E6EB; background: white; font-size: 13px;">
+                    May Sagot <span id="bilang-sagot">0</span>
+                </button>
+                <button class="tab-katayuan" data-filter="sarado" style="white-space: nowrap; padding: 8px 14px; border-radius: 20px; border: 1px solid #E5E6EB; background: white; font-size: 13px;">
+                    Sarado <span id="bilang-sarado">0</span>
+                </button>
+            </div>
+
+            <!-- LISTAHAN NG TIKET -->
+            <div id="listahan-tiket">
+                <p style="color: #86909C; text-align: center; padding: 30px;">Naglalagay…</p>
+            </div>
+
+            <!-- KUNG WALANG TIKET -->
+            <div id="walang-tiket" style="text-align: center; padding: 40px 20px; display: none;">
+                <div style="font-size: 50px; margin-bottom: 12px;">✅</div>
+                <h3 style="font-size: 16px; margin-bottom: 6px;">Wala pang tiket</h3>
+                <p style="color: #86909C; font-size: 14px;">Lahat ng tanong ay nasagot na.</p>
+            </div>
+
+            <!-- ANYO NG PAGSAGOT (nakatago hanggang piliin) -->
+            <div id="kahon-pagsagot" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 16px 16px 0 0; padding: 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); display: none; z-index: 2000;">
+                <h4 style="margin-bottom: 12px;">✍️ Sagutin ang Tiket: <span id="sagot-id"></span></h4>
+                <textarea id="larawan-sagot" placeholder="Isulat ang sagot dito…" style="width: 100%; height: 100px; border: 1px solid #E5E6EB; border-radius: 10px; padding: 12px; font-size: 14px; resize: none;" required></textarea>
+                <div style="display: flex; gap: 10px; margin-top: 12px;">
+                    <button id="kansela-sagot" class="btn secondary-btn" style="flex: 1; margin: 0;">Kansela</button>
+                    <button id="ipadala-sagot" class="btn primary-btn" style="flex: 2; margin: 0;">✅ Ipadala ang Sagot</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() {
+  menu.classList.add('bukas');
+  tabing.classList.add('nakita');
+  btnMenu.textContent = '✕';
+}
+function isaraMenu() {
+  menu.classList.remove('bukas');
+  tabing.classList.remove('nakita');
+  btnMenu.textContent = '☰';
+}
+btnMenu.addEventListener('click', () => {
+  menu.classList.contains('bukas') ? isaraMenu() : buksanMenu();
+});
+
+// SWIPE
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => {
+  simulaX = e.touches[0].clientX;
+  simulaY = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  const duloX = e.changedTouches[0].clientX;
+  const duloY = e.changedTouches[0].clientY;
+  const dx = duloX - simulaX;
+  const dy = Math.abs(duloY - simulaY);
+  if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+  if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// === PAMAMAHALA SA TIKET ===
+let aktibongTabi = 'lahat';
+let kasalukuyangTiket = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  ilagayListahan();
+
+  // Palitan ang tabi
+  document.querySelectorAll('.tab-katayuan').forEach(tabi => {
+    tabi.addEventListener('click', () => {
+      document.querySelectorAll('.tab-katayuan').forEach(t => {
+        t.classList.remove('aktibo');
+        t.style.background = 'white';
+        t.style.color = 'inherit';
+        t.style.borderColor = '#E5E6EB';
+      });
+      tabi.classList.add('aktibo');
+      tabi.style.background = '#165DFF';
+      tabi.style.color = 'white';
+      tabi.style.borderColor = 'transparent';
+      aktibongTabi = tabi.dataset.filter;
+      ilagayListahan();
+    });
+  });
+
+  // Kansela ang pagsagot
+  document.getElementById('kansela-sagot').addEventListener('click', () => {
+    document.getElementById('kahon-pagsagot').style.display = 'none';
+    kasalukuyangTiket = null;
+  });
+
+  // Ipadala ang sagot
+  document.getElementById('ipadala-sagot').addEventListener('click', () => {
+    if (!kasalukuyangTiket) return;
+    const sagot = document.getElementById('larawan-sagot').value.trim();
+    if (!sagot) {
+      alert('Isulat muna ang sagot.');
+      return;
+    }
+
+    const idx = RIDER_APP.datos.mga_tiket.findIndex(t => t.id === kasalukuyangTiket.id);
+    if (idx !== -1) {
+      RIDER_APP.datos.mga_tiket[idx].sagot = sagot;
+      RIDER_APP.datos.mga_tiket[idx].katayuan = 'tinugunan';
+      RIDER_APP.datos.mga_tiket[idx].oras_sagot = new Date().toLocaleString('fil-PH');
+      RIDER_APP.iimbak();
+    }
+
+    alert('✅ Naipadala na ang sagot! Makikita ito ng mamimili.');
+    document.getElementById('kahon-pagsagot').style.display = 'none';
+    document.getElementById('larawan-sagot').value = '';
+    kasalukuyangTiket = null;
+    ilagayListahan();
+  });
+});
+
+function ilagayListahan() {
+  const lugar = document.getElementById('listahan-tiket');
+  const walang = document.getElementById('walang-tiket');
+  const mgaTiket = RIDER_APP.datos.mga_tiket || [];
+
+  // Bilang sa itaas
+  document.getElementById('bilang-lahat').textContent = mgaTiket.length || '';
+  document.getElementById('bilang-bago').textContent = mgaTiket.filter(t => t.katayuan === 'hinihintay').length || '';
+  document.getElementById('bilang-sagot').textContent = mgaTiket.filter(t => t.katayuan === 'tinugunan').length || '';
+  document.getElementById('bilang-sarado').textContent = mgaTiket.filter(t => t.katayuan === 'sarado').length || '';
+
+  // Salain
+  const salain = aktibongTabi === 'lahat'
+    ? mgaTiket
+    : mgaTiket.filter(t => t.katayuan === aktibongTabi);
+
+  if (mgaTiket.length === 0) {
+    lugar.style.display = 'none';
+    walang.style.display = 'block';
+    return;
+  } else {
+    lugar.style.display = 'block';
+    walang.style.display = 'none';
+  }
+
+  if (salain.length === 0) {
+    lugar.innerHTML = `<p style="color:#86909C; text-align:center; padding:20px;">Wala pang tiket sa kategoryang ito.</p>`;
+    return;
+  }
+
+  lugar.innerHTML = '';
+  salain.forEach(tiket => {
+    const kulay = {
+      hinihintay: '#FF7D00',
+      tinugunan: '#165DFF',
+      sarado: '#00B42A'
+    }[tiket.katayuan] || '#86909C';
+    const pangalanKatayuan = {
+      hinihintay: 'Hinihintay',
+      tinugunan: 'May Sagot',
+      sarado: 'Sarado'
+    }[tiket.katayuan] || tiket.katayuan;
+
+    lugar.innerHTML += `
+      <div class="tiket-kard ${tiket.katayuan === 'hinihintay' ? 'bago' : ''}">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+          <div>
+            <strong style="font-size: 14px;">${tiket.id}</strong>
+            <div style="font-size: 12px; color: #86909C;">${tiket.pangalan} • ${tiket.telepono}</div>
+          </div>
+          <span class="katayuan-badge" style="background: ${kulay}15; color: ${kulay};">${pangalanKatayuan}</span>
+        </div>
+
+        <div style="font-size: 13px; margin-bottom: 6px;">
+          <strong>Paksa:</strong> ${tiket.paksa}
+          ${tiket.utos_ref !== 'Wala' ? `<br><strong>Utos:</strong> ${tiket.utos_ref}` : ''}
+        </div>
+        <div style="font-size: 13px; color: #4E5969; margin-bottom: 8px;">${tiket.mensahe}</div>
+        <div style="font-size: 11px; color: #86909C;">📅 ${tiket.petsa}</div>
+
+        ${tiket.sagot ? `
+          <div class="sagot-larawan">
+            <div style="font-size: 11px; color: #165DFF; font-weight: 600; margin-bottom: 4px;">📤 Ipadala — ${tiket.oras_sagot || ''}</div>
+            <div style="font-size: 13px;">${tiket.sagot}</div>
+          </div>
+        ` : ''}
+
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          ${tiket.katayuan !== 'sarado' ? `
+            <button class="btn sagot-btn" data-id="${tiket.id}" style="flex: 1; background: #165DFF; color: white; margin: 0; padding: 10px;">
+              ${tiket.katayuan === 'hinihintay' ? '✍️ Sagutin' : '✏️ Baguhin ang Sagot'}
+            </button>
+          ` : ''}
+          ${tiket.katayuan !== 'sarado' ? `
+            <button class="btn sarado-btn" data-id="${tiket.id}" style="flex: 1; background: #00B42A; color: white; margin: 0; padding: 10px;">
+              ✅ Sarado
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  });
+
+  // Idagdag ang mga pindutan
+  salain.forEach(tiket => {
+    // Sagutin / Baguhin
+    document.querySelector(`.sagot-btn[data-id="${tiket.id}"]`)?.addEventListener('click', () => {
+      kasalukuyangTiket = tiket;
+      document.getElementById('sagot-id').textContent = tiket.id;
+      document.getElementById('larawan-sagot').value = tiket.sagot || '';
+      document.getElementById('kahon-pagsagot').style.display = 'block';
+    });
+
+    // Sarado
+    document.querySelector(`.sarado-btn[data-id="${tiket.id}"]`)?.addEventListener('click', () => {
+      if (confirm('Markahan bang sarado ang tiket na ito? Hindi na ito mababago mamaya.')) {
+        const idx = RIDER_APP.datos.mga_tiket.findIndex(t => t.id === tiket.id);
+        if (idx !== -1) {
+          RIDER_APP.datos.mga_tiket[idx].katayuan = 'sarado';
+          RIDER_APP.iimbak();
+        }
+        ilagayListahan();
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>
