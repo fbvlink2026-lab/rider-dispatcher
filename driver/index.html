@@ -6,7 +6,7 @@
   <title>Habal-Habal Rate Calculator v11.0</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* ==================================================
+  /* ==================================================
    HABAL-HABAL RATE CALCULATOR v11.0 — style.css
    Ginawa ni martodosko | Setyembre 2026
    ================================================== */
@@ -38,6 +38,7 @@ body {
 .screen.active { display: block; }
 .container { max-width: 600px; margin: 0 auto; padding: 16px; }
 
+/* Top Bar */
 .top-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 16px; background: var(--card); box-shadow: var(--shadow);
@@ -48,6 +49,7 @@ body {
 }
 .top-bar h1, .top-bar h2 { font-size: 18px; font-weight: 600; }
 
+/* Side Menu */
 .overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none;
 }
@@ -72,6 +74,7 @@ body {
 .menu-links a:hover { background: rgba(21, 101, 192, 0.08); }
 .menu-footer { padding: 16px; text-align: center; border-top: 1px solid var(--border); }
 
+/* Cards */
 .card {
   background: var(--card); border-radius: var(--radius); padding: 20px;
   margin-bottom: 16px; box-shadow: var(--shadow);
@@ -79,6 +82,7 @@ body {
 .card h3 { font-size: 16px; margin-bottom: 14px; }
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 
+/* Form Elements */
 .form-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
 .form-row label { flex: 1; min-width: 140px; font-size: 14px; }
 input, select, textarea {
@@ -91,6 +95,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .veh-info { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
 .map-note { font-size: 13px; color: var(--primary); }
 
+/* Buttons */
 .btn {
   padding: 10px 16px; border: none; border-radius: 8px; font-size: 14px;
   cursor: pointer; transition: all 0.2s; background: #ECEFF1; color: var(--text);
@@ -108,6 +113,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 }
 .icon-btn:hover { background: rgba(0,0,0,0.08); }
 
+/* Progress Bar */
 .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
 .progress-bar { height: 10px; background: #E0E0E0; border-radius: 5px; overflow: hidden; margin-bottom: 10px; }
 .progress-bar-fill { height: 100%; transition: width 0.3s ease; }
@@ -122,6 +128,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   padding: 10px; border-radius: 8px; margin-top: 10px; text-align: center; font-size: 14px;
 }
 
+/* Route List */
 .route-item {
   display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 10px;
 }
@@ -134,6 +141,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .route-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .route-actions { display: flex; gap: 4px; }
 
+/* Trip Records */
 .trip-record {
   display: flex; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px;
 }
@@ -146,23 +154,28 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .tag-needed { background: #E3F2FD; color: var(--primary); }
 .tag-earned { background: #E8F5E9; color: var(--ok); }
 
+/* Grand Total */
 .grand-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 15px; }
 .grand-net { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; font-size: 17px; font-weight: bold; }
 
+/* Results Table */
 .res-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
 .res-table td, .res-table th { padding: 8px 4px; font-size: 14px; }
 .res-table tr.total-row { border-top: 1px solid var(--border); padding-top: 8px; }
 .res-table tr.net-row td { font-weight: bold; font-size: 16px; }
 
+/* Map */
 .map-card { padding: 0; overflow: hidden; }
 #map { height: 300px; border-radius: var(--radius); }
 
+/* GPS Indicator */
 .gps-indicator {
   padding: 8px 12px; border-radius: 20px; font-size: 13px; display: inline-block; margin-bottom: 10px;
 }
 .gps-indicator.active { background: #E8F5E9; color: var(--ok); }
 .gps-indicator.inactive { background: #ECEFF1; color: var(--muted); }
 
+/* Modal */
 .modal {
   position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
   display: none; align-items: center; justify-content: center; padding: 16px;
@@ -181,13 +194,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .custom-fields { background: #F5F5F5; padding: 12px; border-radius: 8px; margin: 12px 0; }
 .custom-fields h4 { font-size: 14px; margin-bottom: 8px; }
 
+/* Spinner */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spin { display: inline-block; animation: spin 1s linear infinite; }
-
-  </style>
+</style>
   <!-- Leaflet para sa mapa -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
@@ -517,7 +529,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   </div>
 
   <script>
-    // ==================================================
+  // ==================================================
 // HABAL-HABAL RATE CALCULATOR v11.0 — logic.js
 // Ginawa ni martodosko | Setyembre 2026
 // ==================================================
@@ -1499,7 +1511,192 @@ function renderRouteList() {
             </div>
             <div class="route-actions">
                 <button class="icon-btn btn-go" onclick="useRoute(${r.id})" title="Buksan Kuwenta">▶️</button>
-                <button class="icon-btn btn-add" onclick="recordDirectTrip(${r.id})" title
-  </script>
+                <button class="icon-btn btn-add" onclick="recordDirectTrip(${r.id})" title="Itala Agad">➕</button>
+                <button class="icon-btn btn-edit" onclick="editRoute(${r.id})" title="Baguhin">✏️</button>
+                <button class="icon-btn btn-delete" onclick="deleteRoute(${r.id})" title="Burahin">🗑️</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function useRoute(id) {
+    selectedRoute = routes.find(r => r.id === id);
+    if (!selectedRoute) return;
+    
+    distKm = selectedRoute.km;
+    const v = getActiveVehicle();
+    
+    const menuScreen = document.getElementById("menu-screen");
+    const calcScreen = document.getElementById("calc-screen");
+    const results = document.getElementById("results");
+    const calcRouteName = document.getElementById("calc-route-name");
+    const calcRouteAddr = document.getElementById("calc-route-addr");
+    const mapNoteText = document.getElementById("map-note-text");
+    const calcVehicle = document.getElementById("calc-vehicle");
+    const gpsControls = document.getElementById("gps-controls");
+    const gpsKmRow = document.getElementById("gps-km-row");
+    const gpsStat = document.getElementById("gps-stat");
+    const distStat = document.getElementById("dist-stat");
+    const gasPrice = document.getElementById("gas-price");
+    const gasSavedNote = document.getElementById("gas-saved-note");
+    
+    if (menuScreen) menuScreen.classList.add("hidden");
+    if (calcScreen) calcScreen.classList.remove("hidden");
+    if (results) results.classList.add("hidden");
+    if (gpsControls) gpsControls.classList.add("hidden");
+    if (gpsKmRow) gpsKmRow.classList.add("hidden");
+    if (gpsStat) gpsStat.classList.add("hidden");
+    if (distStat) distStat.classList.remove("hidden");
+    
+    if (calcRouteName) calcRouteName.textContent = selectedRoute.name;
+    if (calcRouteAddr) calcRouteAddr.textContent = `${selectedRoute.start} → ${selectedRoute.end}`;
+    if (mapNoteText) mapNoteText.textContent = "📏 Nakatakdang Distansya";
+    if (calcVehicle) calcVehicle.textContent = `🚗 ${v.name} • ${v.kmPerL} km/L • Bilis: ${v.speedKmh} km/oras`;
+    
+    const useKm = document.getElementById("use-km");
+    if (useKm) useKm.textContent = distKm.toFixed(2);
+    
+    if (GAS_PRICE_GLOBAL && gasPrice) {
+        gasPrice.value = GAS_PRICE_GLOBAL;
+        if (gasSavedNote) gasSavedNote.classList.remove("hidden");
+    }
+    
+    const fareInput = document.getElementById("fare-amount");
+    if (fareInput && LAST_FARE[id]) fareInput.value = LAST_FARE[id];
+    
+    updateDistanceLabels();
+    recalcConsumption();
+    updateCostPerHour();
+}
+
+function calculateFare() {
+    const fareInput = document.getElementById("fare-amount");
+    const fare = parseFloat(fareInput?.value);
+    const gasPrice = parseFloat(document.getElementById("gas-price")?.value);
+    
+    if (!distKm || isNaN(fare) || fare <= 0 || isNaN(gasPrice) || gasPrice <= 0) {
+        alert("⚠️ Punan nang tama ang lahat — Distansya, Presyo ng Gasolina, at Pamasahe!");
+        return;
+    }
+    
+    const v = getActiveVehicle();
+    const workHrs = WORK_HOURS_PER_DAY;
+    const kmUsed = LAST_TRIP_TYPE === "one" ? distKm : distKm * 2;
+    const liter = kmUsed / v.kmPerL;
+    const hrs = kmUsed / v.speedKmh;
+    const costGas = liter * gasPrice;
+    const costPerHr = (MAINTENANCE_PER_DAY + RENT_PER_DAY) / workHrs;
+    const costTime = costPerHr * hrs;
+    const totalCost = costGas + costTime;
+    const netIncome = fare - totalCost;
+    const perKm = fare / kmUsed;
+    const perHour = netIncome / hrs;
+    
+    if (selectedRoute) {
+        LAST_FARE[selectedRoute.id] = fare;
+        localStorage.setItem("lastFareByRoute", JSON.stringify(LAST_FARE));
+    }
+    GAS_PRICE_GLOBAL = gasPrice;
+    localStorage.setItem("lastGasPrice", gasPrice);
+    localStorage.setItem("gasPriceGlobal", gasPrice);
+    
+    const results = document.getElementById("results");
+    if (results) results.classList.remove("hidden");
+    
+    document.getElementById("res-fare").textContent = fare.toFixed(2);
+    document.getElementById("res-km").textContent = kmUsed.toFixed(2);
+    document.getElementById("res-liter").textContent = liter.toFixed(2);
+    document.getElementById("res-gas-price").textContent = gasPrice.toFixed(2);
+    document.getElementById("res-cost-gas").textContent = costGas.toFixed(2);
+    document.getElementById("res-hrs").textContent = hrs.toFixed(2);
+    document.getElementById("res-cost-time").textContent = costTime.toFixed(2);
+    document.getElementById("res-total-cost").textContent = totalCost.toFixed(2);
+    document.getElementById("res-net").textContent = netIncome.toFixed(2);
+    document.getElementById("res-per-km").textContent = perKm.toFixed(2);
+    document.getElementById("res-per-hour").textContent = perHour.toFixed(2);
+    
+    const netEl = document.getElementById("res-net");
+    if (netIncome >= 0) {
+        netEl.style.color = "var(--ok)";
+        netEl.style.fontWeight = "bold";
+    } else {
+        netEl.style.color = "var(--danger)";
+        netEl.style.fontWeight = "bold";
+    }
+    
+    window._lastTrip = { fare, totalCost, netIncome };
+}
+
+function saveAndRecord() {
+    if (!window._lastTrip) {
+        alert("Kuwentyahin muna bago itala!");
+        return;
+    }
+    if (!selectedRoute && !isGPSMode) {
+        alert("Walang napiling ruta!");
+        return;
+    }
+    
+    const routeName = isGPSMode
+        ? `📍 GPS — ${distKm.toFixed(2)} km`
+        : selectedRoute.name;
+    
+    addTripRecord(
+        routeName,
+        window._lastTrip.fare,
+        window._lastTrip.totalCost,
+        window._lastTrip.netIncome,
+        LAST_TRIP_TYPE
+    );
+    
+    alert("✅ Naitala na!");
+    window._lastTrip = null;
+}
+
+function shareLastResult() {
+    if (!window._lastTrip) {
+        alert("Kuwentyahin muna bago i-share!");
+        return;
+    }
+    const t = window._lastTrip;
+    const routeName = isGPSMode
+        ? `GPS — ${distKm.toFixed(2)} km`
+        : selectedRoute?.name || "Biyahe";
+    const text = encodeURIComponent(
+        `🚗 ${routeName}\n` +
+        `Uri: ${LAST_TRIP_TYPE === "one" ? "1-Daan" : "Paikot"}\n` +
+        `Singil: ₱${t.fare.toFixed(2)}\n` +
+        `Kabuuang Gastos: ₱${t.totalCost.toFixed(2)}\n` +
+        `Kita: ₱${t.netIncome.toFixed(2)}\n\n` +
+        `— Galing sa Habal-Habal Rate Calculator ni martodosko`
+    );
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+}
+
+function resetCalc() {
+    document.getElementById("fare-amount").value = "";
+    document.getElementById("results").classList.add("hidden");
+    window._lastTrip = null;
+}
+
+// ========== I-EXPORT SA GLOBAL ==========
+Object.assign(window, {
+    toggleSideMenu, closeSideMenu, goHome, goBack,
+    setTripType, openGPSRoute, useGPSDistance,
+    startGPSTracking, stopGPSTracking,
+    openAddModal, closeModal, saveRoute, editRoute, deleteRoute,
+    useRoute, calculateFare, saveAndRecord, shareLastResult, resetCalc,
+    openSettings, closeSettings, saveSettings,
+    openKeyModal, closeKeyModal, checkKey, openImportExport,
+    exportData, importData,
+    openContactModal, closeContactModal, sendContactMsg,
+    shareFB, shareMessenger, shareWA, copyLink, shareApp,
+    fetchRoute, recordDirectTrip
+});
+
+console.log("✅ logic.js — BUONG BUO NA AT HANDA NA!");
+
+
+</script>
 </body>
 </html>
