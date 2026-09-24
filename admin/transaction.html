@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Galaw ng Pera — Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <style>
+        .galaw-kard {
+            background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px;
+            border-left: 3px solid;
+        }
+        .galaw-kita { border-color: #00B42A; }
+        .galaw-gastos { border-color: #F53F3F; }
+    </style>
+</head>
+<body>
+<div class="katawan-aplikasyon">
+
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-ulo"><h2>🏠 Admin Panel</h2><p>Talaan ng Pera</p></div>
+        <nav class="menu-talaan">
+            <div class="menu-kabanata-pamagat">Pananalapi</div>
+            <a href="payments.html" class="menu-link">💳 Paraan ng Bayad</a>
+            <a href="finance.html" class="menu-link">💰 Sentro ng Pondo</a>
+            <a href="transactions.html" class="menu-link aktibo">📋 Galaw ng Pera</a>
+        </nav>
+        <div class="menu-ibaba">martodosko © 2026 — v1.3.0</div>
+    </aside>
+
+    <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+    <main class="pangunahing-larawan">
+        <div class="itaas-na-bar">
+            <button class="pindutan-menu" id="btnMenu">☰</button>
+            <span class="pangalan-pahina">📋 Talaan ng Galaw ng Pera</span>
+        </div>
+
+        <div class="app-container">
+
+            <!-- BUOD SA ITAAS -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px;">
+                <div style="background: #F0FFF4; border-radius: 10px; padding: 12px; text-align: center;">
+                    <div style="font-size: 12px; color: #00B42A;">Kabuuang Kita</div>
+                    <div id="buod-kita" style="font-weight: 700; font-size: 16px; color: #00B42A;">₱0.00</div>
+                </div>
+                <div style="background: #FFF1F0; border-radius: 10px; padding: 12px; text-align: center;">
+                    <div style="font-size: 12px; color: #F53F3F;">Kabuuang Gastos</div>
+                    <div id="buod-gastos" style="font-weight: 700; font-size: 16px; color: #F53F3F;">₱0.00</div>
+                </div>
+            </div>
+            <div style="background: #F7F8FA; border-radius: 10px; padding: 12px; text-align: center; margin-bottom: 16px;">
+                <div style="font-size: 13px; color: #4E5969;">Netong Kita</div>
+                <div id="buod-neto" style="font-weight: 700; font-size: 18px;">₱0.00</div>
+            </div>
+
+            <!-- SALAAN -->
+            <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                <select id="salaang_uri" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #E5E6EB;">
+                    <option value="lahat">Lahat ng Galaw</option>
+                    <option value="kita">Kita Lamang</option>
+                    <option value="gastos">Gastos Lamang</option>
+                </select>
+                <button onclick="ilista()" class="btn primary-btn" style="padding: 8px 14px; margin: 0;">🔍</button>
+            </div>
+
+            <!-- LISTAHAN -->
+            <div id="listahan-galaw">
+                <p style="color: #86909C; text-align: center; padding: 30px;">Naglalagay…</p>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent='✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent='☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// SWIPE
+let simulaX=0, simulaY=0;
+document.addEventListener('touchstart',e=>{simulaX=e.touches[0].clientX;simulaY=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-simulaX,dy=Math.abs(e.changedTouches[0].clientY-simulaY);if(simulaX<35&&dx>50&&dy<30&&!menu.classList.contains('bukas'))buksanMenu();if(dx<-50&&dy<30&&menu.classList.contains('bukas'))isaraMenu();},{passive:true});
+
+// === TALAAN NG GALAW ===
+document.addEventListener('DOMContentLoaded', ilista);
+document.getElementById('salaang_uri').addEventListener('change', ilista);
+
+function formatPera(p) { return '₱' + p.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function pangalanKategorya(k, uri) {
+  const mapa = {
+    kita: { bayad_biyahe: 'Bayad sa Biyahe', deposito: 'Deposito/Pondo', ibang_kita: 'Ibang Kita' },
+    gastos: { gas: 'Gasolina', piyesa: 'Piyesa/Pagkumpuni', sweldo: 'Sweldo', iba_gastos: 'Ibang Gastos' }
+  };
+  return mapa[uri]?.[k] || k;
+}
+
+function ilista() {
+  const lahat = RIDER_APP.datos.kayamanan || [];
+  const salainUri = document.getElementById('salaang_uri').value;
+  const salain = salainUri === 'lahat' ? lahat : lahat.filter(t => t.uri === salainUri);
+
+  // Buod
+  const kabuongKita = lahat.filter(t=>t.uri==='kita').reduce((s,t)=>s+t.halaga,0);
+  const kabuongGastos = lahat.filter(t=>t.uri==='gastos').reduce((s,t)=>s+t.halaga,0);
+  document.getElementById('buod-kita').textContent = formatPera(kabuongKita);
+  document.getElementById('buod-gastos').textContent = formatPera(kabuongGastos);
+  const neto = kabuongKita - kabuongGastos;
+  document.getElementById('buod-neto').textContent = formatPera(neto);
+  document.getElementById('buod-neto').style.color = neto >= 0 ? '#00B42A' : '#F53F3F';
+
+  // Listahan
+  const lugar = document.getElementById('listahan-galaw');
+  if (salain.length === 0) {
+    lugar.innerHTML = '<p style="color:#86909C; text-align:center; padding:30px;">Wala pang naitalang galaw ng pera.</p>';
+    return;
+  }
+  lugar.innerHTML = '';
+  salain.forEach(t => {
+    lugar.innerHTML += `
+      <div class="galaw-kard ${t.uri==='kita'?'galaw-kita':'galaw-gastos'}">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">${pangalanKategorya(t.kategorya, t.uri)}</div>
+            <div style="font-size: 12px; color: #86909C;">${t.id} • ${t.petsa}</div>
+            <div style="font-size: 13px; margin-top: 4px;">${t.tala}</div>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; color: ${t.uri==='kita'?'#00B42A':'#F53F3F'};">
+            ${t.uri==='kita'?'+':'-'}${formatPera(t.halaga)}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+</script>
+</body>
+</html>
