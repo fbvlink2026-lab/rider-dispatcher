@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💳 Paraan ng Bayad — Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💳</text></svg>">
+    <style>
+        .paraan-kard {
+            background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px;
+            border: 2px solid #E5E6EB; transition: all 0.2s;
+        }
+        .paraan-kandido { border-color: #00B42A; background: #F0FFF4; }
+        .toggle {
+            position: relative; width: 48px; height: 26px; background: #E5E6EB; border-radius: 13px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .toggle.bukas { background: #00B42A; }
+        .toggle::after {
+            content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+            background: white; border-radius: 50%; transition: 0.2s;
+        }
+        .toggle.bukas::after { transform: translateX(22px); }
+    </style>
+</head>
+<body>
+<div class="katawan-aplikasyon">
+
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-ulo"><h2>🏠 Admin Panel</h2><p>Pamamahala sa Bayad</p></div>
+        <nav class="menu-talaan">
+            <div class="menu-kabanata-pamagat">Pangunahin</div>
+            <a href="index.html" class="menu-link">📊 Dashboard</a>
+            <a href="../index.html" class="menu-link">🛣️ Pagkalkula</a>
+
+            <div class="menu-kabanata-pamagat">Pananalapi</div>
+            <a href="payments.html" class="menu-link aktibo">💳 Paraan ng Bayad</a>
+            <a href="finance.html" class="menu-link">💰 Sentro ng Pondo</a>
+            <a href="transactions.html" class="menu-link">📋 Galaw ng Pera</a>
+
+            <div class="menu-kabanata-pamagat">Iba pa</div>
+            <a href="orders.html" class="menu-link">📝 Utos</a>
+            <a href="tickets.html" class="menu-link">🎫 Tiket</a>
+        </nav>
+        <div class="menu-ibaba">martodosko © 2026 — v1.3.0</div>
+    </aside>
+
+    <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+    <main class="pangunahing-larawan">
+        <div class="itaas-na-bar">
+            <button class="pindutan-menu" id="btnMenu">☰</button>
+            <span class="pangalan-pahina">💳 Paraan ng Bayad</span>
+        </div>
+
+        <div class="app-container">
+
+            <div style="background: linear-gradient(135deg, #165DFF 0%, #0E42D2 100%); color: white; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 style="margin: 0 0 6px;">⚙️ Pamamahala sa Lahat ng Paraan ng Pagbabayad</h3>
+                <p style="font-size: 13px; opacity: 0.9;">I-setup, buksan/isara, at i-update ang mga detalye na makikita ng mamimili.</p>
+            </div>
+
+            <!-- GCash -->
+            <div class="paraan-kard" id="kard-gcash">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong style="font-size: 15px;">💚 GCash</strong>
+                    <div class="toggle bukas" data-paraangc="gcash" id="toggle-gcash"></div>
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Pangalan ng May-ari</label>
+                    <input type="text" id="gcash_pangalan" placeholder="RIDER DISPATCHER SERVICES">
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Numero</label>
+                    <input type="tel" id="gcash_numero" placeholder="0917-123-4567">
+                </div>
+                <button class="btn primary-btn" onclick="iligtas('gcash')" style="width: auto; padding: 8px 16px; font-size: 13px;">💾 Iligtas</button>
+            </div>
+
+            <!-- Maya -->
+            <div class="paraan-kard" id="kard-maya">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong style="font-size: 15px;">💙 Maya</strong>
+                    <div class="toggle bukas" data-paraangc="maya" id="toggle-maya"></div>
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Pangalan ng May-ari</label>
+                    <input type="text" id="maya_pangalan" placeholder="RIDER DISPATCHER SERVICES">
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Numero</label>
+                    <input type="tel" id="maya_numero" placeholder="0917-123-4567">
+                </div>
+                <button class="btn primary-btn" onclick="iligtas('maya')" style="width: auto; padding: 8px 16px; font-size: 13px;">💾 Iligtas</button>
+            </div>
+
+            <!-- Banko / Wire Transfer -->
+            <div class="paraan-kard" id="kard-banko">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong style="font-size: 15px;">🏦 Wire Transfer / Bangko</strong>
+                    <div class="toggle bukas" data-paraangc="banko" id="toggle-banko"></div>
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Pangalan ng Bangko</label>
+                    <input type="text" id="banko_pangalan_bangko" placeholder="BPI / BDO / Landbank">
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Pangalan ng Account</label>
+                    <input type="text" id="banko_pangalan" placeholder="RIDER DISPATCHER SERVICES">
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Numero ng Account</label>
+                    <input type="text" id="banko_numero" placeholder="1234-5678-9012">
+                </div>
+                <div class="input-group" style="margin: 0 0 8px 0;">
+                    <label style="font-size: 12px;">Swift / Branch Code (opsyonal)</label>
+                    <input type="text" id="banko_code" placeholder="BPIIPHMMXXX">
+                </div>
+                <button class="btn primary-btn" onclick="iligtas('banko')" style="width: auto; padding: 8px 16px; font-size: 13px;">💾 Iligtas</button>
+            </div>
+
+            <!-- Pera sa Kamay -->
+            <div class="paraan-kard" id="kard-cash">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong style="font-size: 15px;">💵 Pera sa Kamay</strong>
+                    <div class="toggle bukas" data-paraangc="cash" id="toggle-cash"></div>
+                </div>
+                <p style="font-size: 12px; color: #86909C;">Babayaran nang direkta sa biyahe.</p>
+            </div>
+
+            <div style="margin-top: 24px; padding: 14px; background: #F7F8FA; border-radius: 10px;">
+                <p style="font-size: 13px; color: #4E5969; margin: 0;">✅ Ang lahat ng iniligtas na detalye ay lalabas sa <strong>customer/support.html</strong> — awtomatikong magkakasabay.</p>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent='✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent='☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// SWIPE
+let simulaX=0, simulaY=0;
+document.addEventListener('touchstart',e=>{simulaX=e.touches[0].clientX;simulaY=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-simulaX,dy=Math.abs(e.changedTouches[0].clientY-simulaY);if(simulaX<35&&dx>50&&dy<30&&!menu.classList.contains('bukas'))buksanMenu();if(dx<-50&&dy<30&&menu.classList.contains('bukas'))isaraMenu();},{passive:true});
+
+// === PAGTATAKDA NG BAYAD ===
+document.addEventListener('DOMContentLoaded', () => {
+  if (!RIDER_APP.datos.paraang_bayad) RIDER_APP.datos.paraang_bayad = {};
+  IpasokSaAnyo();
+
+  // Toggle bukas/isara
+  document.querySelectorAll('.toggle').forEach(tgl => {
+    tgl.addEventListener('click', () => {
+      tgl.classList.toggle('bukas');
+      const uri = tgl.dataset.paraangc;
+      if (!RIDER_APP.datos.paraang_bayad[uri]) RIDER_APP.datos.paraang_bayad[uri] = {};
+      RIDER_APP.datos.paraang_bayad[uri].bukas = tgl.classList.contains('bukas');
+      RIDER_APP.iimbak();
+    });
+  });
+});
+
+function IpasokSaAnyo() {
+  const pb = RIDER_APP.datos.paraang_bayad || {};
+  ['gcash','maya','banko','cash'].forEach(uri => {
+    const data = pb[uri] || {};
+    if (data.bukas === false) document.getElementById(`toggle-${uri}`).classList.remove('bukas');
+    else document.getElementById(`toggle-${uri}`).classList.add('bukas');
+  });
+  if(pb.gcash) {
+    document.getElementById('gcash_pangalan').value = pb.gcash.pangalan || '';
+    document.getElementById('gcash_numero').value = pb.gcash.numero || '';
+  }
+  if(pb.maya) {
+    document.getElementById('maya_pangalan').value = pb.maya.pangalan || '';
+    document.getElementById('maya_numero').value = pb.maya.numero || '';
+  }
+  if(pb.banko) {
+    document.getElementById('banko_pangalan_bangko').value = pb.banko.pangalan_bangko || '';
+    document.getElementById('banko_pangalan').value = pb.banko.pangalan || '';
+    document.getElementById('banko_numero').value = pb.banko.numero || '';
+    document.getElementById('banko_code').value = pb.banko.code || '';
+  }
+}
+
+function iligtas(uri) {
+  if (!RIDER_APP.datos.paraang_bayad[uri]) RIDER_APP.datos.paraang_bayad[uri] = {};
+  const d = RIDER_APP.datos.paraang_bayad[uri];
+  d.bukas = document.getElementById(`toggle-${uri}`).classList.contains('bukas');
+  if(uri==='gcash'||uri==='maya') {
+    d.pangalan = document.getElementById(`${uri}_pangalan`).value.trim();
+    d.numero = document.getElementById(`${uri}_numero`).value.trim();
+  }
+  if(uri==='banko') {
+    d.pangalan_bangko = document.getElementById(`banko_pangalan_bangko`).value.trim();
+    d.pangalan = document.getElementById(`banko_pangalan`).value.trim();
+    d.numero = document.getElementById(`banko_numero`).value.trim();
+    d.code = document.getElementById(`banko_code`).value.trim();
+  }
+  RIDER_APP.iimbak();
+  alert('✅ Na-iligtas na! Lalabas sa pahina ng Mamimili.');
+}
+</script>
+</body>
+</html>
