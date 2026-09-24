@@ -1,0 +1,128 @@
+<!-- ==================================================
+   FILE        : index.html (Root Portal)
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/index.html
+   LAYUNIN     : PANGUNAHING PORTAL — Pumili: Pasahero o Drayber
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>🏍️ Rider Dispatcher — Portal</title>
+    <meta name="description" content="Pumili kung ikaw ay Pasahero o Drayber — tumpak na presyo ng pamasahe.">
+    <meta name="author" content="martodosko">
+    <meta name="theme-color" content="#165DFF">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🏍️ Rider Dispatcher — Portal">
+    <meta property="og:description" content="Alamin ang tamang presyo — hindi lugi, hindi mahal.">
+    <meta property="og:locale" content="tl_PH">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #165DFF 0%, #0E42D2 100%);
+        }
+        .portal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 24px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .big-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+        .choice-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        .choice-card {
+            display: block;
+            padding: 24px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 2px solid transparent;
+        }
+        .choice-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .passenger {
+            background: #E8F3FF;
+            color: #165DFF;
+            border-color: #C9E0FF;
+        }
+        .passenger:hover { border-color: #165DFF; }
+        .driver {
+            background: #F0FFF4;
+            color: #00B42A;
+            border-color: #D1F5DE;
+        }
+        .driver:hover { border-color: #00B42A; }
+        .choice-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        .footer-links {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #86909C;
+        }
+        .footer-links a {
+            color: #165DFF;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="portal-card">
+    <div class="big-icon">🏍️</div>
+    <h1 style="font-size: 24px; margin-bottom: 8px;">Rider Dispatcher</h1>
+    <p style="color: #4E5969; margin-bottom: 8px;">Tumpak na presyo ng pamasahe</p>
+    <p style="font-size: 13px; color: #86909C;">Pumili kung sino ka:</p>
+
+    <div class="choice-grid">
+        <a href="customer/" class="choice-card passenger">
+            <div class="choice-icon">🙋</div>
+            <h3 style="margin-bottom: 4px;">Ako ay Pasahero</h3>
+            <p style="font-size: 13px; opacity: 0.85;">Magpa-biyahe, tingnan ang presyo, magpadala ng utos</p>
+        </a>
+
+        <a href="driver/" class="choice-card driver">
+            <div class="choice-icon">🏍️</div>
+            <h3 style="margin-bottom: 4px;">Ako ay Drayber</h3>
+            <p style="font-size: 13px; opacity: 0.85;">Kwentahin ang kita, alamin kung lugi, tumanggap ng utos</p>
+        </a>
+    </div>
+
+    <div class="footer-links">
+        <p>
+            <a href="admin/">🔐 Admin Panel</a> ·
+            <a href="faq.html">📖 Gabay</a> ·
+            <a href="about.html">ℹ️ Tungkol</a>
+        </p>
+        <p style="margin-top: 8px;">© 2026 martodosko — Lahat ng Karapatang Nakareserba</p>
+    </div>
+</div>
+
+</body>
+</html>
