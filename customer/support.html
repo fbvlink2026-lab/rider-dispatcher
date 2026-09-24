@@ -1,7 +1,331 @@
-<!-- Sa customer/support.html → sa loob ng kahon-bayad -->
-<div class="kahon-bayad">
-  <h3 style="margin: 0 0 12px; font-size: 15px;">💳 Paraan ng Pagbabayad</h3>
-  <div id="listahan-paraan-bayad">
-    <p style="opacity: 0.8;">Naglalagay…</p>
-  </div>
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❓ Tulong at Suporta — Rider Dispatcher</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❓</text></svg>">
+    <style>
+        .qr-kahon {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #E5E6EB;
+            margin-bottom: 14px;
+        }
+        .qr-larawan {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 10px;
+            background: #F7F8FA;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+        .kahon-bayad {
+            background: linear-gradient(135deg, #165DFF 0%, #0E42D2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+        .tulad-tiket {
+            border-left: 3px solid #00B42A;
+            background: #F0FFF4;
+            padding: 12px 14px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 10px;
+        }
+        .katayuan-tiket {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="katawan-aplikasyon">
+
+    <!-- SIDE MENU -->
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-ulo" style="background: linear-gradient(135deg, #00B42A 0%, #009A29 100%);">
+            <h2>👤 Portal ng Mamimili</h2>
+            <p>Laging Nandito Para sa Iyo</p>
+        </div>
+        <nav class="menu-talaan">
+            <div class="menu-kabanata-pamagat">Aking Biyahe</div>
+            <a href="index.html" class="menu-link">
+                <span class="menu-ikon">🏠</span> Tahanan
+            </a>
+            <a href="booking.html" class="menu-link">
+                <span class="menu-ikon">🚕</span> Magpa-Biyahe
+            </a>
+            <a href="my-orders.html" class="menu-link">
+                <span class="menu-ikon">📋</span> Aking mga Utos
+            </a>
+
+            <div class="menu-kabanata-pamagat">Presyo at Alok</div>
+            <a href="../index.html" class="menu-link">
+                <span class="menu-ikon">💰</span> Tingnan ang Presyo
+            </a>
+            <a href="promo.html" class="menu-link">
+                <span class="menu-ikon">🎁</span> Kodigo ng Alok
+            </a>
+
+            <div class="menu-kabanata-pamagat">Tulong</div>
+            <a href="support.html" class="menu-link aktibo">
+                <span class="menu-ikon">❓</span> Tulong at Suporta
+            </a>
+            <a href="../about.html" class="menu-link">
+                <span class="menu-ikon">ℹ️</span> Tungkol sa Amin
+            </a>
+        </nav>
+        <div class="menu-ibaba">
+            Rider Dispatcher © 2026
+        </div>
+    </aside>
+
+    <div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+    <main class="pangunahing-larawan">
+        <div class="itaas-na-bar" style="border-bottom-color: #E8FFEE;">
+            <button class="pindutan-menu" id="btnMenu">☰</button>
+            <span class="pangalan-pahina">❓ Tulong at Suporta</span>
+        </div>
+
+        <div class="app-container">
+
+            <!-- QR CODE — LINK SA SITE -->
+            <div class="qr-kahon">
+                <h3 style="font-size: 15px; margin-bottom: 10px;">📱 I-scan para sa Pagbukas ng Site</h3>
+                <div class="qr-larawan">📲</div>
+                <p style="font-size: 13px; color: #4E5969; margin-bottom: 8px;">I-scan gamit ang kamera ng telepono</p>
+                <div style="background: #F7F8FA; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 12px; word-break: break-all; color: #165DFF;">
+                    rider-dispatcher.github.io<br>
+                    /customer
+                </div>
+                <button id="kopya-link" class="btn secondary-btn" style="margin-top: 10px; width: auto; padding: 8px 16px;">
+                    📋 Kopyahin ang Link
+                </button>
+            </div>
+
+            <!-- BAYAD SA PAMAMAGITAN NG KABLE / BAYAD -->
+            <div class="kahon-bayad">
+
+
+
+                <h3 style="margin: 0 0 12px; font-size: 15px;">💳 Paraan ng Pagbabayad</h3>
+                <div id="listahan-paraan-bayad">
+                    <p style="opacity: 0.8;">Naglalagay…</p>
+                </div>
+                <h3 style="margin: 0 0 12px; font-size: 15px;">💳 Bayad sa Pamamagitan ng Kable / Banko</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px;">
+                    <span>Pangalan ng Bangko:</span>
+                    <strong>RIDER DISPATCHER SERVICES</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px;">
+                    <span>Account No.:</span>
+                    <strong>1234-5678-9012-3456</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                    <span>Bayad sa:</span>
+                    <strong>GCash / Maya / BPI / BDO</strong>
+                </div>
+                <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">
+                    💡 Ilagay ang iyong Pangalan at Numero ng Utos sa paliwanag ng bayad.
+                </p>
+                <button id="kopya-detalye" style="background: white; color: #165DFF; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                    📋 Kopyahin ang Detalye ng Bayad
+                </button>
+            </div>
+
+            <!-- 24/7 SUPORTA SA TIKET -->
+            <h3 style="font-size: 15px; margin: 20px 0 12px;">🎫 Magpadala ng Tiket — 24 Oras / 7 Araw</h3>
+            <form id="anyo-tiket" style="background: white; border-radius: 12px; padding: 16px; border: 1px solid #E5E6EB; margin-bottom: 20px;">
+                <div class="input-group">
+                    <label for="tiket-paksa">📌 Paksa</label>
+                    <select id="tiket-paksa" required>
+                        <option value="">— Pumili —</option>
+                        <option value="bayad">Problema sa Bayad</option>
+                        <option value="biyahe">Pagbabago sa Biyahe</option>
+                        <option value="reklamo">Reklamo</option>
+                        <option value="tanong">Tanong</option>
+                        <option value="iba">Iba pa</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="tiket-utos">📋 Numero ng Utos (kung mayroon)</label>
+                    <input type="text" id="tiket-utos" placeholder="Hal. utos_1234567890">
+                </div>
+                <div class="input-group">
+                    <label for="tiket-ngalan">👤 Iyong Pangalan</label>
+                    <input type="text" id="tiket-ngalan" required>
+                </div>
+                <div class="input-group">
+                    <label for="tiket-telepono">📞 Numero ng Telepono</label>
+                    <input type="tel" id="tiket-telepono" required>
+                </div>
+                <div class="input-group">
+                    <label for="tiket-mensahe">✍️ Iyong Mensahe / Problema</label>
+                    <textarea id="tiket-mensahe" placeholder="Ilarawan nang detalyado ang iyong sitwasyon…" style="min-height: 100px;" required></textarea>
+                </div>
+                <button type="submit" class="btn primary-btn" style="background: #00B42A;">
+                    ✅ Ipadala ang Tiket — Sagot sa loob ng 24 oras
+                </button>
+            </form>
+
+            <!-- MGA TIKET NA IPINADALA -->
+            <h3 style="font-size: 15px; margin-bottom: 12px;">📋 Aking Mga Tiket</h3>
+            <div id="listahan-tiket">
+                <p style="color: #86909C; text-align: center; padding: 10px;">Wala pang ipinadalang tiket.</p>
+            </div>
+
+            <!-- IMPORMASYON NG KONTAK -->
+            <div style="margin-top: 24px; background: #F7F8FA; border-radius: 12px; padding: 16px;">
+                <h4 style="font-size: 14px; margin-bottom: 10px;">📞 Direktang Pakikipag-ugnayan</h4>
+                <p style="font-size: 13px; margin-bottom: 4px;"><strong>Telepono:</strong> 0917-123-4567</p>
+                <p style="font-size: 13px; margin-bottom: 4px;"><strong>Email:</strong> support@rider-dispatcher.ph</p>
+                <p style="font-size: 13px; color: #00B42A;"><strong>Oras:</strong> 24 oras / 7 araw sa isang linggo</p>
+            </div>
+
+        </div>
+    </main>
 </div>
+
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() {
+  menu.classList.add('bukas');
+  tabing.classList.add('nakita');
+  btnMenu.textContent = '✕';
+}
+function isaraMenu() {
+  menu.classList.remove('bukas');
+  tabing.classList.remove('nakita');
+  btnMenu.textContent = '☰';
+}
+btnMenu.addEventListener('click', () => {
+  menu.classList.contains('bukas') ? isaraMenu() : buksanMenu();
+});
+
+// SWIPE
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => {
+  simulaX = e.touches[0].clientX;
+  simulaY = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  const duloX = e.changedTouches[0].clientX;
+  const duloY = e.changedTouches[0].clientY;
+  const dx = duloX - simulaX;
+  const dy = Math.abs(duloY - simulaY);
+  if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+  if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// === KOPIYAHIN ANG LINK ===
+document.getElementById('kopya-link').addEventListener('click', async () => {
+  const link = 'rider-dispatcher.github.io/customer';
+  try {
+    await navigator.clipboard.writeText(link);
+    this.textContent = '✓ Nakopya!';
+    setTimeout(() => this.textContent = '📋 Kopyahin ang Link', 2000);
+  } catch { alert(link); }
+});
+
+// === KOPIYAHIN ANG DETALYE NG BAYAD ===
+document.getElementById('kopya-detalye').addEventListener('click', async () => {
+  const teksto =
+`Pangalan ng Bangko: RIDER DISPATCHER SERVICES
+Account No.: 1234-5678-9012-3456
+Bayad sa: GCash / Maya / BPI / BDO
+Ilagay ang Pangalan at Utos No. sa paliwanag`;
+  try {
+    await navigator.clipboard.writeText(teksto);
+    this.textContent = '✓ Nakopya!';
+    setTimeout(() => this.textContent = '📋 Kopyahin ang Detalye ng Bayad', 2000);
+  } catch { alert(teksto); }
+});
+
+// === PAGPADALA NG TIKET ===
+document.addEventListener('DOMContentLoaded', ilagayMgaTiket);
+
+document.getElementById('anyo-tiket').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const bagongTiket = {
+    id: 'TIKET-' + Date.now(),
+    paksa: document.getElementById('tiket-paksa').value,
+    utos_ref: document.getElementById('tiket-utos').value.trim() || 'Wala',
+    pangalan: document.getElementById('tiket-ngalan').value.trim(),
+    telepono: document.getElementById('tiket-telepono').value.trim(),
+    mensahe: document.getElementById('tiket-mensahe').value.trim(),
+    katayuan: 'hinihintay', // hinihintay, tinugunan, sarado
+    petsa: new Date().toLocaleString('fil-PH'),
+    sagot: null
+  };
+
+  if (!RIDER_APP.datos.mga_tiket) RIDER_APP.datos.mga_tiket = [];
+  RIDER_APP.datos.mga_tiket.unshift(bagongTiket);
+  RIDER_APP.iimbak();
+
+  alert(`✅ Matagumpay na naipadala!\nNumero ng Tiket: ${bagongTiket.id}\nSasagot kami sa loob ng 24 oras.`);
+  document.getElementById('anyo-tiket').reset();
+  ilagayMgaTiket();
+});
+
+function ilagayMgaTiket() {
+  const lugar = document.getElementById('listahan-tiket');
+  const mgaTiket = RIDER_APP.datos.mga_tiket || [];
+
+  if (mgaTiket.length === 0) {
+    lugar.innerHTML = '<p style="color: #86909C; text-align: center; padding: 10px;">Wala pang ipinadalang tiket.</p>';
+    return;
+  }
+
+  lugar.innerHTML = '';
+  mgaTiket.forEach(tiket => {
+    const kulay = {
+      hinihintay: '#FF7D00',
+      tinugunan: '#165DFF',
+      sarado: '#00B42A'
+    }[tiket.katayuan] || '#86909C';
+    const pangalanKatayuan = {
+      hinihintay: 'Hinihintay ang Sagot',
+      tinugunan: 'May Sagot Na',
+      sarado: 'Sarado'
+    }[tiket.katayuan] || tiket.katayuan;
+
+    lugar.innerHTML += `
+      <div class="tulad-tiket">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+          <strong style="font-size: 13px;">${tiket.id}</strong>
+          <span class="katayuan-tiket" style="background: ${kulay}15; color: ${kulay};">${pangalanKatayuan}</span>
+        </div>
+        <div style="font-size: 12px; color: #4E5969; margin-bottom: 4px;">
+          ${tiket.paksa} — ${tiket.petsa}
+        </div>
+        <div style="font-size: 13px;">${tiket.mensahe}</div>
+        ${tiket.sagot ? `
+          <div style="margin-top: 8px; background: white; padding: 8px 10px; border-radius: 6px; border-left: 2px solid #165DFF;">
+            <div style="font-size: 11px; color: #165DFF; font-weight: 600;">Sagot mula sa Suporta:</div>
+            <div style="font-size: 12px; margin-top: 2px;">${tiket.sagot}</div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  });
+}
+</script>
+</body>
+</html>
