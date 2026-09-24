@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 Mga Mamimili | Admin — Rider Dispatcher</title>
+    <!-- File: admin/customers.html | Bersyon: 1.1.0 | Petsa: 2026-09-24 | May-akda: martodosko -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+    <style>
+        .lista { margin-top: 10px; }
+        .bagay { padding: 14px; border-bottom: 1px solid #F2F3F5; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .bagay:last-child { border-bottom: none; }
+        .detalye { flex: 1; font-size: 14px; }
+        .detalye strong { display: block; font-size: 15px; margin-bottom: 2px; }
+        .bilang-utos { background: #E8F0FF; color: #165DFF; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+        .mga-pindutan { display: flex; flex-direction: column; gap: 6px; min-width: 85px; }
+        .btn-maliit { padding: 6px 10px; font-size: 13px; border-radius: 8px; border: none; cursor: pointer; }
+        .patong { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; }
+        .patong.nakatago { display: none; }
+        .patong-loob { background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; max-height: 90vh; overflow-y: auto; }
+        .patong-loob h2 { font-size: 18px; margin-bottom: 16px; text-align: center; }
+        .kasaysayan-lista { margin-top: 10px; }
+        .kasaysayan-bagay { padding: 8px 0; border-bottom: 1px solid #F2F3F5; font-size: 13px; }
+        .walang-utos { color: #4E5969; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-back">← Bumalik</a>
+            <span class="nav-title">👤 Mga Mamimili</span>
+            <span></span>
+        </nav>
+
+        <!-- LISTAHAN NG MAMIMILI -->
+        <section class="form-section">
+            <h3>Listahan ng Lahat ng Mamimili</h3>
+            <div id="lista-mamimili" class="lista">
+                <p style="text-align:center; color:#4E5969; padding:20px;">Naglalagay…</p>
+            </div>
+        </section>
+
+        <!-- MAGDAGDAG / BAGUHIN -->
+        <section class="form-section">
+            <h3 id="pamagat-anyo">➕ Magdagdag ng Bagong Mamimili</h3>
+            
+            <div class="input-group">
+                <label>Pangalan *</label>
+                <input type="text" id="m-pangalan" placeholder="Buong pangalan">
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Numero ng Telepono *</label>
+                    <input type="tel" id="m-telepono" placeholder="09XX XXX XXXX">
+                </div>
+                <div class="input-group">
+                    <label>Lugar / Tirahan</label>
+                    <input type="text" id="m-lugar" placeholder="Saan madalas hinihintay">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Pangunahing Ruta / Patutunguhan</label>
+                <select id="m-ruta">
+                    <option value="">— Pumili ng ruta —</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Tala / Paalala</label>
+                <textarea id="m-tala" style="width:100%; min-height:70px; padding:10px; border:1px solid #E5E6EB; border-radius:8px;" placeholder="Gustong oras, paboritong sasakyan, atbp…"></textarea>
+            </div>
+
+            <button id="isumbag-btn" class="btn primary-btn btn-full">✅ I-save</button>
+        </section>
+
+        <!-- PATONG: KASAYSAYAN NG PAG-UUTOS -->
+        <div id="patong-kasaysayan" class="patong nakatago">
+            <div class="patong-loob">
+                <h2 id="pangalan-kasaysayan">Kasaysayan</h2>
+                <div id="lugar-kasaysayan" class="kasaysayan-lista">
+                    <!-- Lalabas dito ang mga utos -->
+                </div>
+                <button id="isara-kasaysayan" class="btn secondary-btn btn-full" style="margin-top: 12px;">Isara</button>
+            </div>
+        </div>
+
+        <!-- PATONG: PAGBURA -->
+        <div id="patong-bura" class="patong nakatago">
+            <div class="patong-loob">
+                <h2>⚠️ Burahin ang Mamimili?</h2>
+                <p id="pangalan-bura" style="text-align:center; margin-bottom:16px; font-weight:600;"></p>
+                <p style="font-size:14px; color:#4E5969; margin-bottom:20px;">Hindi na mababawi kapag nabura. Ang mga utos ay mananatili sa listahan ng utos.</p>
+                <button id="kumpirma-bura" class="btn danger-btn btn-full">🗑️ Oo, Burahin</button>
+                <button id="hindi-bura" class="btn secondary-btn btn-full" style="margin-top:8px;">Hindi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idNagbabago = null;
+            let idBuburahin = null;
+
+            // ILAGAY ANG MGA RUTA SA PAGPIPILIAN
+            function ilagayMgaRutaSaPagpipilian() {
+                const lugar = document.getElementById('m-ruta');
+                lugar.innerHTML = '<option value="">— Pumili ng ruta —</option>';
+                (RIDER_APP.datos.mga_ruta || []).forEach(r => {
+                    lugar.innerHTML += `<option value="${r.id}">${r.pangalan}</option>`;
+                });
+            }
+
+            // KUNIN ANG BILANG NG UTOS NG MAMIMILI
+            function kuninBilangNgUtos(mamimiliId) {
+                if (!RIDER_APP.datos.mga_utos) return 0;
+                return RIDER_APP.datos.mga_utos.filter(u => u.mamimiliId === mamimiliId).length;
+            }
+
+            // ILISTA ANG LAHAT NG MAMIMILI
+            function ilistaMamimili() {
+                const lugar = document.getElementById('lista-mamimili');
+                const lahat = RIDER_APP.datos.mga_mamimili || [];
+
+                if (lahat.length === 0) {
+                    lugar.innerHTML = '<p style="text-align:center; color:#4E5969; padding:20px;">Wala pang nakalagay na mamimili.</p>';
+                    return;
+                }
+
+                lugar.innerHTML = '';
+                lahat.forEach(m => {
+                    const rutaPangalan = kuninPangalanNgRuta(m.rutaId);
+                    const bilangUtos = kuninBilangNgUtos(m.id);
+                    
+                    lugar.innerHTML += `
+                    <div class="bagay" data-id="${m.id}">
+                        <div class="detalye">
+                            <strong>${m.pangalan}</strong>
+                            ☎️ ${m.telepono}<br>
+                            📍 ${m.lugar || 'Walang itinakdang lugar'} • ${rutaPangalan || 'Walang itinakdang ruta'}<br>
+                            <span class="bilang-utos">${bilangUtos} na utos</span>
+                        </div>
+                        <div class="mga-pindutan">
+                            <button class="btn-maliit secondary-btn kasaysayan-btn" data-id="${m.id}">📊 Kasaysayan</button>
+                            <button class="btn-maliit secondary-btn baguhin-btn" data-id="${m.id}">✏️ Baguhin</button>
+                            <button class="btn-maliit danger-btn bura-btn" data-id="${m.id}">🗑️ Burahin</button>
+                        </div>
+                    </div>`;
+                });
+
+                ilakipGawainSaPindutan();
+            }
+
+            function kuninPangalanNgRuta(id) {
+                if (!id) return '';
+                const ruta = (RIDER_APP.datos.mga_ruta || []).find(r => r.id === id);
+                return ruta ? ruta.pangalan : '';
+            }
+
+            function ilakipGawainSaPindutan() {
+                // Kasaysayan
+                document.querySelectorAll('.kasaysayan-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanKasaysayan(btn.dataset.id));
+                });
+                // Baguhin
+                document.querySelectorAll('.baguhin-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanParaBaguhin(btn.dataset.id));
+                });
+                // Burahin
+                document.querySelectorAll('.bura-btn').forEach(btn => {
+                    btn.addEventListener('click', () => buksanPatongBura(btn.dataset.id));
+                });
+            }
+
+            // BUKAS ANG KASAYSAYAN NG UTOS
+            function buksanKasaysayan(mamimiliId) {
+                const mamimili = (RIDER_APP.datos.mga_mamimili || []).find(m => m.id === mamimiliId);
+                if (!mamimili) return;
+
+                document.getElementById('pangalan-kasaysayan').textContent = `📊 ${mamimili.pangalan} — Kasaysayan`;
+                
+                const lugar = document.getElementById('lugar-kasaysayan');
+                const mgaUtos = (RIDER_APP.datos.mga_utos || []).filter(u => u.mamimiliId === mamimiliId);
+
+                if (mgaUtos.length === 0) {
+                    lugar.innerHTML = '<p class="walang-utos">Wala pang naitalang utos.</p>';
+                } else {
+                    lugar.innerHTML = '';
+                    mgaUtos.sort((a, b) => new Date(b.petsa) - new Date(a.petsa)).forEach(u => {
+                        const rutaPangalan = kuninPangalanNgRuta(u.rutaId);
+                        const riderPangalan = kuninPangalanNgRider(u.riderId);
+                        lugar.innerHTML += `
+                        <div class="kasaysayan-bagay">
+                            <strong>${u.petsa ? u.petsa.substring(0, 10) : 'Walang petsa'}</strong> — ${rutaPangalan || 'Hindi tinukoy na ruta'}<br>
+                            Rider: ${riderPangalan || 'Hindi tinukoy'} • Halaga: ₱${u.halaga || '0.00'}
+                        </div>`;
+                    });
+                }
+
+                document.getElementById('patong-kasaysayan').classList.remove('nakatago');
+            }
+
+            function kuninPangalanNgRider(id) {
+                if (!id) return '';
+                const rider = (RIDER_APP.datos.mga_rider || []).find(r => r.id === id);
+                return rider ? rider.pangalan : '';
+            }
+
+            document.getElementById('isara-kasaysayan').addEventListener('click', () => {
+                document.getElementById('patong-kasaysayan').classList.add('nakatago');
+            });
+
+            // BAGUHIN — ILAGAY SA ANYO
+            function buksanParaBaguhin(id) {
+                const mamimili = (RIDER_APP.datos.mga_mamimili || []).find(m => m.id === id);
+                if (!mamimili) return;
+                idNagbabago = id;
+                document.getElementById('pamagat-anyo').textContent = '✏️ Baguhin ang Mamimili';
+                document.getElementById('m-pangalan').value = mamimili.pangalan || '';
+                document.getElementById('m-telepono').value = mamimili.telepono || '';
+                document.getElementById('m-lugar').value = mamimili.lugar || '';
+                document.getElementById('m-ruta').value = mamimili.rutaId || '';
+                document.getElementById('m-tala').value = mamimili.tala || '';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            // BURA — PATONG NG KUMPIRMA
+            function buksanPatongBura(id) {
+                const mamimili = (RIDER_APP.datos.mga_mamimili || []).find(m => m.id === id);
+                if (!mamimili) return;
+                idBuburahin = id;
+                document.getElementById('pangalan-bura').textContent = mamimili.pangalan;
+                document.getElementById('patong-bura').classList.remove('nakatago');
+            }
+
+            document.getElementById('hindi-bura').addEventListener('click', () => {
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+            });
+
+            document.getElementById('kumpirma-bura').addEventListener('click', () => {
+                if (!idBuburahin) return;
+                RIDER_APP.datos.mga_mamimili = RIDER_APP.datos.mga_mamimili.filter(m => m.id !== idBuburahin);
+                RIDER_APP.iimbak();
+                document.getElementById('patong-bura').classList.add('nakatago');
+                idBuburahin = null;
+                ilistaMamimili();
+            });
+
+            // ISUMBAG — BAGONG O BINAGONG MAMIMILI
+            document.getElementById('isumbag-btn').addEventListener('click', () => {
+                const pangalan = document.getElementById('m-pangalan').value.trim();
+                const telepono = document.getElementById('m-telepono').value.trim();
+                if (!pangalan || !telepono) {
+                    alert('❌ Ilagay ang pangalan at numero ng telepono');
+                    return;
+                }
+
+                const bagongDato = {
+                    id: idNagbabago || 'mamimili_' + Date.now(),
+                    pangalan,
+                    telepono,
+                    lugar: document.getElementById('m-lugar').value.trim(),
+                    rutaId: document.getElementById('m-ruta').value,
+                    tala: document.getElementById('m-tala').value.trim()
+                };
+
+                if (idNagbabago) {
+                    const idx = RIDER_APP.datos.mga_mamimili.findIndex(m => m.id === idNagbabago);
+                    RIDER_APP.datos.mga_mamimili[idx] = bagongDato;
+                    alert('✅ Na-update na ang mamimili!');
+                } else {
+                    if (!RIDER_APP.datos.mga_mamimili) RIDER_APP.datos.mga_mamimili = [];
+                    RIDER_APP.datos.mga_mamimili.push(bagongDato);
+                    alert('✅ Naisave na ang bagong mamimili!');
+                }
+
+                linisinAnyo();
+                ilistaMamimili();
+            });
+
+            function linisinAnyo() {
+                idNagbabago = null;
+                document.getElementById('pamagat-anyo').textContent = '➕ Magdagdag ng Bagong Mamimili';
+                ['m-pangalan','m-telepono','m-lugar','m-ruta','m-tala'].forEach(id => document.getElementById(id).value = '');
+            }
+
+            ilagayMgaRutaSaPagpipilian();
+            ilistaMamimili();
+        });
+    </script>
+</body>
+</html>
