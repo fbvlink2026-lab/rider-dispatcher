@@ -1,0 +1,309 @@
+/* ==================================================
+FILE: css/styles.css
+VERSION: 1.3.0
+DATE: 2026-09-24
+DEVELOPER: martodosko
+RIDER DISPATCHER — BUONG ESTILO
+================================================== */
+
+/* === PAGTATAKDA NG KULAY AT SUKAT === */
+:root {
+  --pangunahin: #165DFF;
+  --pangunahin-madilim: #0E42D2;
+  --tagumpay: #00B42A;
+  --babala: #FF7D00;
+  --panganib: #F53F3F;
+  --liwanag: #F2F3F5;
+  --hangganan: #E5E6EB;
+  --teksto: #1D2129;
+  --teksto-madilim: #4E5969;
+  --teksto-mahina: #86909C;
+  --puti: #FFFFFF;
+  --itim: #000000;
+  --anino: rgba(0, 0, 0, 0.08);
+  --anino-malalim: rgba(0, 0, 0, 0.15);
+  --lapad-menu: 260px;
+}
+
+/* === PANGKALAHATANG PAG-AAYOS === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--teksto);
+  background: #F7F8FA;
+}
+
+/* === LARAWAN NG BUONG APLIKASYON === */
+.katawan-aplikasyon {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+/* === SIDE MENU — NAKATAGO SA KALIWA === */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--lapad-menu);
+  height: 100%;
+  background: var(--puti);
+  box-shadow: 2px 0 10px var(--anino-malalim);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.side-menu.bukas {
+  transform: translateX(0);
+}
+
+/* Ulo ng Menu */
+.menu-ulo {
+  padding: 20px 16px;
+  background: linear-gradient(135deg, var(--pangunahin) 0%, var(--pangunahin-madilim) 100%);
+  color: white;
+}
+
+.menu-ulo h2 {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.menu-ulo p {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Talaan ng Link sa Menu */
+.menu-talaan {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.menu-kabanata-pamagat {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teksto-mahina);
+  padding: 12px 16px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: var(--teksto);
+  text-decoration: none;
+  transition: background 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.menu-link.aktibo {
+  background: rgba(22, 93, 255, 0.08);
+  border-left-color: var(--pangunahin);
+  color: var(--pangunahin);
+  font-weight: 500;
+}
+
+.menu-link:active {
+  background: var(--liwanag);
+}
+
+.menu-ikon {
+  font-size: 20px;
+  margin-right: 12px;
+  width: 24px;
+  text-align: center;
+}
+
+/* Pagsara sa ibaba */
+.menu-ibaba {
+  padding: 12px 16px 20px;
+  border-top: 1px solid var(--hangganan);
+  font-size: 11px;
+  color: var(--teksto-mahina);
+  text-align: center;
+}
+
+/* === TABING SA LABAS NG MENU === */
+.tabing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tabing.nakita {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* === PANGUNAHING NILALAMAN === */
+.pangunahing-larawan {
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+/* PANG-ITAAS NA BAHAGI — may pindutan ng menu */
+.itaas-na-bar {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--hangganan);
+  z-index: 100;
+}
+
+.pindutan-menu {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--liwanag);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pangalan-pahina {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* === LARAWAN NG NILALAMAN === */
+.app-container {
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* === MGA PINDUTAN === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn.primary-btn {
+  background: var(--pangunahin);
+  color: white;
+}
+
+.btn.primary-btn:active {
+  background: var(--pangunahin-madilim);
+}
+
+.btn.danger-btn {
+  background: var(--panganib);
+  color: white;
+}
+
+.btn.secondary-btn {
+  background: var(--liwanag);
+  color: var(--teksto);
+}
+
+/* === PAGTATALA NG ANYO === */
+.input-group {
+  margin-bottom: 14px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teksto-madilim);
+  margin-bottom: 6px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--hangganan);
+  border-radius: 10px;
+  font-size: 15px;
+  background: white;
+  color: var(--teksto);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--pangunahin);
+  box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* === KAHON NG IMPORMASYON === */
+.kahon {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--hangganan);
+}
+
+.kahon h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* === PAGTUGON SA MALIIT NA EKRAN === */
+@media (max-width: 480px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .side-menu {
+    width: 85%;
+    max-width: var(--lapad-menu);
+  }
+}
