@@ -1,0 +1,267 @@
+<!-- ==================================================
+   FILE        : customer/my-orders.html
+   BERSYON     : 1.0.0
+   PETSA       : 2026-09-24
+   MAY-AKDA    : martodosko
+   LUGAR       : rider-dispatcher/customer/my-orders.html
+   LAYUNIN     : Talaan ng Lahat ng Biyahe — Katayuan, Kita, Bura
+   KONEKSYON   : ../js/languages.js | ../js/common.js | ../css/styles.css
+================================================== -->
+<!DOCTYPE html>
+<html lang="tl-PH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Aking mga Utos — Rider Dispatcher</title>
+    <meta name="description" content="Tingnan ang lahat ng nakalaan, natapos, at nakanselang biyahe.">
+    <meta name="author" content="martodosko">
+    <meta name="theme-color" content="#165DFF">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Aking mga Utos — Rider Dispatcher">
+    <meta property="og:description" content="Talaan ng lahat ng biyahe at kabuuang kita.">
+    <meta property="og:image" content="https://martodosko.github.io/rider-dispatcher/og-image.png">
+    <meta property="og:locale" content="tl_PH">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aking mga Utos — Rider Dispatcher">
+    <meta name="twitter:description" content="Tingnan ang iyong pag-unlad sa layunin ng kita.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-ulo">
+        <h2>🏍️ Rider Dispatcher</h2>
+        <p>Pamasahe at Pagpapabiyahe</p>
+    </div>
+    <nav class="menu-talaan">
+        <a href="../index.html" class="menu-link">
+            <span class="menu-ikon">🏠</span>
+            <span data-wika="tahanan">Tahanan</span>
+        </a>
+        <a href="booking.html" class="menu-link">
+            <span class="menu-ikon">🚕</span>
+            <span data-wika="magpabiyahe">Magpa-Biyahe</span>
+        </a>
+        <a href="my-orders.html" class="menu-link aktibo">
+            <span class="menu-ikon">📋</span>
+            <span data-wika="aking_utos">Aking mga Utos</span>
+        </a>
+        <a href="voice-booking.html" class="menu-link">
+            <span class="menu-ikon">🎤</span>
+            <span data-wika="utos_sa_boses">Utos sa Boses</span>
+        </a>
+        <a href="promo.html" class="menu-link">
+            <span class="menu-ikon">🎁</span>
+            <span data-wika="promo">Promosyon</span>
+        </a>
+        <a href="support.html" class="menu-link">
+            <span class="menu-ikon">❓</span>
+            <span data-wika="tulong">Tulong</span>
+        </a>
+        <a href="../faq.html" class="menu-link">
+            <span class="menu-ikon">📖</span>
+            FAQ / Gabay
+        </a>
+        <a href="../about.html" class="menu-link">
+            <span class="menu-ikon">ℹ️</span>
+            Tungkol sa Amin
+        </a>
+        <a href="../admin/" class="menu-link" style="margin-top: 12px; border-top: 1px solid var(--hangganan); padding-top: 16px;">
+            <span class="menu-ikon">🔐</span>
+            Admin Panel
+        </a>
+    </nav>
+    <div class="menu-ibaba">martodosko © 2026</div>
+</div>
+
+<div class="tabing" id="tabing" onclick="isaraMenu()"></div>
+
+<main class="pangunahing-larawan">
+    <div class="itaas-na-bar">
+        <button class="pindutan-menu" id="btnMenu">☰</button>
+        <span class="pangalan-pahina" data-wika="aking_utos">Aking mga Utos</span>
+    </div>
+
+    <div class="app-container">
+        <!-- BUOD NG KITA AT PAG-UNLAD -->
+        <div class="kahon" style="background: linear-gradient(135deg, var(--p) 0%, var(--p-dark) 100%); color: white;">
+            <h3 style="color: white; margin-bottom: 12px;">📈 Buod Ngayong Araw</h3>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Bilang ng Biyahe</span>
+                <strong id="buod_bilang">0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Kabuuang Pasok</span>
+                <strong id="buod_pasok">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Kabuuang Gastos</span>
+                <strong id="buod_gastos">₱0.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 18px; font-weight: 700;">
+                <span>Purong Kita</span>
+                <strong id="buod_kita">₱0.00</strong>
+            </div>
+            
+            <!-- PROGRESS BAR -->
+            <div style="margin-top: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                    <span>Pag-abot sa Layunin</span>
+                    <span id="porsyento_layunin">0%</span>
+                </div>
+                <div style="height: 10px; background: rgba(255,255,255,0.2); border-radius: 5px; overflow: hidden;">
+                    <div id="progress_bar" style="height: 100%; background: #4ADE80; width: 0%; transition: width 0.4s ease; border-radius: 5px;"></div>
+                </div>
+                <div style="font-size: 12px; margin-top: 4px; opacity: 0.8;">
+                    Layunin: ₱<span id="halaga_layunin">300.00</span> / araw
+                </div>
+            </div>
+        </div>
+
+        <!-- MGA UTOS / BIYAHE -->
+        <div class="kahon">
+            <h3 style="margin-bottom: 16px;">📋 Talaan ng Biyahe</h3>
+            
+            <div id="listahan_biyahe">
+                <p style="text-align: center; color: var(--teksto-mahina); padding: 20px 0;">Wala pang naitalang biyahe.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../js/languages.js"></script>
+<script src="../js/common.js"></script>
+<script>
+const menu = document.getElementById('sideMenu');
+const tabing = document.getElementById('tabing');
+const btnMenu = document.getElementById('btnMenu');
+
+function buksanMenu() { menu.classList.add('bukas'); tabing.classList.add('nakita'); btnMenu.textContent = '✕'; }
+function isaraMenu() { menu.classList.remove('bukas'); tabing.classList.remove('nakita'); btnMenu.textContent = '☰'; }
+btnMenu.addEventListener('click', () => menu.classList.contains('bukas') ? isaraMenu() : buksanMenu());
+
+// Swipe
+let simulaX = 0, simulaY = 0;
+document.addEventListener('touchstart', e => { simulaX = e.touches[0].clientX; simulaY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - simulaX;
+    const dy = Math.abs(e.changedTouches[0].clientY - simulaY);
+    if (simulaX < 35 && dx > 50 && dy < 30 && !menu.classList.contains('bukas')) buksanMenu();
+    if (dx < -50 && dy < 30 && menu.classList.contains('bukas')) isaraMenu();
+}, { passive: true });
+
+// ---------------- IPAKITA ANG BUOD ----------------
+function ipakitaBuod() {
+    const buod = RiderDato.buod();
+    const datos = RiderDato.kunin();
+    
+    document.getElementById('buod_bilang').textContent = buod.bilang_biyahe;
+    document.getElementById('buod_pasok').textContent = `₱${buod.kabuuan_pasok.toFixed(2)}`;
+    document.getElementById('buod_gastos').textContent = `₱${buod.kabuuan_gastos.toFixed(2)}`;
+    
+    const elKita = document.getElementById('buod_kita');
+    elKita.textContent = `₱${buod.purong_kita.toFixed(2)}`;
+    elKita.style.color = buod.purong_kita >= 0 ? '#4ADE80' : '#FCA5A5';
+    
+    document.getElementById('porsyento_layunin').textContent = `${buod.layunin_natamo}%`;
+    document.getElementById('progress_bar').style.width = `${buod.layunin_natamo}%`;
+    document.getElementById('halaga_layunin').textContent = datos.pagtatakda.layunin_kita.toFixed(2);
+}
+
+// ---------------- IPAKITA ANG LISTAHAN NG BIYAHE ----------------
+function ipakitaListahan() {
+    const datos = RiderDato.kunin();
+    const lalagyan = document.getElementById('listahan_biyahe');
+    
+    if (datos.mga_biyahe.length === 0) {
+        lalagyan.innerHTML = `<p style="text-align: center; color: var(--teksto-mahina); padding: 20px 0;">Wala pang naitalang biyahe.</p>`;
+        return;
+    }
+    
+    lalagyan.innerHTML = '';
+    
+    datos.mga_biyahe.forEach(biyahe => {
+        // Kulay ng katayuan
+        let klaseKatayuan = 'asul';
+        if (biyahe.katayuan === 'tapos') klaseKatayuan = 'tagumpay';
+        if (biyahe.katayuan === 'kinansela') klaseKatayuan = 'pula';
+        
+        // Teksto ng katayuan
+        const tekstoKatayuan = {
+            nakalaan: 'Nakalaan',
+            tinanggap: 'Tinanggap',
+            papunta: 'Papunta na',
+            nakarating: 'Nakarating',
+            tapos: 'Tapos na',
+            kinansela: 'Kinansela'
+        }[biyahe.katayuan] || biyahe.katayuan;
+        
+        // Kita/Lugi na kulay
+        const kulayKita = biyahe.kwenta && biyahe.pamasahe - biyahe.kwenta.kabuuan_gastos >= 0 ? '#00B42A' : '#F53F3F';
+        const halagaKita = biyahe.kwenta ? (biyahe.pamasahe - biyahe.kwenta.kabuuan_gastos).toFixed(2) : '—';
+        
+        lalagyan.innerHTML += `
+            <div class="listahan-item" style="border-bottom: 1px solid var(--hangganan-liwanag); padding: 14px 0;">
+                <div class="listahan-itaas">
+                    <div>
+                        <div class="listahan-mula">${biyahe.mula} → ${biyahe.papuntang}</div>
+                        <div class="listahan-oras">
+                            ${new Date(biyahe.oras_itala).toLocaleString('tl-PH', { dateStyle: 'short', timeStyle: 'short' })}
+                            · ${biyahe.uri_biyahe === 'pabalik' ? 'Pabalik' : 'Isahan'}
+                            · ${biyahe.layo_km} km
+                        </div>
+                    </div>
+                    <span class="katayuan ${klaseKatayuan}">${tekstoKatayuan}</span>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <div>
+                        <div style="font-size: 14px;">Pamasahe: <strong>₱${biyahe.pamasahe.toFixed(2)}</strong></div>
+                        <div style="font-size: 13px; color: var(--teksto-pag);">Purong Kita: <strong style="color: ${kulayKita};">₱${halagaKita}</strong></div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                    ${biyahe.katayuan !== 'tapos' && biyahe.katayuan !== 'kinansela' ? `
+                        <button class="btn outline-btn" style="padding: 6px 10px; font-size: 13px; flex: 1;" onclick="baguhinKatayuanBiyahe('${biyahe.id}', 'tapos')">✅ Tapos</button>
+                        <button class="btn outline-btn" style="padding: 6px 10px; font-size: 13px; flex: 1;" onclick="baguhinKatayuanBiyahe('${biyahe.id}', 'kinansela')">❌ Kansela</button>
+                    ` : ''}
+                    <button class="btn danger-btn" style="padding: 6px 10px; font-size: 13px; flex: 1;" onclick="burahinBiyahe('${biyahe.id}')">🗑️ Bura</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// ---------------- BAGUHIN ANG KATAYUAN ----------------
+function baguhinKatayuanBiyahe(id, bagongKatayuan) {
+    RiderDato.katayuan(id, bagongKatayuan);
+    ipakitaListahan();
+    ipakitaBuod();
+}
+
+// ---------------- BURAHIN ANG BIYAHE ----------------
+function burahinBiyahe(id) {
+    if (!confirm('Sigurado ka bang burahin ito? Mababawasan ang kabuuang kita.')) return;
+    RiderDato.burahin(id);
+    ipakitaListahan();
+    ipakitaBuod();
+}
+
+// ---------------- IPAKITA SA PAGBUKAS ----------------
+document.addEventListener('DOMContentLoaded', () => {
+    ipakitaListahan();
+    ipakitaBuod();
+});
+window.addEventListener('datoNagbago', () => {
+    ipakitaListahan();
+    ipakitaBuod();
+});
+</script>
+</body>
+</html>
